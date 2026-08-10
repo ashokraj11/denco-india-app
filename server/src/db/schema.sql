@@ -76,6 +76,40 @@ CREATE TABLE IF NOT EXISTS stats (
   display_order  INT NOT NULL DEFAULT 0
 );
 
+CREATE TABLE IF NOT EXISTS districts (
+  id             INT AUTO_INCREMENT PRIMARY KEY,
+  name           VARCHAR(60) NOT NULL,
+  slug           VARCHAR(60) NOT NULL UNIQUE,
+  left_pct       DECIMAL(5,2) NOT NULL,
+  top_pct        DECIMAL(5,2) NOT NULL,
+  display_order  INT NOT NULL DEFAULT 0
+);
+
+CREATE TABLE IF NOT EXISTS office_districts (
+  id             INT AUTO_INCREMENT PRIMARY KEY,
+  office_id      INT NOT NULL,
+  district_id    INT NOT NULL,
+  CONSTRAINT fk_office_districts_office FOREIGN KEY (office_id)
+    REFERENCES offices(id) ON DELETE CASCADE,
+  CONSTRAINT fk_office_districts_district FOREIGN KEY (district_id)
+    REFERENCES districts(id) ON DELETE CASCADE,
+  CONSTRAINT uq_office_district UNIQUE (office_id, district_id)
+);
+
+CREATE TABLE IF NOT EXISTS site_settings (
+  id                 INT PRIMARY KEY DEFAULT 1,
+  site_name          VARCHAR(80) NOT NULL DEFAULT 'DENCO',
+  tagline            VARCHAR(80) NOT NULL DEFAULT 'INDIA',
+  logo_url           VARCHAR(500) NULL,
+  meta_title         VARCHAR(160) NOT NULL DEFAULT 'DENCO INDIA | Scientific Dental Laboratory & Digital Dentistry',
+  meta_description   VARCHAR(300) NULL,
+  contact_phone      VARCHAR(32) NULL,
+  contact_email      VARCHAR(160) NULL,
+  contact_address    VARCHAR(255) NULL,
+  whatsapp_number    VARCHAR(32) NULL,
+  CONSTRAINT chk_site_settings_singleton CHECK (id = 1)
+);
+
 CREATE TABLE IF NOT EXISTS enquiries (
   id          INT AUTO_INCREMENT PRIMARY KEY,
   name        VARCHAR(120) NOT NULL,

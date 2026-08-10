@@ -4,12 +4,15 @@ import { LocationPinIcon, PhoneIcon, MailIcon, ArrowRightIcon, CheckIcon, Linked
 import ContentIcon from './icons/ContentIcon';
 import Reveal from './Reveal';
 import DecorativeLayer from './DecorativeLayer';
+import { useSiteSettings } from '../context/SiteSettingsContext';
 
-const WHATSAPP_NUMBER = import.meta.env.VITE_WHATSAPP_NUMBER || '917010767919';
+const FALLBACK_WHATSAPP_NUMBER = import.meta.env.VITE_WHATSAPP_NUMBER || '917010767919';
 
 const EMPTY_FORM = { name: '', clinic: '', email: '', phone: '', subject: 'General Enquiry', message: '', consent: false };
 
 export default function Contact() {
+  const { settings } = useSiteSettings();
+  const whatsappNumber = settings.whatsappNumber || FALLBACK_WHATSAPP_NUMBER;
   const [form, setForm] = useState(EMPTY_FORM);
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -51,7 +54,7 @@ export default function Contact() {
         '*Message:*',
         form.message.trim()
       ].filter(Boolean);
-      const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(lines.join('\n'))}`;
+      const waUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(lines.join('\n'))}`;
       window.open(waUrl, '_blank', 'noopener');
 
       setSubmitted(true);
@@ -81,21 +84,21 @@ export default function Contact() {
                 <span className="ci-ico"><LocationPinIcon /></span>
                 <div>
                   <span className="ci-label">Head Office</span>
-                  <span className="ci-value">Denco India, Serving dental professionals across Tamil Nadu &amp; Puducherry, India</span>
+                  <span className="ci-value">{settings.siteName} {settings.tagline}, {settings.contactAddress}</span>
                 </div>
               </li>
               <li>
                 <span className="ci-ico"><PhoneIcon /></span>
                 <div>
                   <span className="ci-label">Phone</span>
-                  <span className="ci-value"><a href="tel:+919791711182">+91 97917 11182</a></span>
+                  <span className="ci-value"><a href={`tel:${settings.contactPhone}`}>{settings.contactPhone}</a></span>
                 </div>
               </li>
               <li>
                 <span className="ci-ico"><MailIcon /></span>
                 <div>
                   <span className="ci-label">Email</span>
-                  <span className="ci-value"><a href="mailto:info@dencoindia.com">info@dencoindia.com</a></span>
+                  <span className="ci-value"><a href={`mailto:${settings.contactEmail}`}>{settings.contactEmail}</a></span>
                 </div>
               </li>
               <li>

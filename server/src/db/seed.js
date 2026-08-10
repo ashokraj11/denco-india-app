@@ -92,6 +92,63 @@ const stats = [
   { icon_key: 'award', label: 'Award-Winning Lab' }
 ];
 
+// The 40 fixed map points (38 Tamil Nadu districts + Puducherry + Karaikal).
+// Coverage (live/soon) is NOT stored here — it's computed from office_districts.
+const districts = [
+  { name: 'Ariyalur', slug: 'ariyalur', left: 67.6, top: 45.4 },
+  { name: 'Chengalpattu', slug: 'chengalpattu', left: 87.8, top: 19.3 },
+  { name: 'Chennai', slug: 'chennai', left: 93.8, top: 12.6 },
+  { name: 'Coimbatore', slug: 'coimbatore', left: 20.3, top: 47.4 },
+  { name: 'Cuddalore', slug: 'cuddalore', left: 82.6, top: 35.1 },
+  { name: 'Dharmapuri', slug: 'dharmapuri', left: 46.9, top: 28.7 },
+  { name: 'Dindigul', slug: 'dindigul', left: 42.2, top: 58.3 },
+  { name: 'Erode', slug: 'erode', left: 37.3, top: 42.0 },
+  { name: 'Kallakurichi', slug: 'kallakurichi', left: 65.1, top: 35.3 },
+  { name: 'Kancheepuram', slug: 'kancheepuram', left: 81.5, top: 16.7 },
+  { name: 'Kanyakumari', slug: 'kanyakumari', left: 30.6, top: 95.2 },
+  { name: 'Karur', slug: 'karur', left: 45.2, top: 48.4 },
+  { name: 'Krishnagiri', slug: 'krishnagiri', left: 48.3, top: 22.1 },
+  { name: 'Madurai', slug: 'madurai', left: 46.1, top: 65.8 },
+  { name: 'Mayiladuthurai', slug: 'mayiladuthurai', left: 80.4, top: 46.0 },
+  { name: 'Nagapattinam', slug: 'nagapattinam', left: 84.5, top: 51.8 },
+  { name: 'Namakkal', slug: 'namakkal', left: 47.2, top: 44.0 },
+  { name: 'Nilgiris', slug: 'nilgiris', left: 14.2, top: 40.8 },
+  { name: 'Perambalur', slug: 'perambalur', left: 63.1, top: 43.9 },
+  { name: 'Pudukkottai', slug: 'pudukkottai', left: 61.7, top: 58.2 },
+  { name: 'Ramanathapuram', slug: 'ramanathapuram', left: 62.0, top: 75.2 },
+  { name: 'Ranipet', slug: 'ranipet', left: 73.2, top: 15.2 },
+  { name: 'Salem', slug: 'salem', left: 46.7, top: 36.6 },
+  { name: 'Sivaganga', slug: 'sivaganga', left: 54.1, top: 67.1 },
+  { name: 'Tenkasi', slug: 'tenkasi', left: 27.9, top: 82.1 },
+  { name: 'Thanjavur', slug: 'thanjavur', left: 68.9, top: 51.3 },
+  { name: 'Theni', slug: 'theni', left: 31.7, top: 64.4 },
+  { name: 'Thoothukudi', slug: 'thoothukudi', left: 46.2, top: 85.5 },
+  { name: 'Tiruchirappalli', slug: 'tiruchirappalli', left: 58.6, top: 51.1 },
+  { name: 'Tirunelveli', slug: 'tirunelveli', left: 37.8, top: 86.3 },
+  { name: 'Tirupathur', slug: 'tirupathur', left: 56.1, top: 22.5 },
+  { name: 'Tiruppur', slug: 'tiruppur', left: 28.6, top: 45.9 },
+  { name: 'Tiruvallur', slug: 'tiruvallur', left: 86.2, top: 11.7 },
+  { name: 'Tiruvannamalai', slug: 'tiruvannamalai', left: 67.4, top: 27.0 },
+  { name: 'Tiruvarur', slug: 'tiruvarur', left: 79.9, top: 51.6 },
+  { name: 'Vellore', slug: 'vellore', left: 68.7, top: 15.4 },
+  { name: 'Viluppuram', slug: 'viluppuram', left: 76.8, top: 31.9 },
+  { name: 'Virudhunagar', slug: 'virudhunagar', left: 42.5, top: 71.5 },
+  { name: 'Puducherry', slug: 'puducherry', left: 83.7, top: 31.9 },
+  { name: 'Karaikal', slug: 'karaikal', left: 84.4, top: 49.1 }
+];
+
+const defaultSettings = {
+  site_name: 'DENCO',
+  tagline: 'INDIA',
+  logo_url: null,
+  meta_title: 'DENCO INDIA | Scientific Dental Laboratory & Digital Dentistry',
+  meta_description: 'DENCO INDIA is a scientific dental laboratory delivering precision CAD/CAM prosthetics, zirconia restorations and digital dentistry solutions to dental professionals across Tamil Nadu.',
+  contact_phone: '+91 97917 11182',
+  contact_email: 'info@dencoindia.com',
+  contact_address: 'Serving dental professionals across Tamil Nadu & Puducherry, India',
+  whatsapp_number: '917010767919'
+};
+
 async function seedServices(conn) {
   await conn.query('DELETE FROM services');
   for (let i = 0; i < services.length; i++) {
@@ -181,6 +238,41 @@ async function seedStats(conn) {
   console.log(`Seeded ${stats.length} stats`);
 }
 
+async function seedDistricts(conn) {
+  const [[{ count }]] = await conn.query('SELECT COUNT(*) AS count FROM districts');
+  if (count > 0) {
+    console.log('Districts already seeded, skipping (office_districts assignments are preserved)');
+    return;
+  }
+  for (let i = 0; i < districts.length; i++) {
+    const d = districts[i];
+    await conn.query(
+      'INSERT INTO districts (name, slug, left_pct, top_pct, display_order) VALUES (?, ?, ?, ?, ?)',
+      [d.name, d.slug, d.left, d.top, i + 1]
+    );
+  }
+  console.log(`Seeded ${districts.length} districts`);
+}
+
+async function seedSettings(conn) {
+  const [[{ count }]] = await conn.query('SELECT COUNT(*) AS count FROM site_settings WHERE id = 1');
+  if (count > 0) {
+    console.log('Site settings already exist, skipping (admin edits are preserved)');
+    return;
+  }
+  await conn.query(
+    `INSERT INTO site_settings
+      (id, site_name, tagline, logo_url, meta_title, meta_description, contact_phone, contact_email, contact_address, whatsapp_number)
+     VALUES (1, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    [
+      defaultSettings.site_name, defaultSettings.tagline, defaultSettings.logo_url,
+      defaultSettings.meta_title, defaultSettings.meta_description, defaultSettings.contact_phone,
+      defaultSettings.contact_email, defaultSettings.contact_address, defaultSettings.whatsapp_number
+    ]
+  );
+  console.log('Seeded default site settings');
+}
+
 async function seedAdmin(conn) {
   const username = process.env.ADMIN_USERNAME || 'admin';
   const password = process.env.ADMIN_PASSWORD || 'change-this-password';
@@ -201,6 +293,8 @@ async function main() {
     await seedOffices(conn);
     await seedFaqs(conn);
     await seedStats(conn);
+    await seedDistricts(conn);
+    await seedSettings(conn);
     await seedAdmin(conn);
     console.log('Database seeded successfully.');
   } finally {

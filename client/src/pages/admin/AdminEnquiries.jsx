@@ -1,22 +1,16 @@
 import { useEffect, useState } from 'react';
-import { Navigate } from 'react-router-dom';
-import { api } from '../api/client';
-import { useAdminAuth } from '../context/AdminAuthContext';
+import { api } from '../../api/client';
 
-export default function AdminDashboard() {
-  const { isAuthenticated, username, logout } = useAdminAuth();
+export default function AdminEnquiries() {
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
   const [page, setPage] = useState(1);
 
   useEffect(() => {
-    if (!isAuthenticated) return;
     api.get(`/admin/enquiries?page=${page}&limit=25`)
       .then(setResult)
       .catch((err) => setError(err.message));
-  }, [isAuthenticated, page]);
-
-  if (!isAuthenticated) return <Navigate to="/admin/login" replace />;
+  }, [page]);
 
   async function handleDelete(id) {
     if (!window.confirm('Delete this enquiry?')) return;
@@ -31,14 +25,8 @@ export default function AdminDashboard() {
   const totalPages = result ? Math.max(1, Math.ceil(result.total / result.limit)) : 1;
 
   return (
-    <div style={{ maxWidth: 1100, margin: '0 auto', padding: '2rem clamp(1rem,4vw,2rem)' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-        <div>
-          <h2 style={{ margin: 0 }}>Enquiries</h2>
-          <span style={{ color: 'var(--mute)', fontSize: '.85rem' }}>Signed in as {username || 'admin'}</span>
-        </div>
-        <button className="btn btn-ghost btn-sm" onClick={logout}>Log Out</button>
-      </div>
+    <div>
+      <h2 style={{ margin: '0 0 1.2rem' }}>Enquiries</h2>
 
       {error && <p className="form-note" style={{ color: '#D9611E' }}>{error}</p>}
 

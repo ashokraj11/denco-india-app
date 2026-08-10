@@ -1,17 +1,38 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { AdminAuthProvider } from './context/AdminAuthContext';
+import { SiteSettingsProvider } from './context/SiteSettingsContext';
 import Home from './pages/Home';
 import AdminLogin from './pages/AdminLogin';
-import AdminDashboard from './pages/AdminDashboard';
+import AdminLayout from './pages/admin/AdminLayout';
+import AdminEnquiries from './pages/admin/AdminEnquiries';
+import AdminProducts from './pages/admin/AdminProducts';
+import AdminCategories from './pages/admin/AdminCategories';
+import AdminCertifications from './pages/admin/AdminCertifications';
+import AdminServices from './pages/admin/AdminServices';
+import AdminOffices from './pages/admin/AdminOffices';
+import AdminFaqs from './pages/admin/AdminFaqs';
+import AdminSettings from './pages/admin/AdminSettings';
 
 export default function App() {
   return (
-    <AdminAuthProvider>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/admin/login" element={<AdminLogin />} />
-        <Route path="/admin" element={<AdminDashboard />} />
-      </Routes>
-    </AdminAuthProvider>
+    <SiteSettingsProvider>
+      <AdminAuthProvider>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/admin/login" element={<AdminLogin />} />
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route index element={<Navigate to="enquiries" replace />} />
+            <Route path="enquiries" element={<AdminEnquiries />} />
+            <Route path="products" element={<AdminProducts />} />
+            <Route path="categories" element={<AdminCategories />} />
+            <Route path="certifications" element={<AdminCertifications />} />
+            <Route path="services" element={<AdminServices />} />
+            <Route path="offices" element={<AdminOffices />} />
+            <Route path="faqs" element={<AdminFaqs />} />
+            <Route path="settings" element={<AdminSettings />} />
+          </Route>
+        </Routes>
+      </AdminAuthProvider>
+    </SiteSettingsProvider>
   );
 }
