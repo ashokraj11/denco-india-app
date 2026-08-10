@@ -177,8 +177,8 @@ section{ position:relative; padding:clamp(3.6rem,7vw,6rem) 0; }
   white-space:nowrap;
 }
 
-.nav-links{ display:flex; align-items:center; gap:2.1rem; }
-.nav-links a{ font-size:.9rem; font-weight:600; color:var(--ink-soft); position:relative; padding:.3rem 0; transition:color .3s var(--ease); }
+.nav-links{ display:flex; align-items:center; gap:clamp(.9rem, 1.8vw, 2.1rem); flex-wrap:nowrap; }
+.nav-links a{ font-size:clamp(.74rem, 1vw, .9rem); font-weight:600; color:var(--ink-soft); position:relative; padding:.3rem 0; transition:color .3s var(--ease); white-space:nowrap; }
 .nav-links a::after{ content:''; position:absolute; left:0; right:0; bottom:-3px; height:2px; background:var(--accent); transform:scaleX(0); transform-origin:left; transition:transform .3s var(--ease); }
 .nav-links a:hover{ color:var(--navy); }
 .nav-links a:hover::after, .nav-links a.active::after{ transform:scaleX(1); }
