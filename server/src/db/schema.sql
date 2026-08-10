@@ -85,15 +85,20 @@ CREATE TABLE IF NOT EXISTS districts (
   display_order  INT NOT NULL DEFAULT 0
 );
 
-CREATE TABLE IF NOT EXISTS office_districts (
+-- Each row is one named area (town/locality) an office serves, tagged with
+-- the district it falls in. A single district can appear more than once per
+-- office (several towns in the same district), so there is no uniqueness
+-- constraint on (office_id, district_id) here.
+CREATE TABLE IF NOT EXISTS office_areas (
   id             INT AUTO_INCREMENT PRIMARY KEY,
   office_id      INT NOT NULL,
   district_id    INT NOT NULL,
-  CONSTRAINT fk_office_districts_office FOREIGN KEY (office_id)
+  area_name      VARCHAR(120) NOT NULL,
+  display_order  INT NOT NULL DEFAULT 0,
+  CONSTRAINT fk_office_areas_office FOREIGN KEY (office_id)
     REFERENCES offices(id) ON DELETE CASCADE,
-  CONSTRAINT fk_office_districts_district FOREIGN KEY (district_id)
-    REFERENCES districts(id) ON DELETE CASCADE,
-  CONSTRAINT uq_office_district UNIQUE (office_id, district_id)
+  CONSTRAINT fk_office_areas_district FOREIGN KEY (district_id)
+    REFERENCES districts(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS site_settings (

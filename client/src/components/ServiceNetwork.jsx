@@ -8,10 +8,10 @@ const VISIBLE_LIMIT = 6;
 
 function OfficeCard({ office, delay }) {
   const [expanded, setExpanded] = useState(false);
-  const districtNames = (office.districts || []).map((d) => d.name);
-  const overflow = districtNames.length > VISIBLE_LIMIT;
-  const visible = overflow && !expanded ? districtNames.slice(0, VISIBLE_LIMIT) : districtNames;
-  const hiddenCount = districtNames.length - VISIBLE_LIMIT;
+  const areaNames = (office.areas || []).map((a) => a.areaName);
+  const overflow = areaNames.length > VISIBLE_LIMIT;
+  const visible = overflow && !expanded ? areaNames.slice(0, VISIBLE_LIMIT) : areaNames;
+  const hiddenCount = areaNames.length - VISIBLE_LIMIT;
 
   return (
     <Reveal as="div" className="manager-card" delay={delay}>
@@ -28,9 +28,9 @@ function OfficeCard({ office, delay }) {
         <PhoneIcon />{office.phone}
       </a>
       <div>
-        <span className="loc-label">{office.isHeadOffice ? 'Direct Service Areas' : 'Service Districts'}</span>
+        <span className="loc-label">{office.isHeadOffice ? 'Direct Service Areas' : 'Service Locations'}</span>
         <div className="loc-chips">
-          {visible.length === 0 && <span className="loc-chip" style={{ opacity: 0.6 }}>No districts assigned yet</span>}
+          {visible.length === 0 && <span className="loc-chip" style={{ opacity: 0.6 }}>No areas assigned yet</span>}
           {visible.map((loc) => (
             <span className="loc-chip" key={loc}>{loc}</span>
           ))}

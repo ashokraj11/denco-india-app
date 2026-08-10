@@ -93,7 +93,7 @@ const stats = [
 ];
 
 // The 40 fixed map points (38 Tamil Nadu districts + Puducherry + Karaikal).
-// Coverage (live/soon) is NOT stored here — it's computed from office_districts.
+// Coverage (live/soon) is NOT stored here — it's computed from office_areas.
 const districts = [
   { name: 'Ariyalur', slug: 'ariyalur', left: 67.6, top: 45.4 },
   { name: 'Chengalpattu', slug: 'chengalpattu', left: 87.8, top: 19.3 },
@@ -241,7 +241,7 @@ async function seedStats(conn) {
 async function seedDistricts(conn) {
   const [[{ count }]] = await conn.query('SELECT COUNT(*) AS count FROM districts');
   if (count > 0) {
-    console.log('Districts already seeded, skipping (office_districts assignments are preserved)');
+    console.log('Districts already seeded, skipping (office_areas assignments are preserved)');
     return;
   }
   for (let i = 0; i < districts.length; i++) {

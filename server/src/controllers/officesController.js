@@ -5,19 +5,19 @@ async function listOffices(req, res, next) {
     const [offices] = await pool.query(
       'SELECT id, name, role, phone, is_head_office AS isHeadOffice, display_order FROM offices ORDER BY display_order ASC'
     );
-    const [districtRows] = await pool.query(
-      `SELECT od.office_id, d.id, d.name
-       FROM office_districts od
-       JOIN districts d ON d.id = od.district_id
-       ORDER BY d.display_order ASC`
+    const [areaRows] = await pool.query(
+      `SELECT oa.office_id, oa.id, oa.area_name AS areaName, d.id AS districtId, d.name AS districtName
+       FROM office_areas oa
+       JOIN districts d ON d.id = oa.district_id
+       ORDER BY oa.display_order ASC`
     );
 
     const result = offices.map((office) => ({
       ...office,
       isHeadOffice: !!office.isHeadOffice,
-      districts: districtRows
-        .filter((d) => d.office_id === office.id)
-        .map((d) => ({ id: d.id, name: d.name }))
+      areas: areaRows
+        .filter((a) => a.office_id === office.id)
+        .map((a) => ({ id: a.id, areaName: a.areaName, districtId: a.districtId, districtName: a.districtName }))
     }));
 
     res.json(result);
@@ -32,11 +32,16 @@ function validate(body) {
   return null;
 }
 
-async function setOfficeDistricts(conn, officeId, districtIds) {
-  await conn.query('DELETE FROM office_districts WHERE office_id = ?', [officeId]);
-  const ids = Array.isArray(districtIds) ? [...new Set(districtIds)] : [];
-  for (const districtId of ids) {
-    await conn.query('INSERT INTO office_districts (office_id, district_id) VALUES (?, ?)', [officeId, districtId]);
+async function setOfficeAreas(conn, officeId, areas) {
+  await conn.query('DELETE FROM office_areas WHERE office_id = ?', [officeId]);
+  const list = Array.isArray(areas) ? areas : [];
+  for (let i = 0; i < list.length; i++) {
+    const { district_id, area_name } = list[i];
+    if (!district_id || !area_name || !String(area_name).trim()) continue;
+    await conn.query(
+      'INSERT INTO office_areas (office_id, district_id, area_name, display_order) VALUES (?, ?, ?, ?)',
+      [officeId, district_id, String(area_name).trim(), i]
+    );
   }
 }
 
@@ -45,14 +50,14 @@ async function createOffice(req, res, next) {
   try {
     const error = validate(req.body);
     if (error) return res.status(400).json({ error });
-    const { name, role, phone, is_head_office, display_order, districtIds } = req.body;
+    const { name, role, phone, is_head_office, display_order, areas } = req.body;
 
     await conn.beginTransaction();
     const [result] = await conn.query(
       'INSERT INTO offices (name, role, phone, is_head_office, display_order) VALUES (?, ?, ?, ?, ?)',
       [name, role, phone, is_head_office ? 1 : 0, display_order || 0]
     );
-    await setOfficeDistricts(conn, result.insertId, districtIds);
+    await setOfficeAreas(conn, result.insertId, areas);
     await conn.commit();
 
     res.status(201).json({ id: result.insertId });
@@ -69,7 +74,7 @@ async function updateOffice(req, res, next) {
   try {
     const error = validate(req.body);
     if (error) return res.status(400).json({ error });
-    const { name, role, phone, is_head_office, display_order, districtIds } = req.body;
+    const { name, role, phone, is_head_office, display_order, areas } = req.body;
     const { id } = req.params;
 
     await conn.beginTransaction();
@@ -77,7 +82,7 @@ async function updateOffice(req, res, next) {
       'UPDATE offices SET name = ?, role = ?, phone = ?, is_head_office = ?, display_order = ? WHERE id = ?',
       [name, role, phone, is_head_office ? 1 : 0, display_order || 0, id]
     );
-    await setOfficeDistricts(conn, id, districtIds);
+    await setOfficeAreas(conn, id, areas);
     await conn.commit();
 
     res.json({ ok: true });
@@ -91,7 +96,7 @@ async function updateOffice(req, res, next) {
 
 async function removeOffice(req, res, next) {
   try {
-    // office_districts has ON DELETE CASCADE, so this also frees up its districts (they
+    // office_areas has ON DELETE CASCADE, so this also frees up its districts (they
     // revert to "soon" automatically unless another office still covers them).
     await pool.query('DELETE FROM offices WHERE id = ?', [req.params.id]);
     res.status(204).send();
