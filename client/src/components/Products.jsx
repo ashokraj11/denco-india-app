@@ -3,6 +3,7 @@ import ContentIcon from './icons/ContentIcon';
 import { ArrowRightIcon, ChevronUpIcon } from './icons/UiIcons';
 import Reveal from './Reveal';
 import DecorativeLayer from './DecorativeLayer';
+import { resolveImageUrl } from '../utils/resolveImageUrl';
 
 const ICON_BG = { crown: 'var(--accent)', cadcam: 'var(--navy)', zirconia: 'var(--accent)', implant: 'var(--navy)', denture: 'var(--accent)', scan: 'var(--navy)' };
 
@@ -47,7 +48,7 @@ export default function Products() {
             <div className="product-grid">
               {cat.products.map((p, i) => (
                 <Reveal as="div" className="product-card" key={p.id} delay={(i % 3) + 1}>
-                  <div className="product-thumb"><span className="product-dot"></span><img src={p.image_url} alt={p.name} loading="lazy" /></div>
+                  <div className="product-thumb"><span className="product-dot"></span><img src={resolveImageUrl(p.image_url)} alt={p.name} loading="lazy" /></div>
                   <div className="product-body">
                     <div className="product-name"><h5>{p.name}</h5></div>
                     <div className="product-desc"><p>{p.description}</p></div>
