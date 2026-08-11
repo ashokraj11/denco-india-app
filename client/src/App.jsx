@@ -9,6 +9,7 @@ import AdminProducts from './pages/admin/AdminProducts';
 import AdminCategories from './pages/admin/AdminCategories';
 import AdminCertifications from './pages/admin/AdminCertifications';
 import AdminServices from './pages/admin/AdminServices';
+import AdminGallery from './pages/admin/AdminGallery';
 import AdminOffices from './pages/admin/AdminOffices';
 import AdminFaqs from './pages/admin/AdminFaqs';
 import AdminSettings from './pages/admin/AdminSettings';
@@ -27,6 +28,7 @@ export default function App() {
             <Route path="categories" element={<AdminCategories />} />
             <Route path="certifications" element={<AdminCertifications />} />
             <Route path="services" element={<AdminServices />} />
+            <Route path="gallery" element={<AdminGallery />} />
             <Route path="offices" element={<AdminOffices />} />
             <Route path="faqs" element={<AdminFaqs />} />
             <Route path="settings" element={<AdminSettings />} />

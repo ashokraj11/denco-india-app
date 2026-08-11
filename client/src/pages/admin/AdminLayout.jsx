@@ -8,6 +8,7 @@ const NAV_ITEMS = [
   { to: 'categories', label: 'Categories' },
   { to: 'certifications', label: 'Certifications' },
   { to: 'services', label: 'Services' },
+  { to: 'gallery', label: 'Technology Gallery' },
   { to: 'offices', label: 'Area Managers' },
   { to: 'faqs', label: 'FAQs' },
   { to: 'settings', label: 'Site Settings' }

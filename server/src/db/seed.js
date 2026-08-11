@@ -189,6 +189,17 @@ const stats = [
   { icon_key: 'award', label: 'Award-Winning Lab' }
 ];
 
+const galleryItems = [
+  { title: 'CAD/CAM Design Studio', media_url: 'https://images.unsplash.com/photo-1629909613654-28e377c37b09?q=80&w=1400&auto=format&fit=crop' },
+  { title: 'Zirconia Milling Unit', media_url: 'https://images.unsplash.com/photo-1581093458791-9d2b11e94a9d?q=80&w=1400&auto=format&fit=crop' },
+  { title: 'Digital Scanning Station', media_url: 'https://images.unsplash.com/photo-1606811841689-23dfddce3e95?q=80&w=1400&auto=format&fit=crop' },
+  { title: 'Model Trimming & Finishing', media_url: 'https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?q=80&w=1400&auto=format&fit=crop' },
+  { title: 'Quality Inspection Bench', media_url: 'https://images.unsplash.com/photo-1530026405186-ed1f139313f8?q=80&w=1400&auto=format&fit=crop' },
+  { title: 'Technician Workstation', media_url: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?q=80&w=1400&auto=format&fit=crop' },
+  { title: 'Packaging & Dispatch', media_url: 'https://images.unsplash.com/photo-1600959907703-125ba1374a12?q=80&w=1400&auto=format&fit=crop' },
+  { title: 'Reception & Consultation Area', media_url: 'https://images.unsplash.com/photo-1629909615184-74f495363b67?q=80&w=1400&auto=format&fit=crop' }
+];
+
 // The 40 fixed map points (38 Tamil Nadu districts + Puducherry + Karaikal).
 // Coverage (live/soon) is NOT stored here — it's computed from office_areas.
 const districts = [
@@ -380,6 +391,22 @@ async function seedStats(conn) {
   console.log(`Seeded ${stats.length} stats`);
 }
 
+async function seedGallery(conn) {
+  const [[{ count }]] = await conn.query('SELECT COUNT(*) AS count FROM gallery_items');
+  if (count > 0) {
+    console.log('Gallery items already seeded, skipping (admin edits are preserved)');
+    return;
+  }
+  for (let i = 0; i < galleryItems.length; i++) {
+    const g = galleryItems[i];
+    await conn.query(
+      'INSERT INTO gallery_items (title, media_type, media_url, display_order) VALUES (?, ?, ?, ?)',
+      [g.title, 'image', g.media_url, i + 1]
+    );
+  }
+  console.log(`Seeded ${galleryItems.length} gallery items`);
+}
+
 async function seedDistricts(conn) {
   const [[{ count }]] = await conn.query('SELECT COUNT(*) AS count FROM districts');
   if (count > 0) {
@@ -436,6 +463,7 @@ async function main() {
     await seedOffices(conn);
     await seedFaqs(conn);
     await seedStats(conn);
+    await seedGallery(conn);
     await seedSettings(conn);
     await seedAdmin(conn);
     console.log('Database seeded successfully.');

@@ -43,6 +43,14 @@ CREATE TABLE IF NOT EXISTS certifications (
   display_order  INT NOT NULL DEFAULT 0
 );
 
+CREATE TABLE IF NOT EXISTS gallery_items (
+  id             INT AUTO_INCREMENT PRIMARY KEY,
+  title          VARCHAR(160) NOT NULL,
+  media_type     ENUM('image','video') NOT NULL DEFAULT 'image',
+  media_url      VARCHAR(500) NOT NULL,
+  display_order  INT NOT NULL DEFAULT 0
+);
+
 CREATE TABLE IF NOT EXISTS offices (
   id             INT AUTO_INCREMENT PRIMARY KEY,
   name           VARCHAR(120) NOT NULL,

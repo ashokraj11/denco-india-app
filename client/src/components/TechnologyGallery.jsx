@@ -1,22 +1,18 @@
 import { useState } from 'react';
-import { SearchIcon } from './icons/UiIcons';
+import { useFetch } from '../hooks/useFetch';
+import { SearchIcon, PlayIcon } from './icons/UiIcons';
 import Reveal from './Reveal';
 import Lightbox from './Lightbox';
 import DecorativeLayer from './DecorativeLayer';
-
-const GALLERY = [
-  { title: 'CAD/CAM Design Studio', full: 'https://images.unsplash.com/photo-1629909613654-28e377c37b09?q=80&w=1400&auto=format&fit=crop', thumb: 'https://images.unsplash.com/photo-1629909613654-28e377c37b09?q=80&w=800&auto=format&fit=crop' },
-  { title: 'Zirconia Milling Unit', full: 'https://images.unsplash.com/photo-1581093458791-9d2b11e94a9d?q=80&w=1400&auto=format&fit=crop', thumb: 'https://images.unsplash.com/photo-1581093458791-9d2b11e94a9d?q=80&w=700&auto=format&fit=crop' },
-  { title: 'Digital Scanning Station', full: 'https://images.unsplash.com/photo-1606811841689-23dfddce3e95?q=80&w=1400&auto=format&fit=crop', thumb: 'https://images.unsplash.com/photo-1606811841689-23dfddce3e95?q=80&w=700&auto=format&fit=crop' },
-  { title: 'Model Trimming & Finishing', full: 'https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?q=80&w=1400&auto=format&fit=crop', thumb: 'https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?q=80&w=700&auto=format&fit=crop' },
-  { title: 'Quality Inspection Bench', full: 'https://images.unsplash.com/photo-1530026405186-ed1f139313f8?q=80&w=1400&auto=format&fit=crop', thumb: 'https://images.unsplash.com/photo-1530026405186-ed1f139313f8?q=80&w=700&auto=format&fit=crop' },
-  { title: 'Technician Workstation', full: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?q=80&w=1400&auto=format&fit=crop', thumb: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?q=80&w=700&auto=format&fit=crop' },
-  { title: 'Packaging & Dispatch', full: 'https://images.unsplash.com/photo-1600959907703-125ba1374a12?q=80&w=1400&auto=format&fit=crop', thumb: 'https://images.unsplash.com/photo-1600959907703-125ba1374a12?q=80&w=700&auto=format&fit=crop' },
-  { title: 'Reception & Consultation Area', full: 'https://images.unsplash.com/photo-1629909615184-74f495363b67?q=80&w=1400&auto=format&fit=crop', thumb: 'https://images.unsplash.com/photo-1629909615184-74f495363b67?q=80&w=700&auto=format&fit=crop' }
-];
+import { resolveImageUrl } from '../utils/resolveImageUrl';
 
 export default function TechnologyGallery() {
+  const { data: items, loading } = useFetch('/gallery');
   const [active, setActive] = useState(null);
+
+  function open(item) {
+    setActive({ img: resolveImageUrl(item.mediaUrl), title: item.title, type: item.mediaType });
+  }
 
   return (
     <section className="news" id="technology">
@@ -27,24 +23,31 @@ export default function TechnologyGallery() {
           <p>A look inside our facility — the technology, workstations and people behind every restoration we deliver.</p>
         </Reveal>
 
+        {loading && <p>Loading gallery…</p>}
+
         <Reveal as="div" className="gallery-grid">
-          {GALLERY.map((item) => (
+          {items?.map((item) => (
             <div
               className="gallery-item"
-              key={item.title}
+              key={item.id}
               tabIndex={0}
               role="button"
               aria-haspopup="dialog"
-              onClick={() => setActive({ img: item.full, title: item.title })}
+              onClick={() => open(item)}
               onKeyDown={(e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                   e.preventDefault();
-                  setActive({ img: item.full, title: item.title });
+                  open(item);
                 }
               }}
             >
-              <img src={item.thumb} alt={item.title} loading="lazy" />
-              <span className="gallery-zoom"><SearchIcon /></span>
+              {item.mediaType === 'video' ? (
+                // eslint-disable-next-line jsx-a11y/media-has-caption
+                <video src={resolveImageUrl(item.mediaUrl)} muted playsInline preload="metadata" />
+              ) : (
+                <img src={resolveImageUrl(item.mediaUrl)} alt={item.title} loading="lazy" />
+              )}
+              <span className="gallery-zoom">{item.mediaType === 'video' ? <PlayIcon /> : <SearchIcon />}</span>
               <span className="gallery-caption">{item.title}</span>
             </div>
           ))}

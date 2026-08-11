@@ -1,8 +1,9 @@
 import { useEffect, useRef } from 'react';
 import { CloseIcon } from './icons/UiIcons';
 
-// Shared lightbox used for both the certifications grid and the technology
-// gallery. `item` is null when closed; otherwise { img, title, desc? }.
+// Shared lightbox used for the certifications grid and the technology
+// gallery. `item` is null when closed; otherwise { img, title, desc?, type? }.
+// type: 'image' (default) or 'video' — video renders a playable <video> instead of <img>.
 export default function Lightbox({ item, onClose }) {
   const closeRef = useRef(null);
 
@@ -31,7 +32,12 @@ export default function Lightbox({ item, onClose }) {
           <CloseIcon />
         </button>
         <div className="cert-lightbox-media">
-          <img src={item?.img || ''} alt={item?.title || ''} />
+          {item?.type === 'video' ? (
+            // eslint-disable-next-line jsx-a11y/media-has-caption
+            <video src={item.img} controls autoPlay style={{ width: '100%', maxHeight: '72vh' }} />
+          ) : (
+            <img src={item?.img || ''} alt={item?.title || ''} />
+          )}
         </div>
         <div className="cert-lightbox-body">
           <h5>{item?.title || ''}</h5>

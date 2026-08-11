@@ -14,6 +14,7 @@ const faqsRoutes = require('./routes/faqs');
 const statsRoutes = require('./routes/stats');
 const districtsRoutes = require('./routes/districts');
 const settingsRoutes = require('./routes/settings');
+const galleryRoutes = require('./routes/gallery');
 const enquiriesRoutes = require('./routes/enquiries');
 const adminRoutes = require('./routes/admin');
 const adminProductsRoutes = require('./routes/adminProducts');
@@ -24,6 +25,8 @@ const adminOfficesRoutes = require('./routes/adminOffices');
 const adminFaqsRoutes = require('./routes/adminFaqs');
 const adminSettingsRoutes = require('./routes/adminSettings');
 const adminUploadsRoutes = require('./routes/adminUploads');
+const adminGalleryRoutes = require('./routes/adminGallery');
+const adminGalleryUploadsRoutes = require('./routes/adminGalleryUploads');
 
 const app = express();
 
@@ -54,6 +57,7 @@ app.use('/api/faqs', faqsRoutes);
 app.use('/api/stats', statsRoutes);
 app.use('/api/districts', districtsRoutes);
 app.use('/api/settings', settingsRoutes);
+app.use('/api/gallery', galleryRoutes);
 app.use('/api/enquiries', enquiriesRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/admin/products', adminProductsRoutes);
@@ -64,6 +68,8 @@ app.use('/api/admin/offices', adminOfficesRoutes);
 app.use('/api/admin/faqs', adminFaqsRoutes);
 app.use('/api/admin/settings', adminSettingsRoutes);
 app.use('/api/admin/uploads', adminUploadsRoutes);
+app.use('/api/admin/gallery', adminGalleryRoutes);
+app.use('/api/admin/gallery-uploads', adminGalleryUploadsRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
