@@ -3,8 +3,7 @@ import ContentIcon from './icons/ContentIcon';
 import { ArrowRightIcon } from './icons/UiIcons';
 import Reveal from './Reveal';
 import DecorativeLayer from './DecorativeLayer';
-
-const ICON_BG = { crown: 'var(--accent)', cadcam: 'var(--navy)', zirconia: 'var(--accent)', implant: 'var(--navy)', denture: 'var(--accent)', scan: 'var(--navy)' };
+import { getIconBg } from '../utils/iconBg';
 
 export default function Services() {
   const { data: services, loading } = useFetch('/services');
@@ -21,7 +20,7 @@ export default function Services() {
           {loading && <p>Loading services…</p>}
           {services?.map((svc, i) => (
             <Reveal as="div" className="area-card" key={svc.id} delay={(i % 3) + 1}>
-              <span className="area-ico" style={{ background: ICON_BG[svc.icon_key] }}>
+              <span className="area-ico" style={{ background: getIconBg(svc.icon_key) }}>
                 <ContentIcon name={svc.icon_key} />
               </span>
               <h4>{svc.title}</h4>

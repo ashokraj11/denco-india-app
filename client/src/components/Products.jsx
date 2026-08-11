@@ -4,8 +4,7 @@ import { ArrowRightIcon, ChevronUpIcon } from './icons/UiIcons';
 import Reveal from './Reveal';
 import DecorativeLayer from './DecorativeLayer';
 import { resolveImageUrl } from '../utils/resolveImageUrl';
-
-const ICON_BG = { crown: 'var(--accent)', cadcam: 'var(--navy)', zirconia: 'var(--accent)', implant: 'var(--navy)', denture: 'var(--accent)', scan: 'var(--navy)' };
+import { getIconBg } from '../utils/iconBg';
 
 export default function Products() {
   const { data: categories, loading } = useFetch('/products');
@@ -24,7 +23,7 @@ export default function Products() {
         <div className="cat-grid">
           {categories?.map((cat, i) => (
             <Reveal as="a" href={`#${cat.slug}`} className="cat-card" key={cat.id} delay={i + 1}>
-              <span className="cat-ico" style={{ background: ICON_BG[cat.icon_key] }}>
+              <span className="cat-ico" style={{ background: getIconBg(cat.icon_key) }}>
                 <ContentIcon name={cat.icon_key} />
               </span>
               <h4>{cat.name}</h4>
@@ -38,7 +37,7 @@ export default function Products() {
           <Reveal as="div" className="cat-section" id={cat.slug} key={cat.id}>
             <div className="cat-section-head">
               <h3>
-                <span className="cat-ico" style={{ background: ICON_BG[cat.icon_key] }}>
+                <span className="cat-ico" style={{ background: getIconBg(cat.icon_key) }}>
                   <ContentIcon name={cat.icon_key} />
                 </span>
                 {cat.name}

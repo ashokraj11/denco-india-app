@@ -1,15 +1,7 @@
 import { useEffect, useState } from 'react';
 import { api } from '../../api/client';
 import AdminCrudTable from '../../components/admin/AdminCrudTable';
-
-const ICON_OPTIONS = [
-  { value: 'crown', label: 'Crown' },
-  { value: 'cadcam', label: 'CAD/CAM' },
-  { value: 'zirconia', label: 'Zirconia' },
-  { value: 'implant', label: 'Implant' },
-  { value: 'denture', label: 'Denture' },
-  { value: 'scan', label: 'Scan' }
-];
+import { CONTENT_ICON_OPTIONS } from '../../constants/contentIcons';
 
 export default function AdminServices() {
   const [categoryOptions, setCategoryOptions] = useState([]);
@@ -33,7 +25,7 @@ export default function AdminServices() {
       ]}
       fields={[
         { name: 'title', label: 'Title', type: 'text', required: true },
-        { name: 'icon_key', label: 'Icon', type: 'select', required: true, options: ICON_OPTIONS },
+        { name: 'icon_key', label: 'Icon', type: 'select', required: true, options: CONTENT_ICON_OPTIONS },
         { name: 'category_slug', label: 'Links to Category', type: 'select', required: true, options: categoryOptions },
         { name: 'display_order', label: 'Display Order', type: 'number' }
       ]}

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { api } from '../../api/client';
 import ImageUploadField from './ImageUploadField';
+import { slugify } from '../../utils/slugify';
 
 // Generic list + add/edit form + delete, driven by a field-schema config.
 // Used for resources that are a flat list of similarly-shaped records
@@ -8,7 +9,9 @@ import ImageUploadField from './ImageUploadField';
 // enough special-case UI (nested categories, district picker) to stay as
 // their own pages instead of being forced through this.
 //
-// fields: [{ name, label, type: 'text'|'textarea'|'select'|'number'|'image', required, options }]
+// fields: [{ name, label, type: 'text'|'textarea'|'select'|'number'|'image', required, options,
+//            deriveFrom: '<other field name>' — auto-fills this field with a slugified version
+//            of that field's value, until the admin edits this field directly. }]
 export default function AdminCrudTable({ title, listPath, adminBasePath, columns, fields, emptyItem }) {
   const [rows, setRows] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -16,6 +19,7 @@ export default function AdminCrudTable({ title, listPath, adminBasePath, columns
   const [editingId, setEditingId] = useState(null);
   const [form, setForm] = useState(emptyItem);
   const [saving, setSaving] = useState(false);
+  const [touchedFields, setTouchedFields] = useState(new Set());
 
   function load() {
     setLoading(true);
@@ -30,16 +34,35 @@ export default function AdminCrudTable({ title, listPath, adminBasePath, columns
   function startCreate() {
     setEditingId('new');
     setForm(emptyItem);
+    setTouchedFields(new Set());
   }
 
   function startEdit(row) {
     setEditingId(row.id);
     setForm({ ...emptyItem, ...row });
+    // Existing records already have real values in their derived fields
+    // (e.g. slug) — treat those as touched so editing the source field
+    // (e.g. name) doesn't silently rewrite an already-published slug.
+    setTouchedFields(new Set(fields.filter((f) => f.deriveFrom).map((f) => f.name)));
   }
 
   function cancelEdit() {
     setEditingId(null);
     setForm(emptyItem);
+  }
+
+  function updateField(name, value) {
+    setForm((s) => {
+      const next = { ...s, [name]: value };
+      fields
+        .filter((f) => f.deriveFrom === name && !touchedFields.has(f.name))
+        .forEach((f) => { next[f.name] = slugify(value); });
+      return next;
+    });
+  }
+
+  function touchField(name) {
+    setTouchedFields((s) => new Set(s).add(name));
   }
 
   async function handleSubmit(e) {
@@ -112,7 +135,7 @@ export default function AdminCrudTable({ title, listPath, adminBasePath, columns
                   <select
                     required={f.required}
                     value={form[f.name] || ''}
-                    onChange={(e) => setForm((s) => ({ ...s, [f.name]: e.target.value }))}
+                    onChange={(e) => updateField(f.name, e.target.value)}
                   >
                     <option value="" disabled>Select…</option>
                     {f.options.map((o) => (
@@ -127,8 +150,12 @@ export default function AdminCrudTable({ title, listPath, adminBasePath, columns
                     type={f.type === 'number' ? 'number' : 'text'}
                     required={f.required}
                     value={form[f.name] ?? ''}
-                    onChange={(e) => setForm((s) => ({ ...s, [f.name]: e.target.value }))}
+                    onChange={(e) => {
+                      if (f.deriveFrom) touchField(f.name);
+                      updateField(f.name, e.target.value);
+                    }}
                   />
+                  {f.deriveFrom && <span style={{ fontSize: '.78rem', color: 'var(--mute)' }}>Auto-filled from {fields.find((x) => x.name === f.deriveFrom)?.label || f.deriveFrom} — edit here to override.</span>}
                 </>
               )}
             </div>

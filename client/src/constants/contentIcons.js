@@ -1,0 +1,32 @@
+// Icon choices offered in the admin panel for product categories and
+// services. Keys must match an entry in ContentIcon.jsx's PATHS lookup.
+export const CONTENT_ICON_OPTIONS = [
+  { value: 'crown', label: 'Crown' },
+  { value: 'cadcam', label: 'CAD/CAM' },
+  { value: 'zirconia', label: 'Zirconia' },
+  { value: 'implant', label: 'Implant' },
+  { value: 'denture', label: 'Denture' },
+  { value: 'scan', label: 'Digital Scan' },
+  { value: 'tooth', label: 'Tooth' },
+  { value: 'molar', label: 'Molar' },
+  { value: 'toothbrush', label: 'Toothbrush' },
+  { value: 'floss', label: 'Dental Floss' },
+  { value: 'smile', label: 'Smile' },
+  { value: 'xray', label: 'X-Ray' },
+  { value: 'injection', label: 'Injection / Anesthesia' },
+  { value: 'chair', label: 'Dental Chair' },
+  { value: 'magnifier', label: 'Inspection' },
+  { value: 'certificate', label: 'Certificate' },
+  { value: 'calendar', label: 'Appointment' },
+  { value: 'truck', label: 'Delivery' },
+  { value: 'package', label: 'Package' },
+  { value: 'flask', label: 'Lab Flask' },
+  { value: 'printer', label: '3D Printer' },
+  { value: 'gear', label: 'Settings / Workflow' },
+  { value: 'heart', label: 'Care' },
+  { value: 'handshake', label: 'Partnership' },
+  { value: 'clinic', label: 'Clinic / Building' },
+  { value: 'globe', label: 'Network / Coverage' },
+  { value: 'mappin', label: 'Location' },
+  { value: 'shield', label: 'Protection / Quality' }
+];

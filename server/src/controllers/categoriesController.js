@@ -1,6 +1,14 @@
 const pool = require('../config/db');
 
-const ICON_KEYS = ['crown', 'cadcam', 'zirconia', 'implant', 'denture', 'scan'];
+// Keep in sync with client/src/constants/contentIcons.js and
+// client/src/components/icons/ContentIcon.jsx.
+const ICON_KEYS = [
+  'crown', 'cadcam', 'zirconia', 'implant', 'denture', 'scan',
+  'tooth', 'molar', 'toothbrush', 'floss', 'smile', 'xray', 'injection',
+  'chair', 'magnifier', 'certificate', 'calendar', 'truck', 'package',
+  'flask', 'printer', 'gear', 'heart', 'handshake', 'clinic', 'globe',
+  'mappin', 'shield'
+];
 
 async function listCategories(req, res, next) {
   try {
