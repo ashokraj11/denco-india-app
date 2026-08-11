@@ -55,17 +55,112 @@ const certifications = [
   { title: 'ISO 6872:2015', description: 'Dentistry — Ceramic Materials', image_url: 'https://placehold.co/1000x750/0B3327/FEF0E6?text=ISO+6872%3A2015&font=raleway' }
 ];
 
+// Each area is { name, district } — district is a slug matching the `districts`
+// seed above. Mapped from real Tamil Nadu district boundaries; one entry
+// (marked below) is a lower-confidence guess rather than a certain mapping.
 const offices = [
-  { name: 'Mr. Ananthan S', role: 'Area Manager', phone: '+91 88701 97856', locations: ['Aranthangi', 'Karaikudi', 'Kumbakonam', 'Palani', 'Pattukkottai', 'Perambalur', 'Peravurani', 'Pollachi', 'Ponnamaravathi', 'Pudukkottai', 'Thanjavur', 'Udumalaipet'] },
-  { name: 'Mr. Sakthivelmurugan M', role: 'Area Manager', phone: '+91 94441 76257', locations: ['Cuddalore', 'Dharmapuri', 'Karur', 'Krishnagiri', 'Mechery', 'Salem', 'Villupuram'] },
-  { name: 'Mr. Rajasekar G', role: 'Area Manager', phone: '+91 97917 11182', locations: ['Kancheepuram', 'Karaikal', 'Nagapattinam (Nagai)', 'Nagoor', 'Namakkal', 'Ramanathapuram (Ramnad)', 'Thiruvarur', 'Vellore'] },
-  { name: 'Mr. Manikandan', role: 'Area Manager', phone: '+91 97907 75744', locations: ['Ambur', 'Devakottai', 'Kodaikanal', 'Mannargudi', 'Paramakudi', 'Sivagangai', 'Thiruppathur', 'Thiruthuraipoondi', 'Vaniyambadi', 'Vedaranyam'] },
-  { name: 'Mr. Udayachandran U', role: 'Area Manager', phone: '+91 85249 60006', locations: ['Bodi', 'Chinnamanur', 'Cumbum', 'Jayankondam', 'Melur', 'Sivakasi', 'Srivilliputhur', 'Theni'] },
-  { name: 'Mr. Nagarajan G', role: 'Area Manager', phone: '+91 94431 81239', locations: ['Bhuvanagiri', 'Chidambaram', 'Kattumannarkoil', 'Nellikuppam', 'Panruti', 'Pennadam', 'Thittakudi', 'Thozhdur', 'Ulundurpet', 'Virudhachalam'] },
-  { name: 'Mr. Dharani K', role: 'Area Manager', phone: '+91 80722 01284', locations: ['Ariyalur', 'Chengalpattu', 'Dhalavaipuram', 'Kallakurichi', 'Maduranthagam', 'Mayiladuthurai (Mayavaram)', 'Rajapalayam', 'Tenkasi', 'Thirukovilur', 'Thiruvannamalai', 'Tindivanam'] },
-  { name: 'Mr. Karthikeyan B', role: 'Area Manager', phone: '+91 99766 06152', locations: ['Bhavani', 'Chettikulam', 'Kumarapalayam', 'Musiri', 'Padalur', 'Perambalur', 'Thuraiyur', 'Tiruppur', 'Vikravandi'] },
-  { name: 'Denco India Head Office', role: 'Head Office', phone: '+91 97917 11182', isHeadOffice: true, locations: ['Kurinjipadi', 'Kullanchavadi', 'Neyveli Mandarakuppam', 'Neyveli Township', 'Vadalur'] },
-  { name: 'Mr. M. Jagan', role: 'Area Manager – Puducherry Region', phone: '+91 82483 69575', locations: ['Ariyankuppam', 'Puducherry'] }
+  { name: 'Mr. Ananthan S', role: 'Area Manager', phone: '+91 88701 97856', areas: [
+    { name: 'Aranthangi', district: 'pudukkottai' },
+    { name: 'Karaikudi', district: 'sivaganga' },
+    { name: 'Kumbakonam', district: 'thanjavur' },
+    { name: 'Palani', district: 'dindigul' },
+    { name: 'Pattukkottai', district: 'thanjavur' },
+    { name: 'Perambalur', district: 'perambalur' },
+    { name: 'Peravurani', district: 'thanjavur' },
+    { name: 'Pollachi', district: 'coimbatore' },
+    { name: 'Ponnamaravathi', district: 'pudukkottai' },
+    { name: 'Pudukkottai', district: 'pudukkottai' },
+    { name: 'Thanjavur', district: 'thanjavur' },
+    { name: 'Udumalaipet', district: 'tiruppur' }
+  ] },
+  { name: 'Mr. Sakthivelmurugan M', role: 'Area Manager', phone: '+91 94441 76257', areas: [
+    { name: 'Cuddalore', district: 'cuddalore' },
+    { name: 'Dharmapuri', district: 'dharmapuri' },
+    { name: 'Karur', district: 'karur' },
+    { name: 'Krishnagiri', district: 'krishnagiri' },
+    { name: 'Mechery', district: 'salem' },
+    { name: 'Salem', district: 'salem' },
+    { name: 'Villupuram', district: 'viluppuram' }
+  ] },
+  { name: 'Mr. Rajasekar G', role: 'Area Manager', phone: '+91 97917 11182', areas: [
+    { name: 'Kancheepuram', district: 'kancheepuram' },
+    { name: 'Karaikal', district: 'karaikal' },
+    { name: 'Nagapattinam (Nagai)', district: 'nagapattinam' },
+    { name: 'Nagoor', district: 'nagapattinam' },
+    { name: 'Namakkal', district: 'namakkal' },
+    { name: 'Ramanathapuram (Ramnad)', district: 'ramanathapuram' },
+    { name: 'Thiruvarur', district: 'tiruvarur' },
+    { name: 'Vellore', district: 'vellore' }
+  ] },
+  { name: 'Mr. Manikandan', role: 'Area Manager', phone: '+91 97907 75744', areas: [
+    { name: 'Ambur', district: 'tirupathur' },
+    { name: 'Devakottai', district: 'sivaganga' },
+    { name: 'Kodaikanal', district: 'dindigul' },
+    { name: 'Mannargudi', district: 'tiruvarur' },
+    { name: 'Paramakudi', district: 'ramanathapuram' },
+    { name: 'Sivagangai', district: 'sivaganga' },
+    { name: 'Thiruppathur', district: 'sivaganga' },
+    { name: 'Thiruthuraipoondi', district: 'tiruvarur' },
+    { name: 'Vaniyambadi', district: 'tirupathur' },
+    { name: 'Vedaranyam', district: 'nagapattinam' }
+  ] },
+  { name: 'Mr. Udayachandran U', role: 'Area Manager', phone: '+91 85249 60006', areas: [
+    { name: 'Bodi', district: 'theni' },
+    { name: 'Chinnamanur', district: 'theni' },
+    { name: 'Cumbum', district: 'theni' },
+    { name: 'Jayankondam', district: 'ariyalur' },
+    { name: 'Melur', district: 'madurai' },
+    { name: 'Sivakasi', district: 'virudhunagar' },
+    { name: 'Srivilliputhur', district: 'virudhunagar' },
+    { name: 'Theni', district: 'theni' }
+  ] },
+  { name: 'Mr. Nagarajan G', role: 'Area Manager', phone: '+91 94431 81239', areas: [
+    { name: 'Bhuvanagiri', district: 'cuddalore' },
+    { name: 'Chidambaram', district: 'cuddalore' },
+    { name: 'Kattumannarkoil', district: 'cuddalore' },
+    { name: 'Nellikuppam', district: 'cuddalore' },
+    { name: 'Panruti', district: 'cuddalore' },
+    { name: 'Pennadam', district: 'cuddalore' },
+    { name: 'Thittakudi', district: 'cuddalore' },
+    { name: 'Thozhdur', district: 'cuddalore' },
+    { name: 'Ulundurpet', district: 'kallakurichi' },
+    { name: 'Virudhachalam', district: 'cuddalore' }
+  ] },
+  { name: 'Mr. Dharani K', role: 'Area Manager', phone: '+91 80722 01284', areas: [
+    { name: 'Ariyalur', district: 'ariyalur' },
+    { name: 'Chengalpattu', district: 'chengalpattu' },
+    { name: 'Dhalavaipuram', district: 'virudhunagar' },
+    { name: 'Kallakurichi', district: 'kallakurichi' },
+    { name: 'Maduranthagam', district: 'chengalpattu' },
+    { name: 'Mayiladuthurai (Mayavaram)', district: 'mayiladuthurai' },
+    { name: 'Rajapalayam', district: 'virudhunagar' },
+    { name: 'Tenkasi', district: 'tenkasi' },
+    { name: 'Thirukovilur', district: 'kallakurichi' },
+    { name: 'Thiruvannamalai', district: 'tiruvannamalai' },
+    { name: 'Tindivanam', district: 'viluppuram' }
+  ] },
+  { name: 'Mr. Karthikeyan B', role: 'Area Manager', phone: '+91 99766 06152', areas: [
+    { name: 'Bhavani', district: 'erode' },
+    { name: 'Chettikulam', district: 'perambalur' }, // lower-confidence guess — small locality, verify if this manager's area is wrong
+    { name: 'Kumarapalayam', district: 'namakkal' },
+    { name: 'Musiri', district: 'tiruchirappalli' },
+    { name: 'Padalur', district: 'perambalur' },
+    { name: 'Perambalur', district: 'perambalur' },
+    { name: 'Thuraiyur', district: 'tiruchirappalli' },
+    { name: 'Tiruppur', district: 'tiruppur' },
+    { name: 'Vikravandi', district: 'viluppuram' }
+  ] },
+  { name: 'Denco India Head Office', role: 'Head Office', phone: '+91 97917 11182', isHeadOffice: true, areas: [
+    { name: 'Kurinjipadi', district: 'cuddalore' },
+    { name: 'Kullanchavadi', district: 'cuddalore' },
+    { name: 'Neyveli Mandarakuppam', district: 'cuddalore' },
+    { name: 'Neyveli Township', district: 'cuddalore' },
+    { name: 'Vadalur', district: 'cuddalore' }
+  ] },
+  { name: 'Mr. M. Jagan', role: 'Area Manager – Puducherry Region', phone: '+91 82483 69575', areas: [
+    { name: 'Ariyankuppam', district: 'puducherry' },
+    { name: 'Puducherry', district: 'puducherry' }
+  ] }
 ];
 
 const faqs = [
@@ -195,8 +290,13 @@ async function seedCertifications(conn) {
 }
 
 async function seedOffices(conn) {
+  // districts must already be seeded (main() runs seedDistricts before this)
+  // so each area's district slug can be resolved to a real district_id.
+  const [districtRows] = await conn.query('SELECT id, slug FROM districts');
+  const districtIdBySlug = new Map(districtRows.map((d) => [d.slug, d.id]));
+
   await conn.query('DELETE FROM office_locations');
-  await conn.query('DELETE FROM offices');
+  await conn.query('DELETE FROM offices'); // cascades to office_areas too
   for (let i = 0; i < offices.length; i++) {
     const o = offices[i];
     const [result] = await conn.query(
@@ -204,14 +304,25 @@ async function seedOffices(conn) {
       [o.name, o.role, o.phone, o.isHeadOffice ? 1 : 0, i + 1]
     );
     const officeId = result.insertId;
-    for (let j = 0; j < o.locations.length; j++) {
+    for (let j = 0; j < o.areas.length; j++) {
+      const area = o.areas[j];
+      // Legacy table, kept for backward compatibility — no longer read by the app.
       await conn.query(
         'INSERT INTO office_locations (office_id, location_name, display_order) VALUES (?, ?, ?)',
-        [officeId, o.locations[j], j + 1]
+        [officeId, area.name, j + 1]
+      );
+      const districtId = districtIdBySlug.get(area.district);
+      if (!districtId) {
+        console.warn(`No district found for slug "${area.district}" (area "${area.name}", office "${o.name}") — skipped`);
+        continue;
+      }
+      await conn.query(
+        'INSERT INTO office_areas (office_id, district_id, area_name, display_order) VALUES (?, ?, ?, ?)',
+        [officeId, districtId, area.name, j + 1]
       );
     }
   }
-  console.log(`Seeded ${offices.length} offices`);
+  console.log(`Seeded ${offices.length} offices with their service areas`);
 }
 
 async function seedFaqs(conn) {
@@ -290,10 +401,10 @@ async function main() {
     await seedServices(conn);
     await seedProducts(conn);
     await seedCertifications(conn);
+    await seedDistricts(conn); // must run before seedOffices, which links offices to districts
     await seedOffices(conn);
     await seedFaqs(conn);
     await seedStats(conn);
-    await seedDistricts(conn);
     await seedSettings(conn);
     await seedAdmin(conn);
     console.log('Database seeded successfully.');
