@@ -4,7 +4,7 @@
 // time it's empty, then skipped on every later run — so edits made through
 // the admin panel are never overwritten by a later `npm run db:seed`.
 // Usage: npm run db:seed
-require('dotenv').config();
+require('../config/loadEnv');
 const bcrypt = require('bcryptjs');
 const pool = require('../config/db');
 

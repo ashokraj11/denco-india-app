@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
-require('dotenv').config();
+require('./config/loadEnv');
 
 const { notFound, errorHandler } = require('./middleware/errorHandler');
 const { uploadDir } = require('./middleware/upload');

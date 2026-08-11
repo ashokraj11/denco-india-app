@@ -1,6 +1,6 @@
 // Applies schema.sql against the configured database.
 // Usage: npm run db:schema
-require('dotenv').config();
+require('../config/loadEnv');
 const fs = require('fs');
 const path = require('path');
 const mysql = require('mysql2/promise');

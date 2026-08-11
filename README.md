@@ -83,3 +83,16 @@ it, so edits made through the admin panel are never overwritten. The admin
 user's password is the one exception: it's re-hashed from `ADMIN_PASSWORD`
 on every run, so changing that env var and reseeding is how you rotate it.
 `enquiries` is never touched by seeding at all.
+
+## 8. Persistent env for SSH scripts (Hostinger / similar hosts)
+
+On hosts where every redeploy recreates the app's working directory (e.g.
+Hostinger's Git-deploy), a `.env` file created there for running
+`db:schema`/`db:seed` by hand over SSH gets wiped on the next deploy. Fix
+this **once**: create a file at `~/.denco-india.env` (in the account's home
+directory, *not* inside any `domains/.../nodejs` folder) with the same
+contents as `server/.env`. `server/src/config/loadEnv.js` automatically
+checks that path as a fallback, so this survives every future redeploy —
+no need to recreate it again. The live app itself doesn't need this at
+all; it already gets its config from the hosting panel's environment
+variables, which persist on their own.
