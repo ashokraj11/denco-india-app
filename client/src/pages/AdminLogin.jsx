@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Navigate } from 'react-router-dom';
 import { useAdminAuth } from '../context/AdminAuthContext';
+import { EyeIcon, EyeOffIcon } from '../components/icons/UiIcons';
 
 export default function AdminLogin() {
   const { login, isAuthenticated } = useAdminAuth();
@@ -8,6 +9,7 @@ export default function AdminLogin() {
   const [form, setForm] = useState({ username: '', password: '' });
   const [error, setError] = useState(null);
   const [submitting, setSubmitting] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   if (isAuthenticated) return <Navigate to="/admin" replace />;
 
@@ -35,7 +37,29 @@ export default function AdminLogin() {
         </div>
         <div className="form-group">
           <label htmlFor="password">Password</label>
-          <input id="password" type="password" required value={form.password} onChange={(e) => setForm((f) => ({ ...f, password: e.target.value }))} />
+          <div style={{ position: 'relative' }}>
+            <input
+              id="password"
+              type={showPassword ? 'text' : 'password'}
+              required
+              value={form.password}
+              onChange={(e) => setForm((f) => ({ ...f, password: e.target.value }))}
+              style={{ paddingRight: '2.6rem' }}
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword((v) => !v)}
+              aria-label={showPassword ? 'Hide password' : 'Show password'}
+              aria-pressed={showPassword}
+              style={{
+                position: 'absolute', top: '50%', right: '.75rem', transform: 'translateY(-50%)',
+                background: 'none', border: 'none', padding: 0, cursor: 'pointer', color: 'var(--mute)',
+                display: 'flex', alignItems: 'center'
+              }}
+            >
+              {showPassword ? <EyeOffIcon width={19} height={19} /> : <EyeIcon width={19} height={19} />}
+            </button>
+          </div>
         </div>
         {error && <p className="form-note" style={{ color: '#D9611E' }}>{error}</p>}
         <button type="submit" className="btn btn-accent" disabled={submitting}>
