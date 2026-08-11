@@ -1,6 +1,8 @@
 // Seeds the database with DENCO INDIA's real content (ported from the
 // original static index.html) so the app has correct data out of the box.
-// Safe to re-run: clears and re-inserts every content table.
+// Safe to run any number of times: each table is only populated the first
+// time it's empty, then skipped on every later run — so edits made through
+// the admin panel are never overwritten by a later `npm run db:seed`.
 // Usage: npm run db:seed
 require('dotenv').config();
 const bcrypt = require('bcryptjs');
@@ -245,7 +247,11 @@ const defaultSettings = {
 };
 
 async function seedServices(conn) {
-  await conn.query('DELETE FROM services');
+  const [[{ count }]] = await conn.query('SELECT COUNT(*) AS count FROM services');
+  if (count > 0) {
+    console.log('Services already seeded, skipping (admin edits are preserved)');
+    return;
+  }
   for (let i = 0; i < services.length; i++) {
     const s = services[i];
     await conn.query(
@@ -257,8 +263,11 @@ async function seedServices(conn) {
 }
 
 async function seedProducts(conn) {
-  await conn.query('DELETE FROM products');
-  await conn.query('DELETE FROM product_categories');
+  const [[{ count }]] = await conn.query('SELECT COUNT(*) AS count FROM product_categories');
+  if (count > 0) {
+    console.log('Product categories already seeded, skipping (admin edits are preserved)');
+    return;
+  }
   for (let i = 0; i < productCategories.length; i++) {
     const cat = productCategories[i];
     const [result] = await conn.query(
@@ -278,7 +287,11 @@ async function seedProducts(conn) {
 }
 
 async function seedCertifications(conn) {
-  await conn.query('DELETE FROM certifications');
+  const [[{ count }]] = await conn.query('SELECT COUNT(*) AS count FROM certifications');
+  if (count > 0) {
+    console.log('Certifications already seeded, skipping (admin edits are preserved)');
+    return;
+  }
   for (let i = 0; i < certifications.length; i++) {
     const c = certifications[i];
     await conn.query(
@@ -290,6 +303,16 @@ async function seedCertifications(conn) {
 }
 
 async function seedOffices(conn) {
+  // Keyed on office_areas (not offices) specifically so this one-time-only
+  // guard still lets the district/area-name data backfill onto any offices
+  // that were seeded before office_areas existed; after that it's skipped
+  // just like the other tables, preserving admin edits.
+  const [[{ count }]] = await conn.query('SELECT COUNT(*) AS count FROM office_areas');
+  if (count > 0) {
+    console.log('Office service areas already seeded, skipping (admin edits are preserved)');
+    return;
+  }
+
   // districts must already be seeded (main() runs seedDistricts before this)
   // so each area's district slug can be resolved to a real district_id.
   const [districtRows] = await conn.query('SELECT id, slug FROM districts');
@@ -326,7 +349,11 @@ async function seedOffices(conn) {
 }
 
 async function seedFaqs(conn) {
-  await conn.query('DELETE FROM faqs');
+  const [[{ count }]] = await conn.query('SELECT COUNT(*) AS count FROM faqs');
+  if (count > 0) {
+    console.log('FAQs already seeded, skipping (admin edits are preserved)');
+    return;
+  }
   for (let i = 0; i < faqs.length; i++) {
     const f = faqs[i];
     await conn.query(
@@ -338,7 +365,11 @@ async function seedFaqs(conn) {
 }
 
 async function seedStats(conn) {
-  await conn.query('DELETE FROM stats');
+  const [[{ count }]] = await conn.query('SELECT COUNT(*) AS count FROM stats');
+  if (count > 0) {
+    console.log('Stats already seeded, skipping (admin edits are preserved)');
+    return;
+  }
   for (let i = 0; i < stats.length; i++) {
     const s = stats[i];
     await conn.query(

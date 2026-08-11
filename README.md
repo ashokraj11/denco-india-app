@@ -75,7 +75,11 @@ Submitting the "Request a Quote / Enquiry Form" on the homepage:
 
 ## 7. Re-seeding
 
-`npm run db:seed` (from `/server`) is safe to re-run — it clears and
-re-inserts every content table (services, products, certifications,
-offices, FAQs, stats) and upserts the admin user. It does **not** touch
-the `enquiries` table, so submitted leads are never wiped by a reseed.
+`npm run db:seed` (from `/server`) is safe to run any number of times,
+including after every redeploy. Each content table (services, products,
+certifications, offices, FAQs, stats, districts, site settings) is only
+populated the *first* time it's empty — once it has rows, later runs skip
+it, so edits made through the admin panel are never overwritten. The admin
+user's password is the one exception: it's re-hashed from `ADMIN_PASSWORD`
+on every run, so changing that env var and reseeding is how you rotate it.
+`enquiries` is never touched by seeding at all.
