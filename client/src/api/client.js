@@ -36,11 +36,43 @@ async function uploadRequest(path, file, fieldName) {
   return data;
 }
 
+// Downloads a protected (Authorization-header-requiring) endpoint's response
+// as a file — a plain <a href> can't attach that header, so this fetches it
+// as a blob and triggers the save via a throwaway link instead.
+async function downloadFile(path, fallbackFilename) {
+  const token = localStorage.getItem('denco_admin_token');
+  const headers = {};
+  if (token && path.startsWith('/admin')) headers.Authorization = `Bearer ${token}`;
+
+  const res = await fetch(`${API_URL}${path}`, { headers });
+  if (!res.ok) {
+    let message = `Download failed with status ${res.status}`;
+    try { message = (await res.json())?.error || message; } catch { /* not JSON */ }
+    throw new Error(message);
+  }
+
+  const disposition = res.headers.get('content-disposition') || '';
+  const match = disposition.match(/filename="?([^"]+)"?/);
+  const filename = match?.[1] || fallbackFilename;
+
+  const blob = await res.blob();
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+
 export const api = {
   get: (path) => request(path),
   post: (path, body) => request(path, { method: 'POST', body: JSON.stringify(body) }),
   put: (path, body) => request(path, { method: 'PUT', body: JSON.stringify(body) }),
   del: (path) => request(path, { method: 'DELETE' }),
   upload: (path, file) => uploadRequest(path, file, 'image'),
-  uploadMedia: (path, file) => uploadRequest(path, file, 'media')
+  uploadMedia: (path, file) => uploadRequest(path, file, 'media'),
+  uploadBackup: (path, file) => uploadRequest(path, file, 'backup'),
+  download: (path, fallbackFilename) => downloadFile(path, fallbackFilename)
 };

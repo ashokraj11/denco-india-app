@@ -13,6 +13,7 @@ import AdminGallery from './pages/admin/AdminGallery';
 import AdminOffices from './pages/admin/AdminOffices';
 import AdminFaqs from './pages/admin/AdminFaqs';
 import AdminSettings from './pages/admin/AdminSettings';
+import AdminBackup from './pages/admin/AdminBackup';
 
 export default function App() {
   return (
@@ -32,6 +33,7 @@ export default function App() {
             <Route path="offices" element={<AdminOffices />} />
             <Route path="faqs" element={<AdminFaqs />} />
             <Route path="settings" element={<AdminSettings />} />
+            <Route path="backup" element={<AdminBackup />} />
           </Route>
         </Routes>
       </AdminAuthProvider>

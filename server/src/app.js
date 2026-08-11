@@ -27,6 +27,7 @@ const adminSettingsRoutes = require('./routes/adminSettings');
 const adminUploadsRoutes = require('./routes/adminUploads');
 const adminGalleryRoutes = require('./routes/adminGallery');
 const adminGalleryUploadsRoutes = require('./routes/adminGalleryUploads');
+const adminBackupRoutes = require('./routes/adminBackup');
 
 const app = express();
 
@@ -70,6 +71,7 @@ app.use('/api/admin/settings', adminSettingsRoutes);
 app.use('/api/admin/uploads', adminUploadsRoutes);
 app.use('/api/admin/gallery', adminGalleryRoutes);
 app.use('/api/admin/gallery-uploads', adminGalleryUploadsRoutes);
+app.use('/api/admin/backup', adminBackupRoutes);
 
 app.use(notFound);
 app.use(errorHandler);

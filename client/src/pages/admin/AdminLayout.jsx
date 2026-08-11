@@ -11,7 +11,8 @@ const NAV_ITEMS = [
   { to: 'gallery', label: 'Technology Gallery' },
   { to: 'offices', label: 'Area Managers' },
   { to: 'faqs', label: 'FAQs' },
-  { to: 'settings', label: 'Site Settings' }
+  { to: 'settings', label: 'Site Settings' },
+  { to: 'backup', label: 'Backup & Restore' }
 ];
 
 export default function AdminLayout() {
