@@ -14,13 +14,13 @@ export default function Footer() {
         <div className="footer-grid">
           <div className="footer-brand">
             <a href="#home" className="brand">
-              <span className="brand-top">
-                <span className="brand-mark">
-                  {logoSrc ? <img src={logoSrc} alt={settings.siteName} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 'inherit' }} /> : <BrandMarkIcon />}
-                </span>
-                <span>{settings.siteName} <small>{settings.tagline}</small></span>
+              <span className="brand-mark">
+                {logoSrc ? <img src={logoSrc} alt={settings.siteName} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 'inherit' }} /> : <BrandMarkIcon />}
               </span>
-              {secondaryLogoSrc && <img src={secondaryLogoSrc} alt="" className="brand-secondary-logo" />}
+              <span className="brand-text-col">
+                <span>{settings.siteName} <small>{settings.tagline}</small></span>
+                {secondaryLogoSrc && <img src={secondaryLogoSrc} alt="" className="brand-secondary-logo" />}
+              </span>
             </a>
             <p>A scientific dental laboratory delivering precision CAD/CAM prosthetics and digital dentistry solutions to dentists, clinics and hospitals across Tamil Nadu.</p>
             <div className="footer-social">
