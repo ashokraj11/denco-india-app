@@ -11,6 +11,7 @@ import Certifications from '../components/Certifications';
 import TechnologyGallery from '../components/TechnologyGallery';
 import ServiceNetwork from '../components/ServiceNetwork';
 import Contact from '../components/Contact';
+import Testimonials from '../components/Testimonials';
 import Faq from '../components/Faq';
 import Footer from '../components/Footer';
 
@@ -34,6 +35,7 @@ export default function Home() {
       <TechnologyGallery />
       <ServiceNetwork />
       <Contact />
+      <Testimonials />
       <Faq />
       <Footer />
     </>

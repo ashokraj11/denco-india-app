@@ -564,6 +564,23 @@ section{ position:relative; padding:clamp(3.6rem,7vw,6rem) 0; }
 @media(max-width:900px){ .cert-image-grid{ grid-template-columns:1fr; } }
 
 /* ==========================================================================
+   TESTIMONIALS
+   ========================================================================== */
+.testimonials{ background:var(--surface); }
+.testimonials-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:1.3rem; margin-top:1.6rem; }
+.testimonial-card{
+  border-radius:var(--r-lg); overflow:hidden;
+  display:flex; flex-direction:column;
+}
+.testimonial-media{ position:relative; aspect-ratio:4/3; overflow:hidden; background:var(--mist); border-bottom:1px solid var(--line); }
+.testimonial-media img, .testimonial-media video{ width:100%; height:100%; object-fit:cover; display:block; }
+.testimonial-body{ padding:1.2rem 1.3rem 1.4rem; }
+.testimonial-quote{ font-size:.92rem; line-height:1.7; color:var(--ink-soft); margin:0 0 .9rem; }
+.testimonial-name{ font-family:var(--f-display); font-weight:700; font-size:.92rem; color:var(--navy); }
+.testimonial-role{ margin-top:.2rem; font-size:.78rem; color:var(--mute); }
+@media(max-width:900px){ .testimonials-grid{ grid-template-columns:1fr; } }
+
+/* ==========================================================================
    FAQ
    ========================================================================== */
 .faq{ background:rgba(255,255,255,.55); }
@@ -1044,7 +1061,7 @@ a:focus-visible, button:focus-visible{ outline:2px solid var(--accent); outline-
 .nav.scrolled{ background:rgba(255,255,255,.86); box-shadow:0 1px 0 rgba(255,255,255,.6) inset, var(--shadow-sm); }
 
 /* ---- Spatial glass surfaces: floating, layered, depth-aware cards ---- */
-.area-card, .cat-card, .product-card, .cert-card, .manager-card,
+.area-card, .cat-card, .product-card, .cert-card, .manager-card, .testimonial-card,
 .faq-item, .contact-form-card, .tn-map-card{
   background:var(--glass-bg);
   backdrop-filter:var(--glass-blur);
@@ -1059,10 +1076,10 @@ a:focus-visible, button:focus-visible{ outline:2px solid var(--accent); outline-
   border:1px solid rgba(255,255,255,.8);
   box-shadow:var(--shadow-float);
 }
-.area-card, .cat-card, .product-card, .cert-card, .manager-card{
+.area-card, .cat-card, .product-card, .cert-card, .manager-card, .testimonial-card{
   transition:transform .4s var(--ease), box-shadow .4s var(--ease), background .4s var(--ease), border-color .4s var(--ease);
 }
-.area-card:hover, .cat-card:hover, .product-card:hover, .cert-card:hover, .manager-card:hover{
+.area-card:hover, .cat-card:hover, .product-card:hover, .cert-card:hover, .manager-card:hover, .testimonial-card:hover{
   background:var(--glass-bg-hi);
   border-color:rgba(255,255,255,.9);
   box-shadow:var(--shadow-float), inset 0 1px 0 rgba(255,255,255,.9);

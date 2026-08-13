@@ -51,6 +51,16 @@ CREATE TABLE IF NOT EXISTS gallery_items (
   display_order  INT NOT NULL DEFAULT 0
 );
 
+CREATE TABLE IF NOT EXISTS testimonials (
+  id             INT AUTO_INCREMENT PRIMARY KEY,
+  name           VARCHAR(120) NOT NULL,
+  role           VARCHAR(160) NULL,
+  quote          TEXT NULL,
+  media_type     ENUM('image','video') NOT NULL DEFAULT 'image',
+  media_url      VARCHAR(500) NULL,
+  display_order  INT NOT NULL DEFAULT 0
+);
+
 CREATE TABLE IF NOT EXISTS hero_slides (
   id             INT AUTO_INCREMENT PRIMARY KEY,
   image_url      VARCHAR(500) NOT NULL,
@@ -122,6 +132,7 @@ CREATE TABLE IF NOT EXISTS site_settings (
   logo_url           VARCHAR(500) NULL,
   secondary_logo_url VARCHAR(500) NULL,
   brochure_url       VARCHAR(500) NULL,
+  testimonials_visible TINYINT(1) NOT NULL DEFAULT 1,
   meta_title         VARCHAR(160) NOT NULL DEFAULT 'DENCO INDIA | Scientific Dental Laboratory & Digital Dentistry',
   meta_description   VARCHAR(300) NULL,
   contact_phone      VARCHAR(32) NULL,
@@ -136,6 +147,7 @@ CREATE TABLE IF NOT EXISTS site_settings (
 -- table, so each new column needs its own idempotent add).
 ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS secondary_logo_url VARCHAR(500) NULL AFTER logo_url;
 ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS brochure_url VARCHAR(500) NULL AFTER secondary_logo_url;
+ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS testimonials_visible TINYINT(1) NOT NULL DEFAULT 1 AFTER brochure_url;
 
 CREATE TABLE IF NOT EXISTS enquiries (
   id          INT AUTO_INCREMENT PRIMARY KEY,

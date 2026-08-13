@@ -10,6 +10,7 @@ const NAV_ITEMS = [
   { to: 'certifications', label: 'Certifications' },
   { to: 'services', label: 'Services' },
   { to: 'gallery', label: 'Technology Gallery' },
+  { to: 'testimonials', label: 'Testimonials' },
   { to: 'offices', label: 'Area Managers' },
   { to: 'faqs', label: 'FAQs' },
   { to: 'settings', label: 'Site Settings' },
