@@ -36,7 +36,7 @@ export default function BrandLockup() {
   return (
     <a href="#home" className={`brand${secondaryLogoSrc ? ' brand--compact' : ''}`}>
       <span className="brand-mark" style={markStyle}>
-        {logoSrc ? <img src={logoSrc} alt={settings.siteName} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 'inherit' }} /> : <BrandMarkIcon />}
+        {logoSrc ? <img src={logoSrc} alt={settings.siteName} style={{ width: '100%', height: '100%', objectFit: 'contain', borderRadius: 'inherit' }} /> : <BrandMarkIcon />}
       </span>
       <span className="brand-text-col" ref={stackRef}>
         <span><span ref={nameRef}>{settings.siteName}</span> <small>{settings.tagline}</small></span>
