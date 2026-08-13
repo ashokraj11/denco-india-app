@@ -158,10 +158,10 @@ section{ position:relative; padding:clamp(3.6rem,7vw,6rem) 0; }
   flex-shrink: 0;
 }
 .brand-text-col{
-  display:flex; flex-direction:column; align-items:flex-start; gap:.35rem;
+  display:flex; flex-direction:column; align-items:flex-start; gap:.55rem;
 }
 .brand-secondary-logo{
-  width:clamp(96px, 12vw, 140px); height:clamp(32px, 4vw, 44px);
+  height:clamp(44px, 6vw, 60px); width:auto; max-width:180px;
   object-fit:contain; object-position:left center;
 }
 .brand-mark{
