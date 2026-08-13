@@ -1,8 +1,11 @@
-import { useEffect, useRef, useState } from 'react';
-import { useHeroSequence } from '../hooks/useHeroSequence';
+import { useEffect, useState } from 'react';
+import { api } from '../api/client';
+import { resolveImageUrl } from '../utils/resolveImageUrl';
 import { ArrowRightIcon } from './icons/UiIcons';
 import Reveal from './Reveal';
 import DecorativeLayer from './DecorativeLayer';
+
+const SLIDE_INTERVAL = 6000;
 
 const HEADLINES = [
   { line1: 'Precision Dental Restorations,', line2: 'Engineered for', accent: 'Perfect Fit.' },
@@ -13,8 +16,22 @@ const HEADLINES = [
 ];
 
 export default function Hero() {
-  const canvasRef = useRef(null);
-  useHeroSequence(canvasRef);
+  const [slides, setSlides] = useState([]);
+  const [slideIndex, setSlideIndex] = useState(0);
+
+  useEffect(() => {
+    api.get('/hero-slides').then(setSlides).catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    if (slides.length < 2) return undefined;
+    const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion) return undefined;
+    const id = setInterval(() => {
+      setSlideIndex((i) => (i + 1) % slides.length);
+    }, SLIDE_INTERVAL);
+    return () => clearInterval(id);
+  }, [slides.length]);
 
   const [index, setIndex] = useState(0);
   const [swapping, setSwapping] = useState(false);
@@ -34,7 +51,15 @@ export default function Hero() {
 
   return (
     <header className="hero" id="home">
-      <div className="hero-sequence" aria-hidden="true"><canvas id="heroSequence" ref={canvasRef}></canvas></div>
+      <div className="hero-slides" aria-hidden="true">
+        {slides.map((slide, i) => (
+          <div
+            key={slide.id}
+            className={`hero-slide${i === slideIndex ? ' is-active' : ''}`}
+            style={{ backgroundImage: `url(${resolveImageUrl(slide.imageUrl)})` }}
+          />
+        ))}
+      </div>
       <div className="container">
         <div className="hero-grid">
           <Reveal as="div" className="hero-copy">
