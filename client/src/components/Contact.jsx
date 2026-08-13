@@ -8,7 +8,7 @@ import { useSiteSettings } from '../context/SiteSettingsContext';
 
 const FALLBACK_WHATSAPP_NUMBER = import.meta.env.VITE_WHATSAPP_NUMBER || '917010767919';
 
-const EMPTY_FORM = { name: '', clinic: '', email: '', phone: '', subject: 'General Enquiry', message: '', consent: false };
+const EMPTY_FORM = { name: '', clinic: '', email: '', phone: '', message: '', consent: false };
 
 export default function Contact() {
   const { settings } = useSiteSettings();
@@ -38,7 +38,6 @@ export default function Contact() {
         clinic: form.clinic.trim() || undefined,
         email: form.email.trim(),
         phone: form.phone.trim(),
-        subject: form.subject,
         message: form.message.trim()
       });
 
@@ -49,7 +48,6 @@ export default function Contact() {
         form.clinic.trim() ? `*Clinic/Hospital:* ${form.clinic.trim()}` : null,
         `*Email:* ${form.email.trim()}`,
         `*Phone:* ${form.phone.trim()}`,
-        `*Subject:* ${form.subject}`,
         '',
         '*Message:*',
         form.message.trim()
@@ -137,16 +135,6 @@ export default function Contact() {
                 <label htmlFor="cf-phone">Phone Number <span className="req">*</span></label>
                 <input type="tel" id="cf-phone" name="phone" placeholder="+91 XXXXX XXXXX" required value={form.phone} onChange={(e) => update('phone', e.target.value)} />
               </div>
-            </div>
-            <div className="form-group">
-              <label htmlFor="cf-subject">I'm Enquiring About</label>
-              <select id="cf-subject" name="subject" value={form.subject} onChange={(e) => update('subject', e.target.value)}>
-                <option>General Enquiry</option>
-                <option>Request a Case Quote</option>
-                <option>Schedule a Lab Pickup</option>
-                <option>Partnership / New Account</option>
-                <option>Product Support</option>
-              </select>
             </div>
             <div className="form-group">
               <label htmlFor="cf-message">Message <span className="req">*</span></label>
