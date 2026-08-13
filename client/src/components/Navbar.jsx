@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import { BrandMarkIcon, ArrowRightIcon } from './icons/UiIcons';
-import { useSiteSettings } from '../context/SiteSettingsContext';
-import { resolveImageUrl } from '../utils/resolveImageUrl';
+import { ArrowRightIcon } from './icons/UiIcons';
+import BrandLockup from './BrandLockup';
 
 const LINKS = [
   { href: '#home', label: 'Home' },
@@ -19,9 +18,6 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeHref, setActiveHref] = useState('#home');
-  const { settings } = useSiteSettings();
-  const logoSrc = resolveImageUrl(settings.logoUrl);
-  const secondaryLogoSrc = resolveImageUrl(settings.secondaryLogoUrl);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -78,15 +74,7 @@ export default function Navbar() {
     <>
       <nav className={`nav${scrolled ? ' scrolled' : ''}`} id="mainNav" ref={navRef}>
         <div className="container nav-inner">
-          <a href="#home" className="brand">
-            <span className="brand-mark">
-              {logoSrc ? <img src={logoSrc} alt={settings.siteName} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 'inherit' }} /> : <BrandMarkIcon />}
-            </span>
-            <span className="brand-text-col">
-              <span>{settings.siteName} <small>{settings.tagline}</small></span>
-              {secondaryLogoSrc && <img src={secondaryLogoSrc} alt="" className="brand-secondary-logo" />}
-            </span>
-          </a>
+          <BrandLockup />
 
           <button
             className={`nav-toggle${mobileOpen ? ' active' : ''}`}

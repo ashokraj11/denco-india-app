@@ -161,8 +161,7 @@ section{ position:relative; padding:clamp(3.6rem,7vw,6rem) 0; }
   display:flex; flex-direction:column; align-items:flex-start; gap:.55rem;
 }
 .brand-secondary-logo{
-  height:clamp(44px, 6vw, 60px); width:auto; max-width:180px;
-  object-fit:contain; object-position:left center;
+  display:block; width:auto; height:auto; max-width:220px;
 }
 .brand-mark{
   width:clamp(64px, 14vw, 80px); height:clamp(64px, 14vw, 80px);
@@ -272,7 +271,7 @@ section{ position:relative; padding:clamp(3.6rem,7vw,6rem) 0; }
 /* ==========================================================================
    HERO
    ========================================================================== */
-.hero{ padding-top:clamp(7rem,12vw,9rem); padding-bottom:3rem; position:relative; z-index:0; overflow:hidden; background:#C4CCCD; }
+.hero{ padding-top:calc(var(--nav-h, 5.5rem) + 2rem); padding-bottom:3rem; position:relative; z-index:0; overflow:hidden; background:#C4CCCD; }
 .hero-sequence{
   position:absolute; top:var(--nav-h, 5.5rem); left:clamp(1.5rem,4vw,3.5rem); right:clamp(1.5rem,4vw,3.5rem); bottom:0; z-index:-2;
   overflow:hidden;

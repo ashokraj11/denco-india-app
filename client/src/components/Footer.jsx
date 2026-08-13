@@ -1,27 +1,17 @@
-import { BrandMarkIcon, LinkedInIcon, InstagramIcon, FacebookIcon, LocationPinIcon, PhoneIcon, MailIcon } from './icons/UiIcons';
+import { LinkedInIcon, InstagramIcon, FacebookIcon, LocationPinIcon, PhoneIcon, MailIcon } from './icons/UiIcons';
 import DecorativeLayer from './DecorativeLayer';
+import BrandLockup from './BrandLockup';
 import { useSiteSettings } from '../context/SiteSettingsContext';
-import { resolveImageUrl } from '../utils/resolveImageUrl';
 
 export default function Footer() {
   const { settings } = useSiteSettings();
-  const logoSrc = resolveImageUrl(settings.logoUrl);
-  const secondaryLogoSrc = resolveImageUrl(settings.secondaryLogoUrl);
 
   return (
     <footer style={{ position: 'relative' }}>
       <div className="container">
         <div className="footer-grid">
           <div className="footer-brand">
-            <a href="#home" className="brand">
-              <span className="brand-mark">
-                {logoSrc ? <img src={logoSrc} alt={settings.siteName} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 'inherit' }} /> : <BrandMarkIcon />}
-              </span>
-              <span className="brand-text-col">
-                <span>{settings.siteName} <small>{settings.tagline}</small></span>
-                {secondaryLogoSrc && <img src={secondaryLogoSrc} alt="" className="brand-secondary-logo" />}
-              </span>
-            </a>
+            <BrandLockup />
             <p>A scientific dental laboratory delivering precision CAD/CAM prosthetics and digital dentistry solutions to dentists, clinics and hospitals across Tamil Nadu.</p>
             <div className="footer-social">
               <a href="#" aria-label="LinkedIn"><LinkedInIcon /></a>
