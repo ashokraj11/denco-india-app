@@ -15,4 +15,11 @@ function uploadMediaFile(req, res) {
   res.status(201).json({ url: `/uploads/${req.file.filename}`, type });
 }
 
-module.exports = { uploadImage, uploadMediaFile };
+function uploadDocumentFile(req, res) {
+  if (!req.file) {
+    return res.status(400).json({ error: 'No document provided (field name must be "document")' });
+  }
+  res.status(201).json({ url: `/uploads/${req.file.filename}` });
+}
+
+module.exports = { uploadImage, uploadMediaFile, uploadDocumentFile };

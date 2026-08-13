@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { api } from '../../api/client';
 import ImageUploadField from '../../components/admin/ImageUploadField';
+import DocumentUploadField from '../../components/admin/DocumentUploadField';
 import { useSiteSettings } from '../../context/SiteSettingsContext';
 
 export default function AdminSettings() {
@@ -29,6 +30,7 @@ export default function AdminSettings() {
         tagline: form.tagline,
         logo_url: form.logoUrl,
         secondary_logo_url: form.secondaryLogoUrl,
+        brochure_url: form.brochureUrl,
         meta_title: form.metaTitle,
         meta_description: form.metaDescription,
         contact_phone: form.contactPhone,
@@ -66,6 +68,8 @@ export default function AdminSettings() {
         <ImageUploadField label="Logo" value={form.logoUrl} onChange={(url) => update('logoUrl', url)} />
 
         <ImageUploadField label="Secondary Logo (rectangular, shown under the site name in the menu bar and footer)" value={form.secondaryLogoUrl} onChange={(url) => update('secondaryLogoUrl', url)} />
+
+        <DocumentUploadField label="Brochure (PDF, linked from the homepage's Download Brochure button)" value={form.brochureUrl} onChange={(url) => update('brochureUrl', url)} />
 
         <div className="form-group">
           <label>Browser Tab Title</label>

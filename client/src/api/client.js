@@ -73,6 +73,7 @@ export const api = {
   del: (path) => request(path, { method: 'DELETE' }),
   upload: (path, file) => uploadRequest(path, file, 'image'),
   uploadMedia: (path, file) => uploadRequest(path, file, 'media'),
+  uploadDocument: (path, file) => uploadRequest(path, file, 'document'),
   uploadBackup: (path, file) => uploadRequest(path, file, 'backup'),
   download: (path, fallbackFilename) => downloadFile(path, fallbackFilename)
 };

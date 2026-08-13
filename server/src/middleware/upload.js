@@ -12,6 +12,7 @@ fs.mkdirSync(uploadDir, { recursive: true });
 
 const IMAGE_MIME = new Set(['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/svg+xml']);
 const VIDEO_MIME = new Set(['video/mp4', 'video/webm', 'video/ogg', 'video/quicktime']);
+const DOCUMENT_MIME = new Set(['application/pdf']);
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, uploadDir),
@@ -48,4 +49,17 @@ const uploadMedia = multer({
   }
 });
 
-module.exports = { upload, uploadMedia, uploadDir, IMAGE_MIME };
+// Used for the downloadable company brochure — a single PDF, kept separate
+// from uploadMedia's image/video limit since a brochure can run larger.
+const uploadDocument = multer({
+  storage,
+  limits: { fileSize: 20 * 1024 * 1024 },
+  fileFilter: (req, file, cb) => {
+    if (!DOCUMENT_MIME.has(file.mimetype)) {
+      return cb(new Error('Only PDF files are allowed'));
+    }
+    cb(null, true);
+  }
+});
+
+module.exports = { upload, uploadMedia, uploadDocument, uploadDir, IMAGE_MIME };

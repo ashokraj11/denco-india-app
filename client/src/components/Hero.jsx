@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { api } from '../api/client';
 import { resolveImageUrl } from '../utils/resolveImageUrl';
+import { useSiteSettings } from '../context/SiteSettingsContext';
 import { ArrowRightIcon } from './icons/UiIcons';
 import Reveal from './Reveal';
 import DecorativeLayer from './DecorativeLayer';
@@ -16,6 +17,8 @@ const HEADLINES = [
 ];
 
 export default function Hero() {
+  const { settings } = useSiteSettings();
+  const brochureUrl = resolveImageUrl(settings.brochureUrl);
   const [slides, setSlides] = useState([]);
   const [slideIndex, setSlideIndex] = useState(0);
 
@@ -72,7 +75,9 @@ export default function Hero() {
               <a href="#products" className="btn btn-primary">Explore Our Services
                 <ArrowRightIcon />
               </a>
-              <a href="#about" className="btn btn-ghost">About Us</a>
+              {brochureUrl && (
+                <a href={brochureUrl} className="btn btn-ghost" download target="_blank" rel="noopener noreferrer">Download Brochure</a>
+              )}
             </div>
             <div className="trust-row">
               <div className="trust-badge">✓ ISO Certified Quality</div>

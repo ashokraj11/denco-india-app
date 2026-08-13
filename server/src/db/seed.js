@@ -250,6 +250,7 @@ const defaultSettings = {
   tagline: 'INDIA',
   logo_url: null,
   secondary_logo_url: null,
+  brochure_url: null,
   meta_title: 'DENCO INDIA | Scientific Dental Laboratory & Digital Dentistry',
   meta_description: 'DENCO INDIA is a scientific dental laboratory delivering precision CAD/CAM prosthetics, zirconia restorations and digital dentistry solutions to dental professionals across Tamil Nadu.',
   contact_phone: '+91 97917 11182',
@@ -432,10 +433,10 @@ async function seedSettings(conn) {
   }
   await conn.query(
     `INSERT INTO site_settings
-      (id, site_name, tagline, logo_url, secondary_logo_url, meta_title, meta_description, contact_phone, contact_email, contact_address, whatsapp_number)
-     VALUES (1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      (id, site_name, tagline, logo_url, secondary_logo_url, brochure_url, meta_title, meta_description, contact_phone, contact_email, contact_address, whatsapp_number)
+     VALUES (1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     [
-      defaultSettings.site_name, defaultSettings.tagline, defaultSettings.logo_url, defaultSettings.secondary_logo_url,
+      defaultSettings.site_name, defaultSettings.tagline, defaultSettings.logo_url, defaultSettings.secondary_logo_url, defaultSettings.brochure_url,
       defaultSettings.meta_title, defaultSettings.meta_description, defaultSettings.contact_phone,
       defaultSettings.contact_email, defaultSettings.contact_address, defaultSettings.whatsapp_number
     ]
