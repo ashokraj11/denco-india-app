@@ -31,13 +31,22 @@ export default function BrandLockup() {
     };
   }, [settings.siteName, secondaryLogoSrc]);
 
-  const markStyle = secondaryLogoSrc && stackHeight ? { width: `${stackHeight}px`, height: `${stackHeight}px` } : undefined;
+  const markHeight = secondaryLogoSrc && stackHeight ? `${stackHeight}px` : undefined;
 
   return (
     <a href="#home" className={`brand${secondaryLogoSrc ? ' brand--compact' : ''}`}>
-      <span className="brand-mark" style={markStyle}>
-        {logoSrc ? <img src={logoSrc} alt={settings.siteName} style={{ width: '100%', height: '100%', objectFit: 'contain', borderRadius: 'inherit' }} /> : <BrandMarkIcon />}
-      </span>
+      {logoSrc ? (
+        <img
+          src={logoSrc}
+          alt={settings.siteName}
+          className="brand-mark-img"
+          style={markHeight ? { height: markHeight } : undefined}
+        />
+      ) : (
+        <span className="brand-mark" style={markHeight ? { width: markHeight, height: markHeight } : undefined}>
+          <BrandMarkIcon />
+        </span>
+      )}
       <span className="brand-text-col" ref={stackRef}>
         <span><span ref={nameRef}>{settings.siteName}</span> <small>{settings.tagline}</small></span>
         {secondaryLogoSrc && (
