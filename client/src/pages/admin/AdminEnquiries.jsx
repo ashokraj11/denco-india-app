@@ -92,7 +92,7 @@ export default function AdminEnquiries() {
         </button>
       </div>
 
-      <div className="contact-form-card" style={{ marginBottom: '1.2rem', display: 'flex', flexWrap: 'wrap', gap: '.8rem', alignItems: 'flex-end' }}>
+      <div className="contact-form-card" style={{ marginBottom: '1.2rem', display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: '.8rem', alignItems: 'flex-end' }}>
         <div className="form-group" style={{ flex: '2 1 220px', margin: 0 }}>
           <label>Search</label>
           <input
