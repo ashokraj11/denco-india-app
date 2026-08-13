@@ -28,6 +28,7 @@ export default function AdminSettings() {
         site_name: form.siteName,
         tagline: form.tagline,
         logo_url: form.logoUrl,
+        secondary_logo_url: form.secondaryLogoUrl,
         meta_title: form.metaTitle,
         meta_description: form.metaDescription,
         contact_phone: form.contactPhone,
@@ -63,6 +64,8 @@ export default function AdminSettings() {
         </div>
 
         <ImageUploadField label="Logo" value={form.logoUrl} onChange={(url) => update('logoUrl', url)} />
+
+        <ImageUploadField label="Secondary Logo (rectangular, shown under the site name in the menu bar and footer)" value={form.secondaryLogoUrl} onChange={(url) => update('secondaryLogoUrl', url)} />
 
         <div className="form-group">
           <label>Browser Tab Title</label>

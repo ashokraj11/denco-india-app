@@ -151,23 +151,30 @@ section{ position:relative; padding:clamp(3.6rem,7vw,6rem) 0; }
   padding:clamp(.85rem, 2vw, 1.2rem) clamp(1rem, 4vw, 2rem);
 }
 
-.brand{ 
-  display:flex; align-items:center; gap:clamp(.4rem, 2vw, .65rem); 
-  font-family:var(--f-display); font-weight:800; color:var(--navy); 
+.brand{
+  display:flex; flex-direction:column; align-items:flex-start; gap:.4rem;
+  font-family:var(--f-display); font-weight:800; color:var(--navy);
   font-size:clamp(.95rem, 3.5vw, 1.25rem);
   flex-shrink: 0;
 }
-.brand-mark{ 
-  width:clamp(32px, 7vw, 40px); height:clamp(32px, 7vw, 40px); 
-  border-radius:clamp(8px, 2vw, 12px); 
-  background:var(--grad-green); 
-  display:flex; align-items:center; justify-content:center; 
+.brand-top{
+  display:flex; align-items:center; gap:clamp(.4rem, 2vw, .65rem);
+}
+.brand-secondary-logo{
+  width:clamp(96px, 12vw, 140px); height:clamp(32px, 4vw, 44px);
+  object-fit:contain; object-position:left center;
+}
+.brand-mark{
+  width:clamp(64px, 14vw, 80px); height:clamp(64px, 14vw, 80px);
+  border-radius:clamp(16px, 4vw, 24px);
+  background:var(--grad-green);
+  display:flex; align-items:center; justify-content:center;
   box-shadow:0 8px 16px -6px rgba(15,91,63,.5);
   flex-shrink: 0;
 }
-.brand-mark svg{ 
-  width:clamp(18px, 4vw, 22px); 
-  height:clamp(18px, 4vw, 22px); 
+.brand-mark svg{
+  width:clamp(36px, 8vw, 44px);
+  height:clamp(36px, 8vw, 44px);
 }
 .brand small{ 
   display:block; font-family:var(--f-body); 

@@ -114,6 +114,7 @@ CREATE TABLE IF NOT EXISTS site_settings (
   site_name          VARCHAR(80) NOT NULL DEFAULT 'DENCO',
   tagline            VARCHAR(80) NOT NULL DEFAULT 'INDIA',
   logo_url           VARCHAR(500) NULL,
+  secondary_logo_url VARCHAR(500) NULL,
   meta_title         VARCHAR(160) NOT NULL DEFAULT 'DENCO INDIA | Scientific Dental Laboratory & Digital Dentistry',
   meta_description   VARCHAR(300) NULL,
   contact_phone      VARCHAR(32) NULL,
@@ -122,6 +123,11 @@ CREATE TABLE IF NOT EXISTS site_settings (
   whatsapp_number    VARCHAR(32) NULL,
   CONSTRAINT chk_site_settings_singleton CHECK (id = 1)
 );
+
+-- Adds the column when re-running this file against a database created
+-- before secondary_logo_url existed (CREATE TABLE IF NOT EXISTS above is a
+-- no-op on an existing table, so the column needs its own idempotent add).
+ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS secondary_logo_url VARCHAR(500) NULL AFTER logo_url;
 
 CREATE TABLE IF NOT EXISTS enquiries (
   id          INT AUTO_INCREMENT PRIMARY KEY,

@@ -21,6 +21,7 @@ export default function Navbar() {
   const [activeHref, setActiveHref] = useState('#home');
   const { settings } = useSiteSettings();
   const logoSrc = resolveImageUrl(settings.logoUrl);
+  const secondaryLogoSrc = resolveImageUrl(settings.secondaryLogoUrl);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -78,10 +79,13 @@ export default function Navbar() {
       <nav className={`nav${scrolled ? ' scrolled' : ''}`} id="mainNav" ref={navRef}>
         <div className="container nav-inner">
           <a href="#home" className="brand">
-            <span className="brand-mark">
-              {logoSrc ? <img src={logoSrc} alt={settings.siteName} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 'inherit' }} /> : <BrandMarkIcon />}
+            <span className="brand-top">
+              <span className="brand-mark">
+                {logoSrc ? <img src={logoSrc} alt={settings.siteName} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 'inherit' }} /> : <BrandMarkIcon />}
+              </span>
+              <span>{settings.siteName} <small>{settings.tagline}</small></span>
             </span>
-            <span>{settings.siteName} <small>{settings.tagline}</small></span>
+            {secondaryLogoSrc && <img src={secondaryLogoSrc} alt="" className="brand-secondary-logo" />}
           </a>
 
           <button

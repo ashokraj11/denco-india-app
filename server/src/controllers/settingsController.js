@@ -1,15 +1,15 @@
 const pool = require('../config/db');
 
 const COLUMNS = [
-  'site_name', 'tagline', 'logo_url', 'meta_title', 'meta_description',
+  'site_name', 'tagline', 'logo_url', 'secondary_logo_url', 'meta_title', 'meta_description',
   'contact_phone', 'contact_email', 'contact_address', 'whatsapp_number'
 ];
 
 async function getSettings(req, res, next) {
   try {
     const [rows] = await pool.query(
-      `SELECT site_name AS siteName, tagline, logo_url AS logoUrl, meta_title AS metaTitle,
-              meta_description AS metaDescription, contact_phone AS contactPhone,
+      `SELECT site_name AS siteName, tagline, logo_url AS logoUrl, secondary_logo_url AS secondaryLogoUrl,
+              meta_title AS metaTitle, meta_description AS metaDescription, contact_phone AS contactPhone,
               contact_email AS contactEmail, contact_address AS contactAddress,
               whatsapp_number AS whatsappNumber
        FROM site_settings WHERE id = 1`

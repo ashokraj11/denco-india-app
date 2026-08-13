@@ -5,6 +5,7 @@ const DEFAULTS = {
   siteName: 'DENCO',
   tagline: 'INDIA',
   logoUrl: null,
+  secondaryLogoUrl: null,
   metaTitle: 'DENCO INDIA | Scientific Dental Laboratory & Digital Dentistry',
   metaDescription: '',
   contactPhone: '+91 97917 11182',
