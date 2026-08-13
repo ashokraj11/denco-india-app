@@ -85,8 +85,10 @@ DNS propagation can take up to 24-48 hours (usually much faster).
      ADMIN_PASSWORD=<a strong password>
      CLIENT_ORIGIN=https://yourdomain.com,https://www.yourdomain.com
      WHATSAPP_NUMBER=917010767919
+     UPLOAD_DIR=/home/u123456789/app-uploads
      ```
      (Do **not** set `PORT` — Passenger assigns it automatically and `server.js` already respects `process.env.PORT`.)
+     `UPLOAD_DIR` is not optional in production: it MUST point outside the deployed code folder (e.g. a plain folder in your home directory, created once via SSH with `mkdir -p ~/app-uploads`), or every redeploy wipes every uploaded logo/photo/gallery item/hero slide. Leaving it unset defaults to a path inside the deployed folder that Git-deploy recreates from scratch on every push.
    - Click **Restart** so the new env vars take effect.
 5. Apply the schema and seed data. Open the **Node.js app's SSH/terminal access** (hPanel shows a command like `source /home/u123456789/nodevenv/domain/20/bin/activate && cd /home/u123456789/domain/denco-india/server`) via **Advanced → SSH Access**, then run:
    ```bash

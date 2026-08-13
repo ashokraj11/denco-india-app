@@ -21,7 +21,8 @@ const TABLE_SCHEMAS = {
   faqs: ['id', 'category', 'question', 'answer_html', 'display_order'],
   stats: ['id', 'icon_key', 'label', 'display_order'],
   gallery_items: ['id', 'title', 'media_type', 'media_url', 'display_order'],
-  site_settings: ['id', 'site_name', 'tagline', 'logo_url', 'meta_title', 'meta_description', 'contact_phone', 'contact_email', 'contact_address', 'whatsapp_number'],
+  hero_slides: ['id', 'image_url', 'display_order'],
+  site_settings: ['id', 'site_name', 'tagline', 'logo_url', 'secondary_logo_url', 'meta_title', 'meta_description', 'contact_phone', 'contact_email', 'contact_address', 'whatsapp_number'],
   enquiries: ['id', 'name', 'clinic', 'email', 'phone', 'subject', 'message', 'status', 'created_at']
 };
 const TABLE_NAMES = Object.keys(TABLE_SCHEMAS);
