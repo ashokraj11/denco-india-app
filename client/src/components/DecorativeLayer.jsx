@@ -25,6 +25,15 @@ const TOOTH_SPOTS = [
   { top: '18%', left: '50%' }, { top: '94%', left: '50%' }
 ];
 
+// Mirrors the logo's three brand colors: mostly the default ink green, with
+// occasional orange and blue accents sprinkled in for variety.
+function pickNonDarkColorClass() {
+  const r = Math.random();
+  if (r < 0.22) return 'accent';
+  if (r < 0.4) return 'blue';
+  return '';
+}
+
 function pickSpots(count) {
   const usedIdx = [];
   const spots = [];
@@ -63,7 +72,7 @@ export default function DecorativeLayer({ hostIndex = 0, dark = false }) {
       delay: (Math.random() * 4).toFixed(1),
       opacity: (0.14 + Math.random() * 0.16).toFixed(2),
       icon: DENTAL_ICON_PATHS[Math.floor(Math.random() * DENTAL_ICON_PATHS.length)],
-      colorClass: dark ? 'tooth-light' : (Math.random() < 0.3 ? 'accent' : ''),
+      colorClass: dark ? 'tooth-light' : pickNonDarkColorClass(),
       key: `${hostIndex}-${i}`
     }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
