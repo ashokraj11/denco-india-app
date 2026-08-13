@@ -34,7 +34,7 @@ export default function BrandLockup() {
   const markStyle = secondaryLogoSrc && stackHeight ? { width: `${stackHeight}px`, height: `${stackHeight}px` } : undefined;
 
   return (
-    <a href="#home" className="brand">
+    <a href="#home" className={`brand${secondaryLogoSrc ? ' brand--compact' : ''}`}>
       <span className="brand-mark" style={markStyle}>
         {logoSrc ? <img src={logoSrc} alt={settings.siteName} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 'inherit' }} /> : <BrandMarkIcon />}
       </span>
