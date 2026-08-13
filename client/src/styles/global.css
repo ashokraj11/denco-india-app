@@ -183,10 +183,10 @@ section{ position:relative; padding:clamp(3.6rem,7vw,6rem) 0; }
   white-space:nowrap;
 }
 .brand--compact{
-  font-size:clamp(.72rem, 2.6vw, .95rem);
+  font-size:clamp(.5rem, 1.8vw, .65rem);
 }
 .brand--compact small{
-  font-size:clamp(.42rem, 1.5vw, .52rem);
+  font-size:clamp(.3rem, 1.1vw, .38rem);
 }
 .brand--compact .brand-text-col{
   gap:.4rem;
