@@ -172,8 +172,8 @@ section{ position:relative; padding:clamp(3.6rem,7vw,6rem) 0; }
   flex-shrink: 0;
 }
 .brand-mark svg{
-  width:clamp(36px, 8vw, 44px);
-  height:clamp(36px, 8vw, 44px);
+  width:55%;
+  height:55%;
 }
 .brand small{ 
   display:block; font-family:var(--f-body); 

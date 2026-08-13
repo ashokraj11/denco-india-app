@@ -8,28 +8,37 @@ export default function BrandLockup() {
   const logoSrc = resolveImageUrl(settings.logoUrl);
   const secondaryLogoSrc = resolveImageUrl(settings.secondaryLogoUrl);
   const nameRef = useRef(null);
+  const stackRef = useRef(null);
   const [nameWidth, setNameWidth] = useState(null);
+  const [stackHeight, setStackHeight] = useState(null);
 
   useEffect(() => {
-    const el = nameRef.current;
-    if (!el) return undefined;
-    const sync = () => setNameWidth(el.offsetWidth);
+    const nameEl = nameRef.current;
+    const stackEl = stackRef.current;
+    if (!nameEl || !stackEl) return undefined;
+    const sync = () => {
+      setNameWidth(nameEl.offsetWidth);
+      setStackHeight(stackEl.offsetHeight);
+    };
     sync();
     window.addEventListener('resize', sync);
     const ro = window.ResizeObserver ? new ResizeObserver(sync) : null;
-    ro?.observe(el);
+    ro?.observe(nameEl);
+    ro?.observe(stackEl);
     return () => {
       window.removeEventListener('resize', sync);
       ro?.disconnect();
     };
-  }, [settings.siteName]);
+  }, [settings.siteName, secondaryLogoSrc]);
+
+  const markStyle = secondaryLogoSrc && stackHeight ? { width: `${stackHeight}px`, height: `${stackHeight}px` } : undefined;
 
   return (
     <a href="#home" className="brand">
-      <span className="brand-mark">
+      <span className="brand-mark" style={markStyle}>
         {logoSrc ? <img src={logoSrc} alt={settings.siteName} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 'inherit' }} /> : <BrandMarkIcon />}
       </span>
-      <span className="brand-text-col">
+      <span className="brand-text-col" ref={stackRef}>
         <span><span ref={nameRef}>{settings.siteName}</span> <small>{settings.tagline}</small></span>
         {secondaryLogoSrc && (
           <img
