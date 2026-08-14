@@ -16,16 +16,45 @@ const DEFAULTS = {
   whatsappNumber: '917010767919'
 };
 
+// Settings rarely change, but every page load otherwise has to wait on a
+// network round trip before showing the real logo/name -- cache the last
+// successful fetch so returning visitors see it instantly, then silently
+// refresh in the background to pick up any admin changes.
+const CACHE_KEY = 'denco_site_settings_cache';
+
+function readCache() {
+  try {
+    const raw = localStorage.getItem(CACHE_KEY);
+    return raw ? JSON.parse(raw) : null;
+  } catch {
+    return null;
+  }
+}
+
+function writeCache(data) {
+  try {
+    localStorage.setItem(CACHE_KEY, JSON.stringify(data));
+  } catch {
+    // Ignore storage errors (private browsing, quota, etc.) -- caching is
+    // an optimization, not something the app depends on.
+  }
+}
+
 const SiteSettingsContext = createContext({ settings: DEFAULTS, loading: true, reload: () => {} });
 
 export function SiteSettingsProvider({ children }) {
-  const [settings, setSettings] = useState(DEFAULTS);
-  const [loading, setLoading] = useState(true);
+  const [cached] = useState(readCache);
+  const [settings, setSettings] = useState(cached ? { ...DEFAULTS, ...cached } : DEFAULTS);
+  const [loading, setLoading] = useState(!cached);
 
   function load() {
-    setLoading(true);
     api.get('/settings')
-      .then((data) => { if (data) setSettings({ ...DEFAULTS, ...data }); })
+      .then((data) => {
+        if (data) {
+          setSettings({ ...DEFAULTS, ...data });
+          writeCache(data);
+        }
+      })
       .catch(() => {})
       .finally(() => setLoading(false));
   }
