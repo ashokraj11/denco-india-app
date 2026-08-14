@@ -4,7 +4,7 @@ import { useSiteSettings } from '../context/SiteSettingsContext';
 import { resolveImageUrl } from '../utils/resolveImageUrl';
 
 export default function BrandLockup() {
-  const { settings } = useSiteSettings();
+  const { settings, loading } = useSiteSettings();
   const logoSrc = resolveImageUrl(settings.logoUrl);
   const secondaryLogoSrc = resolveImageUrl(settings.secondaryLogoUrl);
   const nameRef = useRef(null);
@@ -42,6 +42,8 @@ export default function BrandLockup() {
           className="brand-mark-img"
           style={markHeight ? { height: markHeight } : undefined}
         />
+      ) : loading ? (
+        <span className="brand-mark" style={markHeight ? { width: markHeight, height: markHeight } : undefined} aria-hidden="true" />
       ) : (
         <span className="brand-mark" style={markHeight ? { width: markHeight, height: markHeight } : undefined}>
           <BrandMarkIcon />
