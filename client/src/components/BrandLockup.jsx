@@ -50,7 +50,7 @@ export default function BrandLockup() {
         </span>
       )}
       <span className="brand-text-col" ref={stackRef}>
-        <span><span ref={nameRef}>{settings.siteName}</span> <small>{settings.tagline}</small></span>
+        <span><span ref={nameRef}>{loading ? '' : settings.siteName}</span> <small>{loading ? '' : settings.tagline}</small></span>
         {secondaryLogoSrc && (
           <img
             src={secondaryLogoSrc}
