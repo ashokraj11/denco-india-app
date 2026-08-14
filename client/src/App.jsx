@@ -12,6 +12,7 @@ import AdminServices from './pages/admin/AdminServices';
 import AdminGallery from './pages/admin/AdminGallery';
 import AdminHeroSlides from './pages/admin/AdminHeroSlides';
 import AdminTestimonials from './pages/admin/AdminTestimonials';
+import AdminTrustBadges from './pages/admin/AdminTrustBadges';
 import AdminOffices from './pages/admin/AdminOffices';
 import AdminFaqs from './pages/admin/AdminFaqs';
 import AdminSettings from './pages/admin/AdminSettings';
@@ -34,6 +35,7 @@ export default function App() {
             <Route path="gallery" element={<AdminGallery />} />
             <Route path="hero-slides" element={<AdminHeroSlides />} />
             <Route path="testimonials" element={<AdminTestimonials />} />
+            <Route path="trust-badges" element={<AdminTrustBadges />} />
             <Route path="offices" element={<AdminOffices />} />
             <Route path="faqs" element={<AdminFaqs />} />
             <Route path="settings" element={<AdminSettings />} />

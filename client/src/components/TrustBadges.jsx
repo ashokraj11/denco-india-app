@@ -1,20 +1,20 @@
 import { useEffect, useRef } from 'react';
 import { useFetch } from '../hooks/useFetch';
-import ContentIcon from './icons/ContentIcon';
+import { resolveImageUrl } from '../utils/resolveImageUrl';
 import Reveal from './Reveal';
 import DecorativeLayer from './DecorativeLayer';
 
 const SPEED = 42; // px per second — constant, dt-based so it never drifts or lags
 
-export default function StatsMarquee() {
-  const { data: stats } = useFetch('/stats');
+export default function TrustBadges() {
+  const { data: badges } = useFetch('/trust-badges');
   const marqueeRef = useRef(null);
   const originalRef = useRef(null);
 
   useEffect(() => {
     const marquee = marqueeRef.current;
     const original = originalRef.current;
-    if (!marquee || !original || !stats?.length) return undefined;
+    if (!marquee || !original || !badges?.length) return undefined;
 
     let unitWidth = 0;
     let pos = 0;
@@ -86,7 +86,9 @@ export default function StatsMarquee() {
       window.removeEventListener('resize', onResize);
       clearClones();
     };
-  }, [stats]);
+  }, [badges]);
+
+  if (!badges?.length) return null;
 
   return (
     <section className="stats-band">
@@ -94,10 +96,9 @@ export default function StatsMarquee() {
         <Reveal as="div" className="stats-card">
           <div className="trust-marquee" id="trustMarquee" ref={marqueeRef}>
             <div className="trust-marquee-track" id="trustTrackOriginal" ref={originalRef}>
-              {stats?.map((s) => (
-                <div className="trust-chip" key={s.id}>
-                  <ContentIcon name={s.icon_key} />
-                  {s.label}
+              {badges.map((b) => (
+                <div className="trust-badge-img" key={b.id}>
+                  <img src={resolveImageUrl(b.imageUrl)} alt="" loading="lazy" />
                 </div>
               ))}
             </div>

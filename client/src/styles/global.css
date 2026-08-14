@@ -465,24 +465,19 @@ section{ position:relative; padding:clamp(3.6rem,7vw,6rem) 0; }
 
 .trust-marquee{ display:flex; width:max-content; will-change:transform; }
 .trust-marquee-track{ display:flex; align-items:center; flex-shrink:0; gap:1rem; padding-right:1rem; }
-.trust-chip{
-  display:inline-flex; align-items:center; gap:.55rem;
-  flex-shrink:0; white-space:nowrap;
-  padding:.75rem 1.4rem;
-  border-radius:var(--r-pill);
-  background:rgba(255,255,255,.08);
-  backdrop-filter:blur(14px) saturate(180%);
-  -webkit-backdrop-filter:blur(14px) saturate(180%);
+.trust-badge-img{
+  display:flex; align-items:center; justify-content:center;
+  flex-shrink:0;
+  width:64px; height:64px; padding:.5rem; box-sizing:border-box;
+  border-radius:var(--r-md);
+  background:#fff;
   border:1px solid rgba(255,255,255,.2);
   box-shadow:0 1px 0 rgba(255,255,255,.14) inset, 0 10px 22px -14px rgba(0,0,0,.5);
-  font-family:var(--f-display); font-weight:700; font-size:.86rem;
-  color:#fff; letter-spacing:.01em;
 }
-.trust-chip svg{ width:17px; height:17px; color:var(--accent); flex-shrink:0; }
+.trust-badge-img img{ width:100%; height:100%; object-fit:contain; }
 
 @media(max-width:420px){
-  .trust-chip{ padding:.6rem 1.1rem; font-size:.76rem; gap:.4rem; }
-  .trust-chip svg{ width:14px; height:14px; }
+  .trust-badge-img{ width:52px; height:52px; padding:.4rem; }
   .trust-marquee-track{ gap:.7rem; padding-right:.7rem; }
 }
 

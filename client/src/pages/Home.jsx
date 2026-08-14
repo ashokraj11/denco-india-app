@@ -5,7 +5,7 @@ import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
 import Services from '../components/Services';
 import Products from '../components/Products';
-import StatsMarquee from '../components/StatsMarquee';
+import TrustBadges from '../components/TrustBadges';
 import About from '../components/About';
 import Certifications from '../components/Certifications';
 import TechnologyGallery from '../components/TechnologyGallery';
@@ -29,7 +29,7 @@ export default function Home() {
       <Hero />
       <Services />
       <Products />
-      <StatsMarquee />
+      <TrustBadges />
       <About />
       <Certifications />
       <TechnologyGallery />

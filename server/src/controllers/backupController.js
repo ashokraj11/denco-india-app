@@ -22,6 +22,7 @@ const TABLE_SCHEMAS = {
   stats: ['id', 'icon_key', 'label', 'display_order'],
   gallery_items: ['id', 'title', 'media_type', 'media_url', 'display_order'],
   hero_slides: ['id', 'image_url', 'display_order'],
+  trust_badges: ['id', 'image_url', 'display_order'],
   testimonials: ['id', 'name', 'role', 'quote', 'media_type', 'media_url', 'display_order'],
   site_settings: ['id', 'site_name', 'tagline', 'logo_url', 'secondary_logo_url', 'brochure_url', 'testimonials_visible', 'meta_title', 'meta_description', 'contact_phone', 'contact_email', 'contact_address', 'whatsapp_number'],
   enquiries: ['id', 'name', 'clinic', 'email', 'phone', 'subject', 'message', 'status', 'created_at']
