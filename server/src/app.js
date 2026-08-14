@@ -53,6 +53,14 @@ app.use(cors({
 app.use(express.json());
 app.use('/uploads', express.static(uploadDir));
 
+// API responses are dynamic and must never be served stale by a CDN, proxy,
+// or the browser's own cache -- e.g. site settings edited in the admin panel
+// need to show up immediately, not after some cache's TTL expires.
+app.use('/api', (req, res, next) => {
+  res.set('Cache-Control', 'no-store');
+  next();
+});
+
 app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
 
 app.use('/api/services', servicesRoutes);
