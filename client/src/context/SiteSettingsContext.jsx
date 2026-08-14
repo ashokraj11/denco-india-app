@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { api } from '../api/client';
+import { resolveImageUrl } from '../utils/resolveImageUrl';
 
 const DEFAULTS = {
   siteName: 'DENCO',
@@ -60,6 +61,18 @@ export function SiteSettingsProvider({ children }) {
   }
 
   useEffect(() => { load(); }, []);
+
+  useEffect(() => {
+    const logoSrc = resolveImageUrl(settings.logoUrl);
+    if (!logoSrc) return;
+    let link = document.querySelector('link[rel="icon"]');
+    if (!link) {
+      link = document.createElement('link');
+      link.rel = 'icon';
+      document.head.appendChild(link);
+    }
+    link.href = logoSrc;
+  }, [settings.logoUrl]);
 
   return (
     <SiteSettingsContext.Provider value={{ settings, loading, reload: load }}>
