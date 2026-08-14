@@ -11,6 +11,14 @@ export default function BrandLockup() {
   const stackRef = useRef(null);
   const [nameWidth, setNameWidth] = useState(null);
   const [stackHeight, setStackHeight] = useState(null);
+  const [logoLoaded, setLogoLoaded] = useState(false);
+
+  // The site name renders instantly once settings resolve, but the logo
+  // image still needs to download -- reset and re-wait for it whenever the
+  // logo changes, so the text appears together with the image, not before it.
+  useEffect(() => { setLogoLoaded(false); }, [logoSrc]);
+
+  const showText = !loading && (!logoSrc || logoLoaded);
 
   useEffect(() => {
     const nameEl = nameRef.current;
@@ -40,7 +48,9 @@ export default function BrandLockup() {
           src={logoSrc}
           alt={settings.siteName}
           className="brand-mark-img"
-          style={markHeight ? { height: markHeight } : undefined}
+          style={{ ...(markHeight ? { height: markHeight } : null), visibility: logoLoaded ? 'visible' : 'hidden' }}
+          onLoad={() => setLogoLoaded(true)}
+          onError={() => setLogoLoaded(true)}
         />
       ) : loading ? (
         <span
@@ -54,7 +64,7 @@ export default function BrandLockup() {
         </span>
       )}
       <span className="brand-text-col" ref={stackRef}>
-        <span><span ref={nameRef}>{loading ? '' : settings.siteName}</span> <small>{loading ? '' : settings.tagline}</small></span>
+        <span><span ref={nameRef}>{showText ? settings.siteName : ''}</span> <small>{showText ? settings.tagline : ''}</small></span>
         {secondaryLogoSrc && (
           <img
             src={secondaryLogoSrc}
