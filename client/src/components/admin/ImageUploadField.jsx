@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { api } from '../../api/client';
 import { resolveImageUrl } from '../../utils/resolveImageUrl';
 
-export default function ImageUploadField({ label = 'Image', value, onChange }) {
+export default function ImageUploadField({ label = 'Image', value, onChange, endpoint = '/admin/uploads' }) {
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -12,7 +12,7 @@ export default function ImageUploadField({ label = 'Image', value, onChange }) {
     setUploading(true);
     setError(null);
     try {
-      const result = await api.upload('/admin/uploads', file);
+      const result = await api.upload(endpoint, file);
       onChange(result.url);
     } catch (err) {
       setError(err.message);

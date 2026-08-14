@@ -62,4 +62,18 @@ const uploadDocument = multer({
   }
 });
 
-module.exports = { upload, uploadMedia, uploadDocument, uploadDir, IMAGE_MIME };
+// Used for hero slider backgrounds — full-width photography, which routinely
+// exceeds upload's 5MB cap meant for small inline images. Images only (no
+// video), just a bigger ceiling.
+const uploadHeroImage = multer({
+  storage,
+  limits: { fileSize: 15 * 1024 * 1024 },
+  fileFilter: (req, file, cb) => {
+    if (!IMAGE_MIME.has(file.mimetype)) {
+      return cb(new Error('Only image files (jpeg, png, webp, gif, svg) are allowed'));
+    }
+    cb(null, true);
+  }
+});
+
+module.exports = { upload, uploadMedia, uploadDocument, uploadHeroImage, uploadDir, IMAGE_MIME };

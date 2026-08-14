@@ -76,7 +76,7 @@ export default function AdminHeroSlides() {
         )}
       </div>
       <p className="form-note" style={{ marginTop: 0, marginBottom: '1.2rem' }}>
-        Images used as the rotating background on the homepage hero section. They cross-fade automatically in Display Order. Leave empty for a plain background.
+        Images used as the rotating background on the homepage hero section (up to 15MB each). They cross-fade automatically in Display Order. Leave empty for a plain background.
       </p>
 
       {error && <p className="form-note" style={{ color: '#D9611E' }}>{error}</p>}
@@ -84,7 +84,7 @@ export default function AdminHeroSlides() {
       {editingId !== null && (
         <form onSubmit={handleSubmit} className="contact-form-card" style={{ marginBottom: '1.5rem', maxWidth: 560 }}>
           <h3 style={{ color: 'var(--navy)', fontSize: '1.05rem', margin: 0 }}>{editingId === 'new' ? 'Add New' : 'Edit'}</h3>
-          <ImageUploadField label="Slide Image" value={form.image_url} onChange={(url) => setForm((s) => ({ ...s, image_url: url }))} />
+          <ImageUploadField label="Slide Image" value={form.image_url} onChange={(url) => setForm((s) => ({ ...s, image_url: url }))} endpoint="/admin/hero-uploads" />
           <div className="form-group">
             <label>Display Order</label>
             <input type="number" value={form.display_order} onChange={(e) => setForm((s) => ({ ...s, display_order: e.target.value }))} />
