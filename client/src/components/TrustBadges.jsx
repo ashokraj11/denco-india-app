@@ -31,8 +31,13 @@ export default function TrustBadges() {
       clearClones();
       unitWidth = original.getBoundingClientRect().width;
       if (!unitWidth) return;
+      // Scrolling resets every time it passes one full unitWidth, so the
+      // strip only needs to be unitWidth wider than the viewport for the
+      // wrap to be gapless -- not double the viewport. (How many times the
+      // badge set visibly repeats within one screen is a separate thing,
+      // set by badge/gap size vs viewport width, not by this clone count.)
       const viewportWidth = marquee.parentElement.getBoundingClientRect().width;
-      const copiesNeeded = Math.max(1, Math.ceil((viewportWidth * 2) / unitWidth));
+      const copiesNeeded = Math.max(1, Math.ceil(viewportWidth / unitWidth));
       for (let i = 0; i < copiesNeeded; i++) {
         const clone = original.cloneNode(true);
         clone.removeAttribute('id');
