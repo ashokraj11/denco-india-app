@@ -1,7 +1,21 @@
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:4000/api';
+const TOKEN_KEY = 'denco_admin_token';
+
+// A 401 on any admin call means the token is missing/expired/invalid --
+// every admin page was otherwise just displaying the raw "Invalid or
+// expired token" error inline and leaving the user stuck on a broken page.
+// Clear the stale token and send them back to log in instead.
+function handleUnauthorized(path, status) {
+  if (status === 401 && path.startsWith('/admin') && path !== '/admin/login') {
+    localStorage.removeItem(TOKEN_KEY);
+    if (!window.location.pathname.startsWith('/admin/login')) {
+      window.location.href = '/admin/login';
+    }
+  }
+}
 
 async function request(path, options = {}) {
-  const token = localStorage.getItem('denco_admin_token');
+  const token = localStorage.getItem(TOKEN_KEY);
   const headers = { ...(options.headers || {}) };
   if (options.body) headers['Content-Type'] = 'application/json';
   if (token && path.startsWith('/admin')) headers.Authorization = `Bearer ${token}`;
@@ -11,6 +25,7 @@ async function request(path, options = {}) {
   const data = isJson ? await res.json() : null;
 
   if (!res.ok) {
+    handleUnauthorized(path, res.status);
     throw new Error(data?.error || `Request failed with status ${res.status}`);
   }
   return data;
@@ -19,7 +34,7 @@ async function request(path, options = {}) {
 // Separate from request() because FormData must NOT get a JSON Content-Type
 // (the browser sets the multipart boundary itself).
 async function uploadRequest(path, file, fieldName) {
-  const token = localStorage.getItem('denco_admin_token');
+  const token = localStorage.getItem(TOKEN_KEY);
   const headers = {};
   if (token && path.startsWith('/admin')) headers.Authorization = `Bearer ${token}`;
 
@@ -31,6 +46,7 @@ async function uploadRequest(path, file, fieldName) {
   const data = isJson ? await res.json() : null;
 
   if (!res.ok) {
+    handleUnauthorized(path, res.status);
     throw new Error(data?.error || `Upload failed with status ${res.status}`);
   }
   return data;
@@ -40,12 +56,13 @@ async function uploadRequest(path, file, fieldName) {
 // as a file — a plain <a href> can't attach that header, so this fetches it
 // as a blob and triggers the save via a throwaway link instead.
 async function downloadFile(path, fallbackFilename) {
-  const token = localStorage.getItem('denco_admin_token');
+  const token = localStorage.getItem(TOKEN_KEY);
   const headers = {};
   if (token && path.startsWith('/admin')) headers.Authorization = `Bearer ${token}`;
 
   const res = await fetch(`${API_URL}${path}`, { headers });
   if (!res.ok) {
+    handleUnauthorized(path, res.status);
     let message = `Download failed with status ${res.status}`;
     try { message = (await res.json())?.error || message; } catch { /* not JSON */ }
     throw new Error(message);
