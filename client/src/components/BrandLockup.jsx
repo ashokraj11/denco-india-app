@@ -43,7 +43,11 @@ export default function BrandLockup() {
           style={markHeight ? { height: markHeight } : undefined}
         />
       ) : loading ? (
-        <span className="brand-mark" style={markHeight ? { width: markHeight, height: markHeight } : undefined} aria-hidden="true" />
+        <span
+          className="brand-mark"
+          style={{ background: 'transparent', boxShadow: 'none', ...(markHeight ? { width: markHeight, height: markHeight } : null) }}
+          aria-hidden="true"
+        />
       ) : (
         <span className="brand-mark" style={markHeight ? { width: markHeight, height: markHeight } : undefined}>
           <BrandMarkIcon />
