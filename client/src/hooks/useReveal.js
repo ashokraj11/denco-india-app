@@ -19,7 +19,14 @@ export function useReveal() {
           }
         });
       },
-      { threshold: 0.15, rootMargin: '0px 0px -60px 0px' }
+      // threshold measures intersection as a fraction of the target's OWN
+      // height, which works fine for normal-sized cards but is a poor fit
+      // for very tall elements (e.g. the mobile gallery grid, which stacks
+      // into a single tall column) -- 15% of a huge element can require
+      // scrolling deep past it before it's ever considered "in view",
+      // leaving a large blank gap the whole time. Trigger as soon as any
+      // part enters instead.
+      { threshold: 0, rootMargin: '0px 0px -60px 0px' }
     );
     io.observe(el);
     return () => io.disconnect();
