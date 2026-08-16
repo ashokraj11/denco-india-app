@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { api } from '../api/client';
-import { LocationPinIcon, PhoneIcon, MailIcon, ArrowRightIcon, CheckIcon, LinkedInIcon, InstagramIcon, FacebookIcon } from './icons/UiIcons';
+import { LocationPinIcon, PhoneIcon, MailIcon, ArrowRightIcon, CheckIcon, LinkedInIcon, InstagramIcon, FacebookIcon, YoutubeIcon } from './icons/UiIcons';
 import ContentIcon from './icons/ContentIcon';
 import Reveal from './Reveal';
 import DecorativeLayer from './DecorativeLayer';
@@ -108,9 +108,10 @@ export default function Contact() {
               </li>
             </ul>
             <div className="contact-info-social">
-              <a href="#" aria-label="LinkedIn"><LinkedInIcon /></a>
-              <a href="#" aria-label="Instagram"><InstagramIcon /></a>
-              <a href="#" aria-label="Facebook"><FacebookIcon /></a>
+              {settings.facebookUrl && <a href={settings.facebookUrl} target="_blank" rel="noopener noreferrer" aria-label="Facebook"><FacebookIcon /></a>}
+              {settings.instagramUrl && <a href={settings.instagramUrl} target="_blank" rel="noopener noreferrer" aria-label="Instagram"><InstagramIcon /></a>}
+              {settings.linkedinUrl && <a href={settings.linkedinUrl} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><LinkedInIcon /></a>}
+              {settings.youtubeUrl && <a href={settings.youtubeUrl} target="_blank" rel="noopener noreferrer" aria-label="YouTube"><YoutubeIcon /></a>}
             </div>
           </div>
 

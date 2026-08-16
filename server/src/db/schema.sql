@@ -145,6 +145,10 @@ CREATE TABLE IF NOT EXISTS site_settings (
   contact_email      VARCHAR(160) NULL,
   contact_address    VARCHAR(255) NULL,
   whatsapp_number    VARCHAR(32) NULL,
+  facebook_url       VARCHAR(500) NULL,
+  instagram_url      VARCHAR(500) NULL,
+  linkedin_url       VARCHAR(500) NULL,
+  youtube_url        VARCHAR(500) NULL,
   CONSTRAINT chk_site_settings_singleton CHECK (id = 1)
 );
 
@@ -154,6 +158,10 @@ CREATE TABLE IF NOT EXISTS site_settings (
 ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS secondary_logo_url VARCHAR(500) NULL AFTER logo_url;
 ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS brochure_url VARCHAR(500) NULL AFTER secondary_logo_url;
 ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS testimonials_visible TINYINT(1) NOT NULL DEFAULT 1 AFTER brochure_url;
+ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS facebook_url VARCHAR(500) NULL AFTER whatsapp_number;
+ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS instagram_url VARCHAR(500) NULL AFTER facebook_url;
+ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS linkedin_url VARCHAR(500) NULL AFTER instagram_url;
+ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS youtube_url VARCHAR(500) NULL AFTER linkedin_url;
 
 CREATE TABLE IF NOT EXISTS enquiries (
   id          INT AUTO_INCREMENT PRIMARY KEY,

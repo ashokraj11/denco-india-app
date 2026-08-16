@@ -36,7 +36,11 @@ export default function AdminSettings() {
         contact_phone: form.contactPhone,
         contact_email: form.contactEmail,
         contact_address: form.contactAddress,
-        whatsapp_number: form.whatsappNumber
+        whatsapp_number: form.whatsappNumber,
+        facebook_url: form.facebookUrl,
+        instagram_url: form.instagramUrl,
+        linkedin_url: form.linkedinUrl,
+        youtube_url: form.youtubeUrl
       });
       reload();
       setSaved(true);
@@ -97,6 +101,31 @@ export default function AdminSettings() {
         <div className="form-group">
           <label>WhatsApp Number (digits only, with country code)</label>
           <input type="text" placeholder="917010767919" value={form.whatsappNumber || ''} onChange={(e) => update('whatsappNumber', e.target.value)} />
+        </div>
+
+        <h3 style={{ color: 'var(--navy)', fontSize: '1.05rem', margin: '.5rem 0 0' }}>Social Media Links</h3>
+        <p className="form-note" style={{ margin: 0 }}>
+          Leave any of these blank to hide that icon in the footer and contact section.
+        </p>
+        <div className="form-row">
+          <div className="form-group">
+            <label>Facebook URL</label>
+            <input type="url" placeholder="https://facebook.com/yourpage" value={form.facebookUrl || ''} onChange={(e) => update('facebookUrl', e.target.value)} />
+          </div>
+          <div className="form-group">
+            <label>Instagram URL</label>
+            <input type="url" placeholder="https://instagram.com/yourpage" value={form.instagramUrl || ''} onChange={(e) => update('instagramUrl', e.target.value)} />
+          </div>
+        </div>
+        <div className="form-row">
+          <div className="form-group">
+            <label>LinkedIn URL</label>
+            <input type="url" placeholder="https://linkedin.com/company/yourpage" value={form.linkedinUrl || ''} onChange={(e) => update('linkedinUrl', e.target.value)} />
+          </div>
+          <div className="form-group">
+            <label>YouTube URL</label>
+            <input type="url" placeholder="https://youtube.com/@yourchannel" value={form.youtubeUrl || ''} onChange={(e) => update('youtubeUrl', e.target.value)} />
+          </div>
         </div>
 
         {error && <p className="form-note" style={{ color: '#D9611E' }}>{error}</p>}

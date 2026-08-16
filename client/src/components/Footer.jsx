@@ -1,4 +1,4 @@
-import { LinkedInIcon, InstagramIcon, FacebookIcon, LocationPinIcon, PhoneIcon, MailIcon } from './icons/UiIcons';
+import { LinkedInIcon, InstagramIcon, FacebookIcon, YoutubeIcon, LocationPinIcon, PhoneIcon, MailIcon } from './icons/UiIcons';
 import DecorativeLayer from './DecorativeLayer';
 import BrandLockup from './BrandLockup';
 import { useSiteSettings } from '../context/SiteSettingsContext';
@@ -14,9 +14,10 @@ export default function Footer() {
             <BrandLockup />
             <p>A scientific dental laboratory delivering precision CAD/CAM prosthetics and digital dentistry solutions to dentists, clinics and hospitals across Tamil Nadu.</p>
             <div className="footer-social">
-              <a href="#" aria-label="LinkedIn"><LinkedInIcon /></a>
-              <a href="#" aria-label="Instagram"><InstagramIcon /></a>
-              <a href="#" aria-label="Facebook"><FacebookIcon /></a>
+              {settings.facebookUrl && <a href={settings.facebookUrl} target="_blank" rel="noopener noreferrer" aria-label="Facebook"><FacebookIcon /></a>}
+              {settings.instagramUrl && <a href={settings.instagramUrl} target="_blank" rel="noopener noreferrer" aria-label="Instagram"><InstagramIcon /></a>}
+              {settings.linkedinUrl && <a href={settings.linkedinUrl} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><LinkedInIcon /></a>}
+              {settings.youtubeUrl && <a href={settings.youtubeUrl} target="_blank" rel="noopener noreferrer" aria-label="YouTube"><YoutubeIcon /></a>}
             </div>
           </div>
           <div className="footer-col">

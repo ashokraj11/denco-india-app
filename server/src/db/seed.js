@@ -257,7 +257,11 @@ const defaultSettings = {
   contact_phone: '+91 97917 11182',
   contact_email: 'info@dencoindia.com',
   contact_address: 'Serving dental professionals across Tamil Nadu & Puducherry, India',
-  whatsapp_number: '917010767919'
+  whatsapp_number: '917010767919',
+  facebook_url: null,
+  instagram_url: null,
+  linkedin_url: null,
+  youtube_url: null
 };
 
 async function seedServices(conn) {
@@ -434,12 +438,13 @@ async function seedSettings(conn) {
   }
   await conn.query(
     `INSERT INTO site_settings
-      (id, site_name, tagline, logo_url, secondary_logo_url, brochure_url, testimonials_visible, meta_title, meta_description, contact_phone, contact_email, contact_address, whatsapp_number)
-     VALUES (1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      (id, site_name, tagline, logo_url, secondary_logo_url, brochure_url, testimonials_visible, meta_title, meta_description, contact_phone, contact_email, contact_address, whatsapp_number, facebook_url, instagram_url, linkedin_url, youtube_url)
+     VALUES (1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     [
       defaultSettings.site_name, defaultSettings.tagline, defaultSettings.logo_url, defaultSettings.secondary_logo_url, defaultSettings.brochure_url,
       defaultSettings.testimonials_visible, defaultSettings.meta_title, defaultSettings.meta_description, defaultSettings.contact_phone,
-      defaultSettings.contact_email, defaultSettings.contact_address, defaultSettings.whatsapp_number
+      defaultSettings.contact_email, defaultSettings.contact_address, defaultSettings.whatsapp_number,
+      defaultSettings.facebook_url, defaultSettings.instagram_url, defaultSettings.linkedin_url, defaultSettings.youtube_url
     ]
   );
   console.log('Seeded default site settings');

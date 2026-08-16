@@ -24,7 +24,7 @@ const TABLE_SCHEMAS = {
   hero_slides: ['id', 'image_url', 'display_order'],
   trust_badges: ['id', 'image_url', 'display_order'],
   testimonials: ['id', 'name', 'role', 'quote', 'media_type', 'media_url', 'display_order'],
-  site_settings: ['id', 'site_name', 'tagline', 'logo_url', 'secondary_logo_url', 'brochure_url', 'testimonials_visible', 'meta_title', 'meta_description', 'contact_phone', 'contact_email', 'contact_address', 'whatsapp_number'],
+  site_settings: ['id', 'site_name', 'tagline', 'logo_url', 'secondary_logo_url', 'brochure_url', 'testimonials_visible', 'meta_title', 'meta_description', 'contact_phone', 'contact_email', 'contact_address', 'whatsapp_number', 'facebook_url', 'instagram_url', 'linkedin_url', 'youtube_url'],
   enquiries: ['id', 'name', 'clinic', 'email', 'phone', 'subject', 'message', 'status', 'created_at']
 };
 const TABLE_NAMES = Object.keys(TABLE_SCHEMAS);
