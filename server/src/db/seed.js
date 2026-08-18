@@ -58,63 +58,21 @@ const certifications = [
 ];
 
 // Each area is { name, district } — district is a slug matching the `districts`
-// seed above. Mapped from real Tamil Nadu district boundaries; one entry
-// (marked below) is a lower-confidence guess rather than a certain mapping.
+// seed above. Mapped from real Tamil Nadu district boundaries; entries marked
+// below are lower-confidence guesses (small/ambiguous localities) rather than
+// certain mappings — worth double-checking against the actual coverage.
 const offices = [
   { name: 'Mr. Ananthan S', role: 'Area Manager', phone: '+91 88701 97856', areas: [
-    { name: 'Aranthangi', district: 'pudukkottai' },
     { name: 'Karaikudi', district: 'sivaganga' },
     { name: 'Kumbakonam', district: 'thanjavur' },
-    { name: 'Palani', district: 'dindigul' },
-    { name: 'Pattukkottai', district: 'thanjavur' },
-    { name: 'Perambalur', district: 'perambalur' },
-    { name: 'Peravurani', district: 'thanjavur' },
-    { name: 'Pollachi', district: 'coimbatore' },
-    { name: 'Ponnamaravathi', district: 'pudukkottai' },
-    { name: 'Pudukkottai', district: 'pudukkottai' },
     { name: 'Thanjavur', district: 'thanjavur' },
-    { name: 'Udumalaipet', district: 'tiruppur' }
-  ] },
-  { name: 'Mr. Sakthivelmurugan M', role: 'Area Manager', phone: '+91 94441 76257', areas: [
-    { name: 'Cuddalore', district: 'cuddalore' },
-    { name: 'Dharmapuri', district: 'dharmapuri' },
-    { name: 'Karur', district: 'karur' },
-    { name: 'Krishnagiri', district: 'krishnagiri' },
-    { name: 'Mechery', district: 'salem' },
-    { name: 'Salem', district: 'salem' },
-    { name: 'Villupuram', district: 'viluppuram' }
-  ] },
-  { name: 'Mr. Rajasekar G', role: 'Area Manager', phone: '+91 97917 11182', areas: [
-    { name: 'Kancheepuram', district: 'kancheepuram' },
-    { name: 'Karaikal', district: 'karaikal' },
-    { name: 'Nagapattinam (Nagai)', district: 'nagapattinam' },
-    { name: 'Nagoor', district: 'nagapattinam' },
-    { name: 'Namakkal', district: 'namakkal' },
-    { name: 'Ramanathapuram (Ramnad)', district: 'ramanathapuram' },
-    { name: 'Thiruvarur', district: 'tiruvarur' },
-    { name: 'Vellore', district: 'vellore' }
-  ] },
-  { name: 'Mr. Manikandan', role: 'Area Manager', phone: '+91 97907 75744', areas: [
-    { name: 'Ambur', district: 'tirupathur' },
-    { name: 'Devakottai', district: 'sivaganga' },
-    { name: 'Kodaikanal', district: 'dindigul' },
-    { name: 'Mannargudi', district: 'tiruvarur' },
-    { name: 'Paramakudi', district: 'ramanathapuram' },
-    { name: 'Sivagangai', district: 'sivaganga' },
-    { name: 'Thiruppathur', district: 'sivaganga' },
-    { name: 'Thiruthuraipoondi', district: 'tiruvarur' },
-    { name: 'Vaniyambadi', district: 'tirupathur' },
-    { name: 'Vedaranyam', district: 'nagapattinam' }
-  ] },
-  { name: 'Mr. Udayachandran U', role: 'Area Manager', phone: '+91 85249 60006', areas: [
-    { name: 'Bodi', district: 'theni' },
-    { name: 'Chinnamanur', district: 'theni' },
-    { name: 'Cumbum', district: 'theni' },
-    { name: 'Jayankondam', district: 'ariyalur' },
-    { name: 'Melur', district: 'madurai' },
-    { name: 'Sivakasi', district: 'virudhunagar' },
-    { name: 'Srivilliputhur', district: 'virudhunagar' },
-    { name: 'Theni', district: 'theni' }
+    { name: 'Pattukkottai', district: 'thanjavur' },
+    { name: 'Peravurani', district: 'thanjavur' },
+    { name: 'Pudukkottai', district: 'pudukkottai' },
+    { name: 'Ponnamaravathi', district: 'pudukkottai' },
+    { name: 'Palani', district: 'dindigul' },
+    { name: 'Udumalaipet', district: 'tiruppur' },
+    { name: 'Aranthangi', district: 'pudukkottai' }
   ] },
   { name: 'Mr. Nagarajan G', role: 'Area Manager', phone: '+91 94431 81239', areas: [
     { name: 'Bhuvanagiri', district: 'cuddalore' },
@@ -122,46 +80,142 @@ const offices = [
     { name: 'Kattumannarkoil', district: 'cuddalore' },
     { name: 'Nellikuppam', district: 'cuddalore' },
     { name: 'Panruti', district: 'cuddalore' },
-    { name: 'Pennadam', district: 'cuddalore' },
-    { name: 'Thittakudi', district: 'cuddalore' },
-    { name: 'Thozhdur', district: 'cuddalore' },
+    { name: 'Tittagudi', district: 'cuddalore' },
+    { name: 'Thozhudur', district: 'cuddalore' },
     { name: 'Ulundurpet', district: 'kallakurichi' },
+    { name: 'Veppur', district: 'perambalur' },
     { name: 'Virudhachalam', district: 'cuddalore' }
+  ] },
+  { name: 'Mr. Manikandan R', role: 'Area Manager', phone: '+91 97907 75744', areas: [
+    { name: 'Ambur', district: 'tirupathur' },
+    { name: 'Devakottai', district: 'sivaganga' },
+    { name: 'Gudiyatham', district: 'vellore' },
+    { name: 'Kodaikanal', district: 'dindigul' },
+    { name: 'Mannarkudi', district: 'tiruvarur' },
+    { name: 'Mecheri', district: 'salem' },
+    { name: 'Paramakudi', district: 'ramanathapuram' },
+    { name: 'Sivagangai', district: 'sivaganga' },
+    { name: 'Tiruppathur', district: 'sivaganga' },
+    { name: 'Thiruthuraipoondi', district: 'tiruvarur' },
+    { name: 'Vaniyambadi', district: 'tirupathur' },
+    { name: 'Vedaranyam', district: 'nagapattinam' }
+  ] },
+  { name: 'Mr. Udayachandran U', role: 'Area Manager', phone: '+91 85249 60004', areas: [
+    { name: 'Bodi', district: 'theni' },
+    { name: 'Chinnamanur', district: 'theni' },
+    { name: 'Cumbum', district: 'theni' },
+    { name: 'Jayankondam', district: 'ariyalur' },
+    { name: 'Melur', district: 'madurai' },
+    { name: 'Periyakulam', district: 'theni' },
+    { name: 'Sivakasi', district: 'virudhunagar' },
+    { name: 'Srivilliputhur', district: 'virudhunagar' },
+    { name: 'Theni', district: 'theni' }
   ] },
   { name: 'Mr. Dharani K', role: 'Area Manager', phone: '+91 80722 01284', areas: [
     { name: 'Ariyalur', district: 'ariyalur' },
-    { name: 'Chengalpattu', district: 'chengalpattu' },
+    { name: 'Chengalpet', district: 'chengalpattu' },
     { name: 'Dhalavaipuram', district: 'virudhunagar' },
+    { name: 'Tindivanam', district: 'viluppuram' },
     { name: 'Kallakurichi', district: 'kallakurichi' },
     { name: 'Maduranthagam', district: 'chengalpattu' },
-    { name: 'Mayiladuthurai (Mayavaram)', district: 'mayiladuthurai' },
+    { name: 'Mayavaram', district: 'mayiladuthurai' },
     { name: 'Rajapalayam', district: 'virudhunagar' },
     { name: 'Tenkasi', district: 'tenkasi' },
-    { name: 'Thirukovilur', district: 'kallakurichi' },
-    { name: 'Thiruvannamalai', district: 'tiruvannamalai' },
-    { name: 'Tindivanam', district: 'viluppuram' }
+    { name: 'Tirukkovilur', district: 'kallakurichi' },
+    { name: 'Tiruvannamalai', district: 'tiruvannamalai' }
   ] },
   { name: 'Mr. Karthikeyan B', role: 'Area Manager', phone: '+91 99766 06152', areas: [
     { name: 'Bhavani', district: 'erode' },
-    { name: 'Chettikulam', district: 'perambalur' }, // lower-confidence guess — small locality, verify if this manager's area is wrong
-    { name: 'Kumarapalayam', district: 'namakkal' },
+    { name: 'Komarapalayam', district: 'namakkal' },
     { name: 'Musiri', district: 'tiruchirappalli' },
-    { name: 'Padalur', district: 'perambalur' },
     { name: 'Perambalur', district: 'perambalur' },
+    { name: 'Pollachi', district: 'coimbatore' },
     { name: 'Thuraiyur', district: 'tiruchirappalli' },
     { name: 'Tiruppur', district: 'tiruppur' },
-    { name: 'Vikravandi', district: 'viluppuram' }
+    { name: 'Avinasi', district: 'tiruppur' },
+    { name: 'Manapparai', district: 'tiruchirappalli' },
+    { name: 'Dindigul', district: 'dindigul' },
+    { name: 'Oddanchatram', district: 'dindigul' }
   ] },
-  { name: 'Denco India Head Office', role: 'Head Office', phone: '+91 97917 11182', isHeadOffice: true, areas: [
+  { name: 'Mr. Gunasekaran A', role: 'Area Manager', phone: '+91 90800 91627', areas: [
+    { name: 'Gobichettipalayam', district: 'erode' },
+    { name: 'Hosur', district: 'krishnagiri' },
+    { name: 'Karur', district: 'karur' },
+    { name: 'Krishnagiri', district: 'krishnagiri' },
+    { name: 'Namakkal', district: 'namakkal' },
+    { name: 'Rasipuram', district: 'namakkal' },
+    { name: 'Sathyamangalam', district: 'erode' },
+    { name: 'Tiruchengode', district: 'namakkal' },
+    { name: 'Perundurai', district: 'erode' }
+  ] },
+  { name: 'Mr. Charles S', role: 'Area Manager', phone: '+91 99657 50655', areas: [
+    { name: 'Cuddalore', district: 'cuddalore' },
     { name: 'Kurinjipadi', district: 'cuddalore' },
     { name: 'Kullanchavadi', district: 'cuddalore' },
-    { name: 'Neyveli Mandarakuppam', district: 'cuddalore' },
+    { name: 'Neyveli Mandharakuppam', district: 'cuddalore' },
     { name: 'Neyveli Township', district: 'cuddalore' },
-    { name: 'Vadalur', district: 'cuddalore' }
+    { name: 'Vadalur', district: 'cuddalore' },
+    { name: 'Villupuram', district: 'viluppuram' }
   ] },
-  { name: 'Mr. M. Jagan', role: 'Area Manager – Puducherry Region', phone: '+91 82483 69575', areas: [
-    { name: 'Ariyankuppam', district: 'puducherry' },
-    { name: 'Puducherry', district: 'puducherry' }
+  { name: 'Mr. Arisivaneedhidevan B', role: 'Area Manager', phone: '+91 88386 13877', areas: [
+    { name: 'Cheyyar', district: 'tiruvannamalai' },
+    { name: 'Gingee', district: 'viluppuram' },
+    { name: 'Sirkazhi', district: 'mayiladuthurai' },
+    { name: 'Vandavasi', district: 'tiruvannamalai' },
+    { name: 'Nagapattinam', district: 'nagapattinam' },
+    { name: 'Ramnad', district: 'ramanathapuram' },
+    { name: 'Tiruvarur', district: 'tiruvarur' }
+  ] },
+  { name: 'Mr. Ranjith Kumar A', role: 'Area Manager', phone: '+91 76675 43128', areas: [
+    { name: 'Dharmapuri', district: 'dharmapuri' },
+    { name: 'Kaveripattinam', district: 'krishnagiri' },
+    { name: 'Kariyamangalam', district: 'dharmapuri' },
+    { name: 'Palakode', district: 'dharmapuri' },
+    { name: 'Papparapatti', district: 'dharmapuri' }, // lower-confidence guess — likely Pappireddipatti taluk
+    { name: 'Harur', district: 'dharmapuri' },
+    { name: 'Sankagiri', district: 'salem' },
+    { name: 'Edapadi', district: 'salem' }
+  ] },
+  { name: 'Mr. Sivananthan M', role: 'Area Manager', phone: '+91 97915 38706', areas: [
+    { name: 'Salem East', district: 'salem' },
+    { name: 'Salem North West', district: 'salem' },
+    { name: 'Salem West', district: 'salem' }
+  ] },
+  { name: 'Mr. Harikrishnan M', role: 'Area Manager', phone: '+91 96299 87898', areas: [
+    { name: 'Vellore', district: 'vellore' },
+    { name: 'Arcot', district: 'vellore' },
+    { name: 'Ranipet', district: 'ranipet' },
+    { name: 'Arakkonam', district: 'ranipet' }
+  ] },
+  { name: 'Mr. Prasanth P', role: 'Area Manager', phone: '+91 77081 93858', areas: [
+    { name: 'Kanchipuram', district: 'kancheepuram' },
+    { name: 'Karaikal', district: 'karaikal' },
+    { name: 'Nagoor', district: 'nagapattinam' },
+    { name: 'Erode', district: 'erode' },
+    { name: 'Paramathi Velur', district: 'namakkal' },
+    { name: 'Aravakurichi', district: 'karur' },
+    { name: 'Pallapatti', district: 'karur' } // lower-confidence guess — could be a different Pallapatti locality
+  ] },
+  { name: 'Direct Doctor’s Area', role: 'Contact Head Office Directly', phone: '+91 97917 11182', areas: [
+    { name: 'Arni', district: 'tiruvannamalai' },
+    { name: 'Atcharapakkam', district: 'chengalpattu' },
+    { name: 'Batlagundu', district: 'dindigul' },
+    { name: 'Chennai', district: 'chennai' },
+    { name: 'Coimbatore', district: 'coimbatore' },
+    { name: 'Dindigul', district: 'dindigul' },
+    { name: 'Manalmelkudi', district: 'pudukkottai' },
+    { name: 'Madurai', district: 'madurai' },
+    { name: 'Melmaruvathur', district: 'chengalpattu' },
+    { name: 'Singampunari', district: 'sivaganga' },
+    { name: 'Thirukazhukundram', district: 'chengalpattu' },
+    { name: 'Thondi', district: 'ramanathapuram' },
+    { name: 'Tiruvallur', district: 'tiruvallur' },
+    { name: 'Tirunelveli', district: 'tirunelveli' },
+    { name: 'Trichy', district: 'tiruchirappalli' },
+    { name: 'Uthangarai', district: 'krishnagiri' },
+    { name: 'Uthiramerur', district: 'kancheepuram' },
+    { name: 'Natham', district: 'dindigul' },
+    { name: 'Vikravandi', district: 'viluppuram' }
   ] }
 ];
 
