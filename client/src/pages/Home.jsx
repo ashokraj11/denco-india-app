@@ -1,6 +1,4 @@
-import { useEffect } from 'react';
 import { useSmoothAnchorScroll } from '../hooks/useSmoothAnchorScroll';
-import { useSiteSettings } from '../context/SiteSettingsContext';
 import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
 import Services from '../components/Services';
@@ -14,17 +12,14 @@ import Contact from '../components/Contact';
 import Testimonials from '../components/Testimonials';
 import Faq from '../components/Faq';
 import Footer from '../components/Footer';
+import SeoMeta from '../components/SeoMeta';
 
 export default function Home() {
   useSmoothAnchorScroll();
-  const { settings } = useSiteSettings();
-
-  useEffect(() => {
-    if (settings.metaTitle) document.title = settings.metaTitle;
-  }, [settings.metaTitle]);
 
   return (
     <>
+      <SeoMeta />
       <Navbar />
       <Hero />
       <Services />

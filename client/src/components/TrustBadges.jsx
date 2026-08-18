@@ -103,7 +103,7 @@ export default function TrustBadges() {
             <div className="trust-marquee-track" id="trustTrackOriginal" ref={originalRef}>
               {badges.map((b) => (
                 <div className="trust-badge-img" key={b.id}>
-                  <img src={resolveImageUrl(b.imageUrl)} alt="" loading="lazy" />
+                  <img src={resolveImageUrl(b.imageUrl)} alt={b.label || 'DENCO INDIA certification badge'} loading="lazy" />
                 </div>
               ))}
             </div>

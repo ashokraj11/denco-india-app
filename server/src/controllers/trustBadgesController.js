@@ -3,7 +3,7 @@ const pool = require('../config/db');
 async function listTrustBadges(req, res, next) {
   try {
     const [rows] = await pool.query(
-      'SELECT id, image_url AS imageUrl, display_order FROM trust_badges ORDER BY display_order ASC'
+      'SELECT id, image_url AS imageUrl, label, display_order FROM trust_badges ORDER BY display_order ASC'
     );
     res.json(rows);
   } catch (err) {
@@ -13,11 +13,11 @@ async function listTrustBadges(req, res, next) {
 
 async function createTrustBadge(req, res, next) {
   try {
-    const { image_url, display_order } = req.body || {};
+    const { image_url, label, display_order } = req.body || {};
     if (!image_url) return res.status(400).json({ error: 'image_url is required' });
     const [result] = await pool.query(
-      'INSERT INTO trust_badges (image_url, display_order) VALUES (?, ?)',
-      [image_url, display_order || 0]
+      'INSERT INTO trust_badges (image_url, label, display_order) VALUES (?, ?, ?)',
+      [image_url, label || null, display_order || 0]
     );
     res.status(201).json({ id: result.insertId });
   } catch (err) {
@@ -27,11 +27,11 @@ async function createTrustBadge(req, res, next) {
 
 async function updateTrustBadge(req, res, next) {
   try {
-    const { image_url, display_order } = req.body || {};
+    const { image_url, label, display_order } = req.body || {};
     if (!image_url) return res.status(400).json({ error: 'image_url is required' });
     await pool.query(
-      'UPDATE trust_badges SET image_url = ?, display_order = ? WHERE id = ?',
-      [image_url, display_order || 0, req.params.id]
+      'UPDATE trust_badges SET image_url = ?, label = ?, display_order = ? WHERE id = ?',
+      [image_url, label || null, display_order || 0, req.params.id]
     );
     res.json({ ok: true });
   } catch (err) {

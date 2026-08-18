@@ -3,7 +3,7 @@ import { api } from '../../api/client';
 import ImageUploadField from '../../components/admin/ImageUploadField';
 import { resolveImageUrl } from '../../utils/resolveImageUrl';
 
-const EMPTY = { image_url: '', display_order: 0 };
+const EMPTY = { image_url: '', label: '', display_order: 0 };
 
 export default function AdminTrustBadges() {
   const [items, setItems] = useState([]);
@@ -30,7 +30,7 @@ export default function AdminTrustBadges() {
 
   function startEdit(item) {
     setEditingId(item.id);
-    setForm({ image_url: item.imageUrl, display_order: item.display_order || 0 });
+    setForm({ image_url: item.imageUrl, label: item.label || '', display_order: item.display_order || 0 });
   }
 
   function cancelEdit() {
@@ -86,6 +86,10 @@ export default function AdminTrustBadges() {
           <h3 style={{ color: 'var(--navy)', fontSize: '1.05rem', margin: 0 }}>{editingId === 'new' ? 'Add New' : 'Edit'}</h3>
           <ImageUploadField label="Badge Image" value={form.image_url} onChange={(url) => setForm((s) => ({ ...s, image_url: url }))} />
           <div className="form-group">
+            <label>Label (used as alt text — e.g. "ISO 9001:2015 Certified")</label>
+            <input type="text" placeholder="e.g. ISO 9001:2015 Certified" value={form.label} onChange={(e) => setForm((s) => ({ ...s, label: e.target.value }))} />
+          </div>
+          <div className="form-group">
             <label>Display Order</label>
             <input type="number" value={form.display_order} onChange={(e) => setForm((s) => ({ ...s, display_order: e.target.value }))} />
           </div>
@@ -113,7 +117,7 @@ export default function AdminTrustBadges() {
             {items.map((item) => (
               <tr key={item.id} style={{ borderBottom: '1px solid var(--line)' }}>
                 <td style={{ padding: '.6rem 1rem' }}>
-                  <img src={resolveImageUrl(item.imageUrl)} alt="" style={{ width: 40, height: 40, objectFit: 'contain', borderRadius: 8, background: 'var(--mist)', padding: 4 }} />
+                  <img src={resolveImageUrl(item.imageUrl)} alt={item.label || ''} style={{ width: 40, height: 40, objectFit: 'contain', borderRadius: 8, background: 'var(--mist)', padding: 4 }} />
                 </td>
                 <td style={{ padding: '.6rem 1rem' }}>{item.display_order}</td>
                 <td style={{ padding: '.6rem 1rem', whiteSpace: 'nowrap' }}>

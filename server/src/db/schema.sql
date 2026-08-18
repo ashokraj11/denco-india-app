@@ -64,8 +64,14 @@ CREATE TABLE IF NOT EXISTS testimonials (
 CREATE TABLE IF NOT EXISTS trust_badges (
   id             INT AUTO_INCREMENT PRIMARY KEY,
   image_url      VARCHAR(500) NOT NULL,
+  label          VARCHAR(160) NULL,
   display_order  INT NOT NULL DEFAULT 0
 );
+
+-- Adds the column when re-running this file against a database created
+-- before it existed (CREATE TABLE IF NOT EXISTS above is a no-op on an
+-- existing table).
+ALTER TABLE trust_badges ADD COLUMN IF NOT EXISTS label VARCHAR(160) NULL AFTER image_url;
 
 CREATE TABLE IF NOT EXISTS hero_slides (
   id             INT AUTO_INCREMENT PRIMARY KEY,
