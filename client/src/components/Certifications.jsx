@@ -6,9 +6,13 @@ import Lightbox from './Lightbox';
 import DecorativeLayer from './DecorativeLayer';
 import { resolveImageUrl } from '../utils/resolveImageUrl';
 
+const INITIAL_VISIBLE = 6;
+
 export default function Certifications() {
   const { data: certs, loading } = useFetch('/certifications');
   const [active, setActive] = useState(null);
+  const [showAll, setShowAll] = useState(false);
+  const visibleCerts = showAll ? certs : certs?.slice(0, INITIAL_VISIBLE);
 
   return (
     <section className="certs" id="certs">
@@ -19,7 +23,7 @@ export default function Certifications() {
         </Reveal>
         <Reveal as="div" className="cert-image-grid">
           {loading && <p>Loading certifications…</p>}
-          {certs?.map((cert) => (
+          {visibleCerts?.map((cert) => (
             <div
               className="cert-card"
               key={cert.id}
@@ -45,6 +49,14 @@ export default function Certifications() {
             </div>
           ))}
         </Reveal>
+
+        {!showAll && certs?.length > INITIAL_VISIBLE && (
+          <div style={{ textAlign: 'center', marginTop: '1.5rem' }}>
+            <button type="button" className="btn btn-ghost btn-sm" onClick={() => setShowAll(true)}>
+              Show More ({certs.length - INITIAL_VISIBLE} more)
+            </button>
+          </div>
+        )}
       </div>
 
       <Lightbox item={active} onClose={() => setActive(null)} />

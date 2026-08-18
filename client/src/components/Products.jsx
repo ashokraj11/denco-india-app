@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useFetch } from '../hooks/useFetch';
 import ContentIcon from './icons/ContentIcon';
 import { ArrowRightIcon, ChevronUpIcon } from './icons/UiIcons';
@@ -6,8 +7,11 @@ import DecorativeLayer from './DecorativeLayer';
 import { resolveImageUrl } from '../utils/resolveImageUrl';
 import { getIconBg } from '../utils/iconBg';
 
+const INITIAL_VISIBLE = 6;
+
 export default function Products() {
   const { data: categories, loading } = useFetch('/products');
+  const [expandedCats, setExpandedCats] = useState({});
 
   return (
     <section className="products" id="products">
@@ -45,7 +49,7 @@ export default function Products() {
               <a href="#products" className="back-to-cats">Back to Categories <ChevronUpIcon /></a>
             </div>
             <div className="product-grid">
-              {cat.products.map((p, i) => (
+              {(expandedCats[cat.id] ? cat.products : cat.products.slice(0, INITIAL_VISIBLE)).map((p, i) => (
                 <Reveal as="div" className="product-card" key={p.id} delay={(i % 3) + 1}>
                   <div className="product-thumb"><span className="product-dot"></span><img src={resolveImageUrl(p.image_url)} alt={p.name} loading="lazy" /></div>
                   <div className="product-body">
@@ -55,6 +59,17 @@ export default function Products() {
                 </Reveal>
               ))}
             </div>
+            {!expandedCats[cat.id] && cat.products.length > INITIAL_VISIBLE && (
+              <div style={{ textAlign: 'center', marginTop: '1.5rem' }}>
+                <button
+                  type="button"
+                  className="btn btn-ghost btn-sm"
+                  onClick={() => setExpandedCats((s) => ({ ...s, [cat.id]: true }))}
+                >
+                  Show More ({cat.products.length - INITIAL_VISIBLE} more)
+                </button>
+              </div>
+            )}
           </Reveal>
         ))}
       </div>
