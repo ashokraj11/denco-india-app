@@ -196,7 +196,7 @@ const offices = [
     { name: 'Aravakurichi', district: 'karur' },
     { name: 'Pallapatti', district: 'karur' } // lower-confidence guess — could be a different Pallapatti locality
   ] },
-  { name: 'Direct Doctor’s Area', role: 'Contact Head Office Directly', phone: '+91 97917 11182', areas: [
+  { name: "Direct Doctor's Area", role: 'Contact Head Office Directly', phone: '+91 97917 11182', areas: [
     { name: 'Arni', district: 'tiruvannamalai' },
     { name: 'Atcharapakkam', district: 'chengalpattu' },
     { name: 'Batlagundu', district: 'dindigul' },
