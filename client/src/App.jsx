@@ -2,9 +2,12 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { AdminAuthProvider } from './context/AdminAuthContext';
 import { SiteSettingsProvider } from './context/SiteSettingsContext';
 import Home from './pages/Home';
+import Career from './pages/Career';
 import AdminLogin from './pages/AdminLogin';
 import AdminLayout from './pages/admin/AdminLayout';
 import AdminEnquiries from './pages/admin/AdminEnquiries';
+import AdminJobs from './pages/admin/AdminJobs';
+import AdminJobApplications from './pages/admin/AdminJobApplications';
 import AdminProducts from './pages/admin/AdminProducts';
 import AdminCategories from './pages/admin/AdminCategories';
 import AdminCertifications from './pages/admin/AdminCertifications';
@@ -24,10 +27,13 @@ export default function App() {
       <AdminAuthProvider>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/careers" element={<Career />} />
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<Navigate to="enquiries" replace />} />
             <Route path="enquiries" element={<AdminEnquiries />} />
+            <Route path="jobs" element={<AdminJobs />} />
+            <Route path="job-applications" element={<AdminJobApplications />} />
             <Route path="products" element={<AdminProducts />} />
             <Route path="categories" element={<AdminCategories />} />
             <Route path="certifications" element={<AdminCertifications />} />

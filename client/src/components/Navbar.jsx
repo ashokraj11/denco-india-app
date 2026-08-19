@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { ArrowRightIcon } from './icons/UiIcons';
 import BrandLockup from './BrandLockup';
 
@@ -100,6 +101,9 @@ export default function Navbar() {
                 </a>
               </li>
             ))}
+            <li>
+              <Link to="/careers" onClick={() => setMobileOpen(false)}>Careers</Link>
+            </li>
             <li>
               <a href="#contact" data-cta onClick={() => setMobileOpen(false)}>
                 <span className="btn btn-primary btn-sm">Book a Lab Pickup</span>

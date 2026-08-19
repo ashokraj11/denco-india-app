@@ -2,6 +2,7 @@ node_modules/
 dist/
 .claude/
 server/uploads/
+server/resumes/
 .env
 .env.*
 !.env.example

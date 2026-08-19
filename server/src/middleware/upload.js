@@ -10,12 +10,32 @@ const multer = require('multer');
 const uploadDir = process.env.UPLOAD_DIR || path.join(__dirname, '../../uploads');
 fs.mkdirSync(uploadDir, { recursive: true });
 
+// Resumes are candidate PII, unlike everything else in uploadDir (which is
+// served publicly at /uploads). Kept as a private SIBLING directory --
+// never mounted with express.static -- and only ever read back through the
+// authenticated admin download endpoint in jobApplicationsController.js.
+const resumeDir = path.join(path.dirname(uploadDir), 'resumes');
+fs.mkdirSync(resumeDir, { recursive: true });
+
 const IMAGE_MIME = new Set(['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/svg+xml']);
 const VIDEO_MIME = new Set(['video/mp4', 'video/webm', 'video/ogg', 'video/quicktime']);
 const DOCUMENT_MIME = new Set(['application/pdf']);
+const RESUME_MIME = new Set([
+  'application/pdf',
+  'application/msword',
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+]);
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, uploadDir),
+  filename: (req, file, cb) => {
+    const ext = path.extname(file.originalname).toLowerCase();
+    cb(null, `${crypto.randomUUID()}${ext}`);
+  }
+});
+
+const resumeStorage = multer.diskStorage({
+  destination: (req, file, cb) => cb(null, resumeDir),
   filename: (req, file, cb) => {
     const ext = path.extname(file.originalname).toLowerCase();
     cb(null, `${crypto.randomUUID()}${ext}`);
@@ -76,4 +96,17 @@ const uploadHeroImage = multer({
   }
 });
 
-module.exports = { upload, uploadMedia, uploadDocument, uploadHeroImage, uploadDir, IMAGE_MIME };
+// Used for job application resumes — PDF or Word doc, written to the
+// private resumeDir above rather than the publicly-served uploadDir.
+const uploadResume = multer({
+  storage: resumeStorage,
+  limits: { fileSize: 10 * 1024 * 1024 },
+  fileFilter: (req, file, cb) => {
+    if (!RESUME_MIME.has(file.mimetype)) {
+      return cb(new Error('Only PDF or Word (.pdf, .doc, .docx) files are allowed'));
+    }
+    cb(null, true);
+  }
+});
+
+module.exports = { upload, uploadMedia, uploadDocument, uploadHeroImage, uploadResume, uploadDir, resumeDir, IMAGE_MIME };

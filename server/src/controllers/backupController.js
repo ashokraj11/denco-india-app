@@ -7,9 +7,16 @@ const BACKUP_VERSION = 1;
 
 // admin_users is intentionally excluded (don't want password hashes in a
 // downloadable file); office_locations is excluded too (deprecated/unused
-// legacy table, superseded by office_areas). Order here is just how they're
-// listed in the export — restore doesn't depend on it since FK checks are
-// disabled for the duration of the restore transaction.
+// legacy table, superseded by office_areas). job_applications is included
+// like enquiries -- note its resume_path column is just a filename
+// reference: the JSON export/restore round-trips application data, but the
+// actual resume files live in the private resumeDir and are NOT part of
+// this export or of exportFiles/importFiles below (which only cover the
+// public uploadDir), so restoring a backup onto a fresh server will leave
+// job_applications pointing at resume files that need migrating separately.
+// Order here is just how they're listed in the export — restore doesn't
+// depend on it since FK checks are disabled for the duration of the
+// restore transaction.
 const TABLE_SCHEMAS = {
   districts: ['id', 'name', 'slug', 'left_pct', 'top_pct', 'display_order'],
   product_categories: ['id', 'slug', 'name', 'icon_key', 'display_order'],
@@ -25,7 +32,9 @@ const TABLE_SCHEMAS = {
   trust_badges: ['id', 'image_url', 'label', 'display_order'],
   testimonials: ['id', 'name', 'role', 'quote', 'media_type', 'media_url', 'display_order'],
   site_settings: ['id', 'site_name', 'tagline', 'logo_url', 'secondary_logo_url', 'brochure_url', 'testimonials_visible', 'meta_title', 'meta_description', 'contact_phone', 'contact_email', 'contact_address', 'whatsapp_number', 'facebook_url', 'instagram_url', 'linkedin_url', 'youtube_url'],
-  enquiries: ['id', 'name', 'clinic', 'email', 'phone', 'subject', 'message', 'status', 'created_at']
+  enquiries: ['id', 'name', 'clinic', 'email', 'phone', 'subject', 'message', 'status', 'created_at'],
+  job_openings: ['id', 'title', 'location', 'employment_type', 'description', 'is_active', 'display_order', 'created_at'],
+  job_applications: ['id', 'job_id', 'name', 'email', 'phone', 'message', 'resume_path', 'resume_filename', 'status', 'created_at']
 };
 const TABLE_NAMES = Object.keys(TABLE_SCHEMAS);
 

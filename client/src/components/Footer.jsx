@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { LinkedInIcon, InstagramIcon, FacebookIcon, YoutubeIcon, LocationPinIcon, PhoneIcon, MailIcon } from './icons/UiIcons';
 import DecorativeLayer from './DecorativeLayer';
 import BrandLockup from './BrandLockup';
@@ -27,6 +28,7 @@ export default function Footer() {
               <li><a href="#about">Vision &amp; Mission</a></li>
               <li><a href="#certs">Certifications</a></li>
               <li><a href="#technology">Technology</a></li>
+              <li><Link to="/careers">Careers</Link></li>
             </ul>
           </div>
           <div className="footer-col">

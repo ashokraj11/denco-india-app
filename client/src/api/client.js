@@ -52,6 +52,32 @@ async function uploadRequest(path, file, fieldName) {
   return data;
 }
 
+// Like uploadRequest, but for forms that combine a file with other text
+// fields in one multipart request (e.g. a job application: resume file +
+// name/email/phone/message) — uploadRequest only ever appends a single file
+// field and nothing else.
+async function uploadFormRequest(path, fields, file, fieldName) {
+  const token = localStorage.getItem(TOKEN_KEY);
+  const headers = {};
+  if (token && path.startsWith('/admin')) headers.Authorization = `Bearer ${token}`;
+
+  const formData = new FormData();
+  Object.entries(fields || {}).forEach(([key, value]) => {
+    if (value !== undefined && value !== null && value !== '') formData.append(key, value);
+  });
+  formData.append(fieldName, file);
+
+  const res = await fetch(`${API_URL}${path}`, { method: 'POST', headers, body: formData });
+  const isJson = res.headers.get('content-type')?.includes('application/json');
+  const data = isJson ? await res.json() : null;
+
+  if (!res.ok) {
+    handleUnauthorized(path, res.status);
+    throw new Error(data?.error || `Submission failed with status ${res.status}`);
+  }
+  return data;
+}
+
 // Downloads a protected (Authorization-header-requiring) endpoint's response
 // as a file — a plain <a href> can't attach that header, so this fetches it
 // as a blob and triggers the save via a throwaway link instead.
@@ -92,5 +118,6 @@ export const api = {
   uploadMedia: (path, file) => uploadRequest(path, file, 'media'),
   uploadDocument: (path, file) => uploadRequest(path, file, 'document'),
   uploadBackup: (path, file) => uploadRequest(path, file, 'backup'),
+  submitWithFile: (path, fields, file) => uploadFormRequest(path, fields, file, 'resume'),
   download: (path, fallbackFilename) => downloadFile(path, fallbackFilename)
 };

@@ -180,3 +180,33 @@ CREATE TABLE IF NOT EXISTS enquiries (
   status      ENUM('new','contacted','closed') NOT NULL DEFAULT 'new',
   created_at  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE IF NOT EXISTS job_openings (
+  id             INT AUTO_INCREMENT PRIMARY KEY,
+  title          VARCHAR(160) NOT NULL,
+  location       VARCHAR(120) NULL,
+  employment_type VARCHAR(60) NOT NULL DEFAULT 'Full-time',
+  description    TEXT NULL,
+  is_active      TINYINT(1) NOT NULL DEFAULT 1,
+  display_order  INT NOT NULL DEFAULT 0,
+  created_at     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- resume_path stores just the stored filename (e.g. a UUID), NOT a public
+-- URL -- resumes are candidate PII and are served only through an
+-- authenticated admin download endpoint, never the public /uploads static
+-- path. See server/src/middleware/upload.js (uploadResume, resumeDir).
+CREATE TABLE IF NOT EXISTS job_applications (
+  id              INT AUTO_INCREMENT PRIMARY KEY,
+  job_id          INT NULL,
+  name            VARCHAR(120) NOT NULL,
+  email           VARCHAR(160) NOT NULL,
+  phone           VARCHAR(32) NOT NULL,
+  message         TEXT NULL,
+  resume_path     VARCHAR(255) NOT NULL,
+  resume_filename VARCHAR(255) NOT NULL,
+  status          ENUM('new','reviewed','shortlisted','rejected') NOT NULL DEFAULT 'new',
+  created_at      TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_job_applications_job FOREIGN KEY (job_id)
+    REFERENCES job_openings(id) ON DELETE SET NULL
+);

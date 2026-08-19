@@ -4,6 +4,8 @@ import { BrandMarkIcon } from '../../components/icons/UiIcons';
 
 const NAV_ITEMS = [
   { to: 'enquiries', label: 'Enquiries' },
+  { to: 'jobs', label: 'Job Postings' },
+  { to: 'job-applications', label: 'Job Applications' },
   { to: 'hero-slides', label: 'Hero Slider' },
   { to: 'trust-badges', label: 'Trust Badges' },
   { to: 'products', label: 'Products' },
