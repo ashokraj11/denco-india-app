@@ -9,7 +9,7 @@ const LINKS = [
   { href: '#about', label: 'About Us' },
   { href: '#services', label: 'Services' },
   { href: '#products', label: 'Products' },
-  { href: '#technology', label: 'Technology' },
+  { href: '#technology', label: 'Gallery' },
   { href: '#service-network', label: 'Service Network' },
   { href: '#certs', label: 'Quality' },
   { href: '#contact', label: 'Contact' }

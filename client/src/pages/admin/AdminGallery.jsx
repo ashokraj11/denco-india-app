@@ -70,7 +70,7 @@ export default function AdminGallery() {
   return (
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.2rem' }}>
-        <h2 style={{ margin: 0 }}>Technology &amp; Infrastructure Gallery</h2>
+        <h2 style={{ margin: 0 }}>Gallery</h2>
         {editingId === null && (
           <button className="btn btn-accent btn-sm" onClick={startCreate}>+ Add New</button>
         )}

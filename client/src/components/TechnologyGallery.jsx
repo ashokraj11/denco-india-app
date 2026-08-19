@@ -22,7 +22,7 @@ export default function TechnologyGallery() {
     <section className="news" id="technology">
       <div className="container">
         <Reveal as="div" className="sec-head">
-          <span className="eyebrow">Technology &amp; Infrastructure</span>
+          <span className="eyebrow">Gallery</span>
           <h2>Why Dental Professionals Choose Us</h2>
           <p>A look inside our facility — the technology, workstations and people behind every restoration we deliver.</p>
         </Reveal>

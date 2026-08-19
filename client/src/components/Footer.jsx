@@ -28,7 +28,7 @@ export default function Footer() {
               <li><HashLink href="#about">About Us</HashLink></li>
               <li><HashLink href="#about">Vision &amp; Mission</HashLink></li>
               <li><HashLink href="#certs">Certifications</HashLink></li>
-              <li><HashLink href="#technology">Technology</HashLink></li>
+              <li><HashLink href="#technology">Gallery</HashLink></li>
               <li><Link to="/careers">Careers</Link></li>
             </ul>
           </div>
