@@ -207,6 +207,9 @@ section{ position:relative; padding:clamp(3.6rem,7vw,6rem) 0; }
 .nav-toggle{ display:none; }
 .nav-links a[data-cta]{ display:none; }
 
+.nav-desktop-cta{ padding:.5rem 1.1rem; font-size:.76rem; gap:.4rem; }
+.nav-desktop-cta svg{ width:12px; height:12px; }
+
 /* ---------- Mobile menu overlay (backdrop behind the dropdown panel) ---------- */
 .nav-overlay{
   position:fixed; inset:0; z-index:95;
