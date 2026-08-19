@@ -37,6 +37,13 @@ export default function JobApplicationModal({ open, job, jobs, onClose }) {
     };
   }, [open, job, onClose]);
 
+  useEffect(() => {
+    if (!submitted) return undefined;
+    // Auto-dismiss the success popup a couple seconds after showing it.
+    const t = setTimeout(onClose, 2200);
+    return () => clearTimeout(t);
+  }, [submitted, onClose]);
+
   function update(field, value) {
     setForm((f) => ({ ...f, [field]: value }));
   }
@@ -85,62 +92,64 @@ export default function JobApplicationModal({ open, job, jobs, onClose }) {
           <CloseIcon />
         </button>
 
-        <form className="contact-form-card" noValidate onSubmit={handleSubmit}>
-          <h3 style={{ color: 'var(--navy)', fontSize: '1.15rem' }}>
-            {job ? `Apply for ${job.title}` : 'Application Form'}
-          </h3>
-          <div className="form-row">
-            <div className="form-group">
-              <label htmlFor="jf-name">Full Name <span className="req">*</span></label>
-              <input type="text" id="jf-name" required value={form.name} onChange={(e) => update('name', e.target.value)} />
+        {submitted ? (
+          <div className="job-apply-success">
+            <span className="job-apply-success-icon"><CheckIcon /></span>
+            <h3 style={{ color: 'var(--navy)' }}>Application Sent!</h3>
+            <p>Thank you! Your application has been received — our team will be in touch if there's a match.</p>
+          </div>
+        ) : (
+          <form className="contact-form-card" noValidate onSubmit={handleSubmit}>
+            <h3 style={{ color: 'var(--navy)', fontSize: '1.15rem' }}>
+              {job ? `Apply for ${job.title}` : 'Application Form'}
+            </h3>
+            <div className="form-row">
+              <div className="form-group">
+                <label htmlFor="jf-name">Full Name <span className="req">*</span></label>
+                <input type="text" id="jf-name" required value={form.name} onChange={(e) => update('name', e.target.value)} />
+              </div>
+              <div className="form-group">
+                <label htmlFor="jf-role">Applying For</label>
+                <select id="jf-role" value={jobId} onChange={(e) => setJobId(e.target.value)}>
+                  <option value="">General Application</option>
+                  {jobs?.map((j) => (
+                    <option key={j.id} value={j.id}>{j.title}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+            <div className="form-row">
+              <div className="form-group">
+                <label htmlFor="jf-email">Email Address <span className="req">*</span></label>
+                <input type="email" id="jf-email" required value={form.email} onChange={(e) => update('email', e.target.value)} />
+              </div>
+              <div className="form-group">
+                <label htmlFor="jf-phone">Phone Number <span className="req">*</span></label>
+                <input type="tel" id="jf-phone" required value={form.phone} onChange={(e) => update('phone', e.target.value)} />
+              </div>
             </div>
             <div className="form-group">
-              <label htmlFor="jf-role">Applying For</label>
-              <select id="jf-role" value={jobId} onChange={(e) => setJobId(e.target.value)}>
-                <option value="">General Application</option>
-                {jobs?.map((j) => (
-                  <option key={j.id} value={j.id}>{j.title}</option>
-                ))}
-              </select>
-            </div>
-          </div>
-          <div className="form-row">
-            <div className="form-group">
-              <label htmlFor="jf-email">Email Address <span className="req">*</span></label>
-              <input type="email" id="jf-email" required value={form.email} onChange={(e) => update('email', e.target.value)} />
+              <label htmlFor="jf-resume">Resume <span className="req">*</span></label>
+              <input
+                type="file"
+                id="jf-resume"
+                required
+                accept=".pdf,.doc,.docx"
+                onChange={(e) => setFile(e.target.files?.[0] || null)}
+              />
+              <span style={{ fontSize: '.78rem', color: 'var(--mute)' }}>PDF or Word document, up to 10MB.</span>
             </div>
             <div className="form-group">
-              <label htmlFor="jf-phone">Phone Number <span className="req">*</span></label>
-              <input type="tel" id="jf-phone" required value={form.phone} onChange={(e) => update('phone', e.target.value)} />
+              <label htmlFor="jf-message">Message (optional)</label>
+              <textarea id="jf-message" rows="4" placeholder="Tell us a bit about yourself…" value={form.message} onChange={(e) => update('message', e.target.value)}></textarea>
             </div>
-          </div>
-          <div className="form-group">
-            <label htmlFor="jf-resume">Resume <span className="req">*</span></label>
-            <input
-              type="file"
-              id="jf-resume"
-              required
-              accept=".pdf,.doc,.docx"
-              onChange={(e) => setFile(e.target.files?.[0] || null)}
-            />
-            <span style={{ fontSize: '.78rem', color: 'var(--mute)' }}>PDF or Word document, up to 10MB.</span>
-          </div>
-          <div className="form-group">
-            <label htmlFor="jf-message">Message (optional)</label>
-            <textarea id="jf-message" rows="4" placeholder="Tell us a bit about yourself…" value={form.message} onChange={(e) => update('message', e.target.value)}></textarea>
-          </div>
-          {error && <p className="form-note" style={{ color: '#D9611E' }}>{error}</p>}
-          <button type="submit" className="btn btn-accent" disabled={submitting}>
-            {submitting ? 'Submitting…' : 'Submit Application'}
-            <ArrowRightIcon />
-          </button>
-          {submitted && (
-            <p className="form-note">
-              <CheckIcon />
-              Thank you! Your application has been received — our team will be in touch if there's a match.
-            </p>
-          )}
-        </form>
+            {error && <p className="form-note" style={{ color: '#D9611E' }}>{error}</p>}
+            <button type="submit" className="btn btn-accent" disabled={submitting}>
+              {submitting ? 'Submitting…' : 'Submit Application'}
+              <ArrowRightIcon />
+            </button>
+          </form>
+        )}
       </div>
     </div>
   );

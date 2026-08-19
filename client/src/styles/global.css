@@ -771,6 +771,18 @@ section{ position:relative; padding:clamp(3.6rem,7vw,6rem) 0; }
 .job-apply-modal.open .job-apply-modal-inner{ transform:translateY(0) scale(1); }
 .job-apply-modal-inner .contact-form-card{ box-shadow:var(--shadow-lift); }
 .job-apply-modal-inner .cert-lightbox-close{ top:-.9rem; right:-.9rem; }
+.job-apply-success{
+  background:#fff; border-radius:var(--r-lg); box-shadow:var(--shadow-lift);
+  padding:2.6rem 2rem; text-align:center; max-width:360px; margin:0 auto;
+}
+.job-apply-success-icon{
+  display:inline-flex; align-items:center; justify-content:center;
+  width:52px; height:52px; border-radius:50%;
+  background:var(--accent); color:#fff; margin-bottom:1rem;
+}
+.job-apply-success-icon svg{ width:24px; height:24px; }
+.job-apply-success h3{ margin:0 0 .5rem; font-size:1.15rem; }
+.job-apply-success p{ margin:0; color:var(--mute); font-size:.92rem; line-height:1.5; }
 
 /* ==========================================================================
    CONTACT CTA
