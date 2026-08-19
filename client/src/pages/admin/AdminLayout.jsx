@@ -55,6 +55,10 @@ export default function AdminLayout() {
           <span className="brand-mark" style={{ width: 34, height: 34 }}><BrandMarkIcon /></span>
           <span style={{ fontFamily: 'var(--f-display)', fontWeight: 800 }}>Admin</span>
         </div>
+        <div style={{ fontSize: '.8rem', color: 'rgba(255,255,255,.6)' }}>
+          <div style={{ marginBottom: '.6rem' }}>Signed in as {username || 'admin'}</div>
+          <button className="btn btn-ghost btn-sm" style={{ width: '100%', justifyContent: 'center' }} onClick={logout}>Log Out</button>
+        </div>
         <nav style={{ display: 'flex', flexDirection: 'column', gap: '.15rem', overflowY: 'auto' }}>
           {NAV_GROUPS.map((group) => {
             const isSingle = group.items.length === 1;
@@ -116,10 +120,6 @@ export default function AdminLayout() {
             );
           })}
         </nav>
-        <div style={{ marginTop: 'auto', fontSize: '.8rem', color: 'rgba(255,255,255,.6)' }}>
-          <div style={{ marginBottom: '.6rem' }}>Signed in as {username || 'admin'}</div>
-          <button className="btn btn-ghost btn-sm" style={{ width: '100%', justifyContent: 'center' }} onClick={logout}>Log Out</button>
-        </div>
       </aside>
       <main style={{ flex: 1, padding: 'clamp(1.2rem, 3vw, 2.4rem)', overflowX: 'auto' }}>
         <Outlet />
