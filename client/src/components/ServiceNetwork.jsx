@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useFetch } from '../hooks/useFetch';
-import { PhoneIcon, PersonIcon, BuildingIcon, LocationPinIcon } from './icons/UiIcons';
+import { PhoneIcon, PersonIcon, BuildingIcon } from './icons/UiIcons';
 import Reveal from './Reveal';
 import DecorativeLayer from './DecorativeLayer';
 
@@ -58,8 +58,6 @@ export default function ServiceNetwork() {
     <section className="service-network" id="service-network">
       <div className="container">
         <Reveal as="div" className="sec-head">
-          <span className="eyebrow">Pan-Regional Coverage</span>
-          <span className="network-stat"><LocationPinIcon />75+ Locations Served</span>
           <h2>Our Service Network</h2>
           <p>Serving locations across Tamil Nadu &amp; Puducherry. Our dedicated area managers ensure timely case collection, delivery and customer support across our extensive service network.</p>
         </Reveal>
