@@ -847,7 +847,7 @@ footer{ background:#071A13; color:rgba(255,255,255,.65); padding-top:4rem; }
   display:grid;
   grid-template-columns:repeat(4,1fr);
   grid-auto-rows:130px;
-  gap:.9rem;
+  gap:.45rem;
   margin-bottom:3rem;
 }
 .gallery-item{
