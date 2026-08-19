@@ -753,6 +753,25 @@ section{ position:relative; padding:clamp(3.6rem,7vw,6rem) 0; }
 .job-card-main p{ font-size:.88rem; color:var(--mute); line-height:1.6; max-width:52ch; }
 .job-card > .btn{ flex-shrink:0; }
 
+/* ---------- Job Application Modal ---------- */
+.job-apply-modal{
+  position:fixed; inset:0; z-index:1000;
+  background:rgba(6,35,26,.82);
+  display:flex; align-items:flex-start; justify-content:center;
+  padding:clamp(1.2rem,4vw,3rem);
+  overflow-y:auto;
+  opacity:0; visibility:hidden;
+  transition:opacity .3s var(--ease), visibility 0s linear .3s;
+}
+.job-apply-modal.open{ opacity:1; visibility:visible; transition:opacity .3s var(--ease); }
+.job-apply-modal-inner{
+  position:relative; max-width:640px; width:100%; margin:auto 0;
+  transform:translateY(18px) scale(.97); transition:transform .35s var(--ease);
+}
+.job-apply-modal.open .job-apply-modal-inner{ transform:translateY(0) scale(1); }
+.job-apply-modal-inner .contact-form-card{ box-shadow:var(--shadow-lift); }
+.job-apply-modal-inner .cert-lightbox-close{ top:-.9rem; right:-.9rem; }
+
 /* ==========================================================================
    CONTACT CTA
    ========================================================================== */
