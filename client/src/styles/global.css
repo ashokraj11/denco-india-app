@@ -179,6 +179,7 @@ section{ position:relative; padding:clamp(3.6rem,7vw,6rem) 0; }
   display:block; height:clamp(64px, 14vw, 80px); width:auto; max-width:120px;
   flex-shrink: 0;
 }
+.brand-name{ font-size:2em; }
 .brand small{
   display:block; font-family:var(--f-body);
   font-size:clamp(.55rem, 2vw, .68rem);
