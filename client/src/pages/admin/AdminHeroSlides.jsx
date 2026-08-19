@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { api } from '../../api/client';
 import ImageUploadField from '../../components/admin/ImageUploadField';
+import Lightbox from '../../components/Lightbox';
 import { resolveImageUrl } from '../../utils/resolveImageUrl';
 
 const EMPTY = { image_url: '', display_order: 0 };
@@ -12,6 +13,7 @@ export default function AdminHeroSlides() {
   const [editingId, setEditingId] = useState(null);
   const [form, setForm] = useState(EMPTY);
   const [saving, setSaving] = useState(false);
+  const [zoomed, setZoomed] = useState(null);
 
   function load() {
     setLoading(true);
@@ -113,7 +115,12 @@ export default function AdminHeroSlides() {
             {items.map((item) => (
               <tr key={item.id} style={{ borderBottom: '1px solid var(--line)' }}>
                 <td style={{ padding: '.6rem 1rem' }}>
-                  <img src={resolveImageUrl(item.imageUrl)} alt="" style={{ width: 72, height: 40, objectFit: 'cover', borderRadius: 8 }} />
+                  <img
+                    src={resolveImageUrl(item.imageUrl)}
+                    alt=""
+                    style={{ width: 72, height: 40, objectFit: 'cover', borderRadius: 8, cursor: 'pointer' }}
+                    onClick={() => setZoomed({ img: resolveImageUrl(item.imageUrl) })}
+                  />
                 </td>
                 <td style={{ padding: '.6rem 1rem' }}>{item.display_order}</td>
                 <td style={{ padding: '.6rem 1rem', whiteSpace: 'nowrap' }}>
@@ -125,6 +132,8 @@ export default function AdminHeroSlides() {
           </tbody>
         </table>
       </div>
+
+      <Lightbox item={zoomed} onClose={() => setZoomed(null)} />
     </div>
   );
 }

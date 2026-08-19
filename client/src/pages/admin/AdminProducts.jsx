@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { api } from '../../api/client';
 import ImageUploadField from '../../components/admin/ImageUploadField';
+import Lightbox from '../../components/Lightbox';
 import { resolveImageUrl } from '../../utils/resolveImageUrl';
 
 const EMPTY = { category_id: '', name: '', image_url: '', description: '', display_order: 0 };
@@ -13,6 +14,7 @@ export default function AdminProducts() {
   const [editingId, setEditingId] = useState(null);
   const [form, setForm] = useState(EMPTY);
   const [saving, setSaving] = useState(false);
+  const [zoomed, setZoomed] = useState(null);
 
   function load() {
     setLoading(true);
@@ -141,7 +143,12 @@ export default function AdminProducts() {
             {products.map((p) => (
               <tr key={p.id} style={{ borderBottom: '1px solid var(--line)' }}>
                 <td style={{ padding: '.6rem 1rem' }}>
-                  <img src={resolveImageUrl(p.image_url)} alt="" style={{ width: 40, height: 40, objectFit: 'cover', borderRadius: 8 }} />
+                  <img
+                    src={resolveImageUrl(p.image_url)}
+                    alt=""
+                    style={{ width: 40, height: 40, objectFit: 'cover', borderRadius: 8, cursor: 'pointer' }}
+                    onClick={() => setZoomed({ img: resolveImageUrl(p.image_url), title: p.name })}
+                  />
                 </td>
                 <td style={{ padding: '.6rem 1rem' }}>{p.name}</td>
                 <td style={{ padding: '.6rem 1rem' }}>{categoryName(p.category_id)}</td>
@@ -155,6 +162,8 @@ export default function AdminProducts() {
           </tbody>
         </table>
       </div>
+
+      <Lightbox item={zoomed} onClose={() => setZoomed(null)} />
     </div>
   );
 }

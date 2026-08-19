@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { api } from '../../api/client';
 import MediaUploadField from '../../components/admin/MediaUploadField';
+import Lightbox from '../../components/Lightbox';
 import { resolveImageUrl } from '../../utils/resolveImageUrl';
 
 const EMPTY = { title: '', media_type: 'image', media_url: '', display_order: 0 };
@@ -12,6 +13,7 @@ export default function AdminGallery() {
   const [editingId, setEditingId] = useState(null);
   const [form, setForm] = useState(EMPTY);
   const [saving, setSaving] = useState(false);
+  const [zoomed, setZoomed] = useState(null);
 
   function load() {
     setLoading(true);
@@ -121,9 +123,19 @@ export default function AdminGallery() {
                 <td style={{ padding: '.6rem 1rem' }}>
                   {item.mediaType === 'video' ? (
                     // eslint-disable-next-line jsx-a11y/media-has-caption
-                    <video src={resolveImageUrl(item.mediaUrl)} muted style={{ width: 40, height: 40, objectFit: 'cover', borderRadius: 8 }} />
+                    <video
+                      src={resolveImageUrl(item.mediaUrl)}
+                      muted
+                      style={{ width: 40, height: 40, objectFit: 'cover', borderRadius: 8, cursor: 'pointer' }}
+                      onClick={() => setZoomed({ img: resolveImageUrl(item.mediaUrl), title: item.title, type: 'video' })}
+                    />
                   ) : (
-                    <img src={resolveImageUrl(item.mediaUrl)} alt="" style={{ width: 40, height: 40, objectFit: 'cover', borderRadius: 8 }} />
+                    <img
+                      src={resolveImageUrl(item.mediaUrl)}
+                      alt=""
+                      style={{ width: 40, height: 40, objectFit: 'cover', borderRadius: 8, cursor: 'pointer' }}
+                      onClick={() => setZoomed({ img: resolveImageUrl(item.mediaUrl), title: item.title })}
+                    />
                   )}
                 </td>
                 <td style={{ padding: '.6rem 1rem' }}>{item.title}</td>
@@ -138,6 +150,8 @@ export default function AdminGallery() {
           </tbody>
         </table>
       </div>
+
+      <Lightbox item={zoomed} onClose={() => setZoomed(null)} />
     </div>
   );
 }

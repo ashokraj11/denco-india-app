@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { api } from '../../api/client';
 import ImageUploadField from '../../components/admin/ImageUploadField';
+import Lightbox from '../../components/Lightbox';
 import { resolveImageUrl } from '../../utils/resolveImageUrl';
 
 const EMPTY = { image_url: '', label: '', display_order: 0 };
@@ -12,6 +13,7 @@ export default function AdminTrustBadges() {
   const [editingId, setEditingId] = useState(null);
   const [form, setForm] = useState(EMPTY);
   const [saving, setSaving] = useState(false);
+  const [zoomed, setZoomed] = useState(null);
 
   function load() {
     setLoading(true);
@@ -117,7 +119,12 @@ export default function AdminTrustBadges() {
             {items.map((item) => (
               <tr key={item.id} style={{ borderBottom: '1px solid var(--line)' }}>
                 <td style={{ padding: '.6rem 1rem' }}>
-                  <img src={resolveImageUrl(item.imageUrl)} alt={item.label || ''} style={{ width: 40, height: 40, objectFit: 'contain', borderRadius: 8, background: 'var(--mist)', padding: 4 }} />
+                  <img
+                    src={resolveImageUrl(item.imageUrl)}
+                    alt={item.label || ''}
+                    style={{ width: 40, height: 40, objectFit: 'contain', borderRadius: 8, background: 'var(--mist)', padding: 4, cursor: 'pointer' }}
+                    onClick={() => setZoomed({ img: resolveImageUrl(item.imageUrl), title: item.label })}
+                  />
                 </td>
                 <td style={{ padding: '.6rem 1rem' }}>{item.display_order}</td>
                 <td style={{ padding: '.6rem 1rem', whiteSpace: 'nowrap' }}>
@@ -129,6 +136,8 @@ export default function AdminTrustBadges() {
           </tbody>
         </table>
       </div>
+
+      <Lightbox item={zoomed} onClose={() => setZoomed(null)} />
     </div>
   );
 }
