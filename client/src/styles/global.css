@@ -151,18 +151,25 @@ section{ position:relative; padding:clamp(3.6rem,7vw,6rem) 0; }
   padding:clamp(.85rem, 2vw, 1.2rem) clamp(1rem, 4vw, 2rem);
 }
 
-.brand{
-  display:flex; align-items:center; gap:clamp(.4rem, 2vw, .65rem);
+.brand-block{
+  display:flex; flex-direction:column; align-items:center; gap:.5rem;
   font-family:var(--f-display); font-weight:800; color:var(--navy);
-  font-size:clamp(.95rem, 3.5vw, 1.25rem);
+  text-align:center;
   flex-shrink: 0;
   margin-left:-30px;
 }
-.brand-text-col{
-  display:flex; flex-direction:column; align-items:flex-start; gap:.3rem;
+.brand-name-row{ display:flex; flex-direction:column; align-items:center; }
+.brand-name{ font-size:clamp(1.1rem, 2.6vw, 1.5rem); line-height:1.15; }
+.brand-name-row small{
+  display:block; font-family:var(--f-body);
+  font-size:clamp(.62rem, 1.6vw, .78rem);
+  letter-spacing:.16em; color:var(--accent); font-weight:700;
+  margin-top:.2rem;
+  white-space:nowrap;
 }
+.brand-logo-row{ display:flex; align-items:center; gap:1rem; }
 .brand-secondary-logo{
-  display:block; width:auto; height:auto; max-width:140px;
+  display:block; height:clamp(84px, 16vw, 104px); width:auto; max-width:220px;
 }
 .brand-mark{
   width:clamp(84px, 16vw, 104px); height:clamp(84px, 16vw, 104px);
@@ -179,23 +186,6 @@ section{ position:relative; padding:clamp(3.6rem,7vw,6rem) 0; }
 .brand-mark-img{
   display:block; height:clamp(84px, 16vw, 104px); width:auto; max-width:160px;
   flex-shrink: 0;
-}
-.brand-name{ font-size:1.3em; }
-.brand small{
-  display:block; font-family:var(--f-body);
-  font-size:clamp(.72rem, 2.6vw, .88rem);
-  letter-spacing:.16em; color:var(--accent); font-weight:700;
-  margin-top:clamp(0px, 1vw, 2px);
-  white-space:nowrap;
-}
-.brand--compact{
-  font-size:clamp(.65rem, 2.2vw, .82rem);
-}
-.brand--compact small{
-  font-size:clamp(.5rem, 1.7vw, .6rem);
-}
-.brand--compact .brand-text-col{
-  gap:.4rem;
 }
 
 .nav-links{ display:flex; align-items:center; gap:clamp(.9rem, 1.8vw, 2.1rem); flex-wrap:nowrap; margin-left:auto; }
@@ -826,7 +816,8 @@ section{ position:relative; padding:clamp(3.6rem,7vw,6rem) 0; }
    ========================================================================== */
 footer{ background:#071A13; color:rgba(255,255,255,.65); padding-top:4rem; }
 .footer-grid{ display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr 1.2fr; gap:2rem; padding-bottom:2.6rem; border-bottom:1px solid rgba(255,255,255,.08); }
-.footer-brand .brand{ color:#fff; }
+.footer-brand .brand-block{ color:#fff; align-items:flex-start; text-align:left; margin-left:0; }
+.footer-brand .brand-name-row{ align-items:flex-start; }
 .footer-brand p{ margin-top:1rem; font-size:.85rem; line-height:1.7; max-width:22rem; color:rgba(255,255,255,.5); }
 .footer-social{ display:flex; gap:.7rem; margin-top:1.3rem; }
 .footer-social a{ width:34px; height:34px; border-radius:8px; border:1px solid rgba(255,255,255,.15); display:flex; align-items:center; justify-content:center; transition:all .3s var(--ease); }
