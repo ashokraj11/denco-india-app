@@ -158,14 +158,14 @@ section{ position:relative; padding:clamp(3.6rem,7vw,6rem) 0; }
   flex-shrink: 0;
 }
 .brand-text-col{
-  display:flex; flex-direction:column; align-items:flex-start; gap:.55rem;
+  display:flex; flex-direction:column; align-items:flex-start; gap:.3rem;
 }
 .brand-secondary-logo{
-  display:block; width:auto; height:auto; max-width:220px;
+  display:block; width:auto; height:auto; max-width:140px;
 }
 .brand-mark{
-  width:clamp(64px, 14vw, 80px); height:clamp(64px, 14vw, 80px);
-  border-radius:clamp(16px, 4vw, 24px);
+  width:clamp(42px, 8vw, 52px); height:clamp(42px, 8vw, 52px);
+  border-radius:clamp(12px, 3vw, 16px);
   background:var(--grad-green);
   display:flex; align-items:center; justify-content:center;
   box-shadow:0 8px 16px -6px rgba(30,145,66,.5);
@@ -176,13 +176,13 @@ section{ position:relative; padding:clamp(3.6rem,7vw,6rem) 0; }
   height:55%;
 }
 .brand-mark-img{
-  display:block; height:clamp(64px, 14vw, 80px); width:auto; max-width:120px;
+  display:block; height:clamp(42px, 8vw, 52px); width:auto; max-width:80px;
   flex-shrink: 0;
 }
-.brand-name{ font-size:2em; }
+.brand-name{ font-size:1.3em; }
 .brand small{
   display:block; font-family:var(--f-body);
-  font-size:clamp(1.1rem, 4vw, 1.36rem);
+  font-size:clamp(.72rem, 2.6vw, .88rem);
   letter-spacing:.16em; color:var(--accent); font-weight:700;
   margin-top:clamp(0px, 1vw, 2px);
   white-space:nowrap;
@@ -191,7 +191,7 @@ section{ position:relative; padding:clamp(3.6rem,7vw,6rem) 0; }
   font-size:clamp(.65rem, 2.2vw, .82rem);
 }
 .brand--compact small{
-  font-size:clamp(.76rem, 2.6vw, .92rem);
+  font-size:clamp(.5rem, 1.7vw, .6rem);
 }
 .brand--compact .brand-text-col{
   gap:.4rem;
