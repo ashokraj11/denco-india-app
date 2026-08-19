@@ -56,12 +56,13 @@ const upload = multer({
   }
 });
 
-// Used for the Technology & Infrastructure gallery, which accepts photos or
-// short video clips — a separate, larger limit so the ordinary image fields
-// above stay capped at 5MB.
+// Used for the Gallery, which accepts photos or video clips up to 3GB — a
+// separate, much larger limit so the ordinary image fields above stay
+// capped at 5MB. See server.js for the matching HTTP server timeout a
+// file this size needs to survive uploading on a slow connection.
 const uploadMedia = multer({
   storage,
-  limits: { fileSize: 60 * 1024 * 1024 },
+  limits: { fileSize: 3 * 1024 * 1024 * 1024 },
   fileFilter: (req, file, cb) => {
     if (!IMAGE_MIME.has(file.mimetype) && !VIDEO_MIME.has(file.mimetype)) {
       return cb(new Error('Only image (jpeg, png, webp, gif, svg) or video (mp4, webm, ogg, mov) files are allowed'));
