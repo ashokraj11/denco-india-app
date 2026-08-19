@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { LinkedInIcon, InstagramIcon, FacebookIcon, YoutubeIcon, LocationPinIcon, PhoneIcon, MailIcon } from './icons/UiIcons';
 import DecorativeLayer from './DecorativeLayer';
 import BrandLockup from './BrandLockup';
+import HashLink from './HashLink';
 import { useSiteSettings } from '../context/SiteSettingsContext';
 
 export default function Footer() {
@@ -24,28 +25,28 @@ export default function Footer() {
           <div className="footer-col">
             <h5>Company</h5>
             <ul>
-              <li><a href="#about">About Us</a></li>
-              <li><a href="#about">Vision &amp; Mission</a></li>
-              <li><a href="#certs">Certifications</a></li>
-              <li><a href="#technology">Technology</a></li>
+              <li><HashLink href="#about">About Us</HashLink></li>
+              <li><HashLink href="#about">Vision &amp; Mission</HashLink></li>
+              <li><HashLink href="#certs">Certifications</HashLink></li>
+              <li><HashLink href="#technology">Technology</HashLink></li>
               <li><Link to="/careers">Careers</Link></li>
             </ul>
           </div>
           <div className="footer-col">
             <h5>Our Services</h5>
             <ul>
-              <li><a href="#cat-fixed">Crown &amp; Bridge</a></li>
-              <li><a href="#cat-digital">CAD/CAM Digital Dentistry</a></li>
-              <li><a href="#cat-fixed">Zirconia Restorations</a></li>
-              <li><a href="#cat-implant">Implant Prosthetics</a></li>
+              <li><HashLink href="#cat-fixed">Crown &amp; Bridge</HashLink></li>
+              <li><HashLink href="#cat-digital">CAD/CAM Digital Dentistry</HashLink></li>
+              <li><HashLink href="#cat-fixed">Zirconia Restorations</HashLink></li>
+              <li><HashLink href="#cat-implant">Implant Prosthetics</HashLink></li>
             </ul>
           </div>
           <div className="footer-col">
             <h5>Information</h5>
             <ul>
-              <li><a href="#certs">Quality Assurance</a></li>
-              <li><a href="#service-network">Service Network</a></li>
-              <li><a href="#faq">FAQs</a></li>
+              <li><HashLink href="#certs">Quality Assurance</HashLink></li>
+              <li><HashLink href="#service-network">Service Network</HashLink></li>
+              <li><HashLink href="#faq">FAQs</HashLink></li>
               <li><a href="#">Download Catalogue</a></li>
             </ul>
           </div>

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRightIcon } from './icons/UiIcons';
 import BrandLockup from './BrandLockup';
+import HashLink from './HashLink';
 
 const LINKS = [
   { href: '#home', label: 'Home' },
@@ -92,29 +93,29 @@ export default function Navbar() {
           <ul className={`nav-links${mobileOpen ? ' open' : ''}`} id="navLinks">
             {LINKS.map((link) => (
               <li key={link.href}>
-                <a
+                <HashLink
                   href={link.href}
                   className={activeHref === link.href ? 'active' : ''}
                   onClick={() => setMobileOpen(false)}
                 >
                   {link.label}
-                </a>
+                </HashLink>
               </li>
             ))}
             <li>
               <Link to="/careers" onClick={() => setMobileOpen(false)}>Careers</Link>
             </li>
             <li>
-              <a href="#contact" data-cta onClick={() => setMobileOpen(false)}>
+              <HashLink href="#contact" data-cta onClick={() => setMobileOpen(false)}>
                 <span className="btn btn-primary btn-sm">Book a Lab Pickup</span>
-              </a>
+              </HashLink>
             </li>
           </ul>
 
-          <a href="#contact" className="btn btn-primary btn-sm nav-desktop-cta">
+          <HashLink href="#contact" className="btn btn-primary btn-sm nav-desktop-cta">
             Book a Lab Pickup
             <ArrowRightIcon />
-          </a>
+          </HashLink>
         </div>
       </nav>
       <div className={`nav-overlay${mobileOpen ? ' open' : ''}`} onClick={() => setMobileOpen(false)}></div>

@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useSmoothAnchorScroll } from '../hooks/useSmoothAnchorScroll';
 import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
@@ -16,6 +18,20 @@ import SeoMeta from '../components/SeoMeta';
 
 export default function Home() {
   useSmoothAnchorScroll();
+  const { hash } = useLocation();
+
+  useEffect(() => {
+    if (!hash || hash.length <= 1) return undefined;
+    // Arriving here from another page (e.g. a HashLink from /careers) --
+    // give the sections a tick to render before measuring their position.
+    const t = setTimeout(() => {
+      const target = document.querySelector(hash);
+      if (!target) return;
+      const y = target.getBoundingClientRect().top + window.scrollY - 84;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }, 60);
+    return () => clearTimeout(t);
+  }, [hash]);
 
   return (
     <>
