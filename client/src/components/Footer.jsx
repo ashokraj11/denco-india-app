@@ -62,8 +62,8 @@ export default function Footer() {
         <div className="footer-bottom">
           <span>© {new Date().getFullYear()} {settings.siteName} {settings.tagline}. All Rights Reserved.</span>
           <div style={{ display: 'flex', gap: '1.4rem' }}>
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms &amp; Conditions</a>
+            <Link to="/privacy-policy">Privacy Policy</Link>
+            <Link to="/terms-conditions">Terms &amp; Conditions</Link>
           </div>
         </div>
       </div>

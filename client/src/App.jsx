@@ -3,6 +3,7 @@ import { AdminAuthProvider } from './context/AdminAuthContext';
 import { SiteSettingsProvider } from './context/SiteSettingsContext';
 import Home from './pages/Home';
 import Career from './pages/Career';
+import LegalPage from './pages/LegalPage';
 import AdminLogin from './pages/AdminLogin';
 import AdminLayout from './pages/admin/AdminLayout';
 import AdminEnquiries from './pages/admin/AdminEnquiries';
@@ -19,6 +20,7 @@ import AdminTrustBadges from './pages/admin/AdminTrustBadges';
 import AdminOffices from './pages/admin/AdminOffices';
 import AdminFaqs from './pages/admin/AdminFaqs';
 import AdminSettings from './pages/admin/AdminSettings';
+import AdminLegalPages from './pages/admin/AdminLegalPages';
 import AdminBackup from './pages/admin/AdminBackup';
 
 export default function App() {
@@ -28,6 +30,8 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/careers" element={<Career />} />
+          <Route path="/privacy-policy" element={<LegalPage slug="privacy-policy" />} />
+          <Route path="/terms-conditions" element={<LegalPage slug="terms-conditions" />} />
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<Navigate to="enquiries" replace />} />
@@ -45,6 +49,7 @@ export default function App() {
             <Route path="offices" element={<AdminOffices />} />
             <Route path="faqs" element={<AdminFaqs />} />
             <Route path="settings" element={<AdminSettings />} />
+            <Route path="legal-pages" element={<AdminLegalPages />} />
             <Route path="backup" element={<AdminBackup />} />
           </Route>
         </Routes>

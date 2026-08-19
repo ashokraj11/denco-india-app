@@ -750,6 +750,16 @@ section{ position:relative; padding:clamp(3.6rem,7vw,6rem) 0; }
 .job-card-main p{ font-size:.88rem; color:var(--mute); line-height:1.6; max-width:52ch; }
 .job-card > .btn{ flex-shrink:0; }
 
+/* ---------- Legal Pages (Privacy Policy / Terms & Conditions) ---------- */
+.legal-page{ padding-bottom:4rem; min-height:60vh; }
+.legal-page .container{ max-width:800px; margin-top:calc(var(--nav-h, 5.5rem) + 2.5rem); }
+.legal-page h1{ font-size:clamp(1.8rem,3vw,2.5rem); color:var(--navy); }
+.legal-page-updated{ margin-top:.5rem; color:var(--mute); font-size:.85rem; }
+.legal-page-content{
+  margin-top:2rem; color:var(--ink-soft); font-size:.98rem; line-height:1.8;
+  white-space:pre-wrap;
+}
+
 /* ---------- Job Application Modal ---------- */
 .job-apply-modal{
   position:fixed; inset:0; z-index:1000;

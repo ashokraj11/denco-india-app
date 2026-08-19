@@ -196,6 +196,21 @@ CREATE TABLE IF NOT EXISTS job_openings (
 -- URL -- resumes are candidate PII and are served only through an
 -- authenticated admin download endpoint, never the public /uploads static
 -- path. See server/src/middleware/upload.js (uploadResume, resumeDir).
+CREATE TABLE IF NOT EXISTS legal_pages (
+  id          INT AUTO_INCREMENT PRIMARY KEY,
+  slug        VARCHAR(40) NOT NULL UNIQUE,
+  title       VARCHAR(150) NOT NULL,
+  content     LONGTEXT NOT NULL,
+  updated_at  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- INSERT IGNORE (not a plain INSERT) so re-running this file against an
+-- existing database -- the idempotent-migration convention used throughout
+-- this file -- doesn't clobber content an admin has already edited.
+INSERT IGNORE INTO legal_pages (slug, title, content) VALUES
+  ('privacy-policy', 'Privacy Policy', 'This Privacy Policy explains how DENCO INDIA collects, uses and protects the information you share with us through this website, including enquiry forms and job applications. Edit this content from the admin panel under Settings -> Legal Pages.'),
+  ('terms-conditions', 'Terms & Conditions', 'These Terms & Conditions govern your use of the DENCO INDIA website and services. Edit this content from the admin panel under Settings -> Legal Pages.');
+
 CREATE TABLE IF NOT EXISTS job_applications (
   id              INT AUTO_INCREMENT PRIMARY KEY,
   job_id          INT NULL,

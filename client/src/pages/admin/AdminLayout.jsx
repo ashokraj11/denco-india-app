@@ -25,6 +25,7 @@ const NAV_GROUPS = [
   { label: 'Network', items: [{ to: 'offices', label: 'Area Managers' }] },
   { label: 'Settings', items: [
     { to: 'settings', label: 'Site Settings' },
+    { to: 'legal-pages', label: 'Legal Pages' },
     { to: 'backup', label: 'Backup & Restore' }
   ] }
 ];
