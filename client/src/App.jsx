@@ -1,4 +1,5 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AdminAuthProvider } from './context/AdminAuthContext';
 import { SiteSettingsProvider } from './context/SiteSettingsContext';
 import Home from './pages/Home';
@@ -23,10 +24,26 @@ import AdminSettings from './pages/admin/AdminSettings';
 import AdminLegalPages from './pages/admin/AdminLegalPages';
 import AdminBackup from './pages/admin/AdminBackup';
 
+// React Router doesn't reset scroll position on navigation like a normal
+// page load would -- without this, clicking a plain <Link> (e.g. "Careers"
+// in the nav) while scrolled down keeps that same pixel offset on the new
+// page, which can land you anywhere, including down in its footer. Hash
+// navigation (e.g. HashLink to "/#services") is deliberately left alone
+// here since Home's own effect handles scrolling to that section.
+function ScrollToTop() {
+  const { pathname, hash } = useLocation();
+  useEffect(() => {
+    if (hash) return;
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+}
+
 export default function App() {
   return (
     <SiteSettingsProvider>
       <AdminAuthProvider>
+        <ScrollToTop />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/careers" element={<Career />} />
