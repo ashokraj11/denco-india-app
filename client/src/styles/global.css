@@ -182,7 +182,7 @@ section{ position:relative; padding:clamp(3.6rem,7vw,6rem) 0; }
 .brand-name{ font-size:2em; }
 .brand small{
   display:block; font-family:var(--f-body);
-  font-size:clamp(.55rem, 2vw, .68rem);
+  font-size:clamp(1.1rem, 4vw, 1.36rem);
   letter-spacing:.16em; color:var(--accent); font-weight:700;
   margin-top:clamp(0px, 1vw, 2px);
   white-space:nowrap;
@@ -191,7 +191,7 @@ section{ position:relative; padding:clamp(3.6rem,7vw,6rem) 0; }
   font-size:clamp(.65rem, 2.2vw, .82rem);
 }
 .brand--compact small{
-  font-size:clamp(.38rem, 1.3vw, .46rem);
+  font-size:clamp(.76rem, 2.6vw, .92rem);
 }
 .brand--compact .brand-text-col{
   gap:.4rem;
