@@ -100,7 +100,7 @@ export default function JobApplicationModal({ open, job, jobs, onClose }) {
           </div>
         ) : (
           <form className="contact-form-card" noValidate onSubmit={handleSubmit}>
-            <h3 style={{ color: 'var(--navy)', fontSize: '1.15rem' }}>
+            <h3 style={{ color: 'var(--navy)', fontSize: '1rem' }}>
               {job ? `Apply for ${job.title}` : 'Application Form'}
             </h3>
             <div className="form-row">
@@ -141,10 +141,10 @@ export default function JobApplicationModal({ open, job, jobs, onClose }) {
             </div>
             <div className="form-group">
               <label htmlFor="jf-message">Message (optional)</label>
-              <textarea id="jf-message" rows="4" placeholder="Tell us a bit about yourself…" value={form.message} onChange={(e) => update('message', e.target.value)}></textarea>
+              <textarea id="jf-message" rows="2" placeholder="Tell us a bit about yourself…" value={form.message} onChange={(e) => update('message', e.target.value)}></textarea>
             </div>
             {error && <p className="form-note" style={{ color: '#D9611E' }}>{error}</p>}
-            <button type="submit" className="btn btn-accent" disabled={submitting}>
+            <button type="submit" className="btn btn-accent btn-sm" disabled={submitting}>
               {submitting ? 'Submitting…' : 'Submit Application'}
               <ArrowRightIcon />
             </button>

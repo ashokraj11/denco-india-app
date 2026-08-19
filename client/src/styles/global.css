@@ -765,24 +765,37 @@ section{ position:relative; padding:clamp(3.6rem,7vw,6rem) 0; }
 }
 .job-apply-modal.open{ opacity:1; visibility:visible; transition:opacity .3s var(--ease); }
 .job-apply-modal-inner{
-  position:relative; max-width:640px; width:100%; margin:auto 0;
+  position:relative; max-width:440px; width:100%; margin:auto 0;
   transform:translateY(18px) scale(.97); transition:transform .35s var(--ease);
 }
 .job-apply-modal.open .job-apply-modal-inner{ transform:translateY(0) scale(1); }
-.job-apply-modal-inner .contact-form-card{ box-shadow:var(--shadow-lift); }
-.job-apply-modal-inner .cert-lightbox-close{ top:-.9rem; right:-.9rem; }
+.job-apply-modal-inner .contact-form-card{
+  box-shadow:var(--shadow-lift);
+  padding:1.3rem 1.4rem 1.5rem; gap:.65rem; border-radius:var(--r-lg);
+}
+.job-apply-modal-inner .contact-form-card h3{ margin-bottom:.1rem; }
+.job-apply-modal-inner .form-row{ gap:.65rem; }
+.job-apply-modal-inner .form-group{ gap:.3rem; }
+.job-apply-modal-inner .form-group label{ font-size:.7rem; }
+.job-apply-modal-inner .form-group input,
+.job-apply-modal-inner .form-group select,
+.job-apply-modal-inner .form-group textarea{ padding:.5rem .7rem; font-size:.82rem; }
+.job-apply-modal-inner .form-group textarea{ min-height:56px; }
+.job-apply-modal-inner .contact-form-card .btn{ margin-top:0; }
+.job-apply-modal-inner .cert-lightbox-close{ top:-.9rem; right:-.9rem; width:30px; height:30px; }
+.job-apply-modal-inner .cert-lightbox-close svg{ width:13px; height:13px; }
 .job-apply-success{
   background:#fff; border-radius:var(--r-lg); box-shadow:var(--shadow-lift);
-  padding:2.6rem 2rem; text-align:center; max-width:360px; margin:0 auto;
+  padding:1.8rem 1.5rem; text-align:center; max-width:300px; margin:0 auto;
 }
 .job-apply-success-icon{
   display:inline-flex; align-items:center; justify-content:center;
-  width:52px; height:52px; border-radius:50%;
-  background:var(--accent); color:#fff; margin-bottom:1rem;
+  width:38px; height:38px; border-radius:50%;
+  background:var(--accent); color:#fff; margin-bottom:.7rem;
 }
-.job-apply-success-icon svg{ width:24px; height:24px; }
-.job-apply-success h3{ margin:0 0 .5rem; font-size:1.15rem; }
-.job-apply-success p{ margin:0; color:var(--mute); font-size:.92rem; line-height:1.5; }
+.job-apply-success-icon svg{ width:18px; height:18px; }
+.job-apply-success h3{ margin:0 0 .35rem; font-size:1.02rem; }
+.job-apply-success p{ margin:0; color:var(--mute); font-size:.85rem; line-height:1.45; }
 
 /* ==========================================================================
    CONTACT CTA
