@@ -80,8 +80,10 @@ async function uploadFormRequest(path, fields, file, fieldName) {
 
 // Downloads a protected (Authorization-header-requiring) endpoint's response
 // as a file — a plain <a href> can't attach that header, so this fetches it
-// as a blob and triggers the save via a throwaway link instead.
-async function downloadFile(path, fallbackFilename) {
+// as a blob and triggers the save via a throwaway link instead. Reads the
+// body as a stream (rather than one res.blob() call) so onProgress can be
+// told how far along a large backup download is.
+async function downloadFile(path, fallbackFilename, onProgress) {
   const token = localStorage.getItem(TOKEN_KEY);
   const headers = {};
   if (token && path.startsWith('/admin')) headers.Authorization = `Bearer ${token}`;
@@ -98,7 +100,26 @@ async function downloadFile(path, fallbackFilename) {
   const match = disposition.match(/filename="?([^"]+)"?/);
   const filename = match?.[1] || fallbackFilename;
 
-  const blob = await res.blob();
+  const total = Number(res.headers.get('content-length')) || 0;
+  let blob;
+  if (total > 0 && res.body && onProgress) {
+    const reader = res.body.getReader();
+    const chunks = [];
+    let received = 0;
+    for (;;) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      chunks.push(value);
+      received += value.length;
+      onProgress(Math.min(100, Math.round((received / total) * 100)));
+    }
+    blob = new Blob(chunks);
+  } else {
+    // No Content-Length (e.g. a chunked/streamed response) -- fall back to
+    // an indeterminate download with no percentage.
+    blob = await res.blob();
+  }
+
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
@@ -119,5 +140,5 @@ export const api = {
   uploadDocument: (path, file) => uploadRequest(path, file, 'document'),
   uploadBackup: (path, file) => uploadRequest(path, file, 'backup'),
   submitWithFile: (path, fields, file) => uploadFormRequest(path, fields, file, 'resume'),
-  download: (path, fallbackFilename) => downloadFile(path, fallbackFilename)
+  download: (path, fallbackFilename, onProgress) => downloadFile(path, fallbackFilename, onProgress)
 };

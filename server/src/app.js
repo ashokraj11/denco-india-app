@@ -58,9 +58,20 @@ app.use(cors({
   origin(origin, callback) {
     if (!origin || allowedOrigins.includes(origin)) return callback(null, true);
     callback(new Error(`Origin ${origin} not allowed by CORS`));
-  }
+  },
+  // Cross-origin fetch() can only read a handful of "safe" response headers
+  // by default -- Content-Disposition/Content-Length aren't in that list, so
+  // without this the client can't see the backup filename or total size to
+  // compute a download progress percentage from (client/api on separate
+  // subdomains in production means every API call here is cross-origin).
+  exposedHeaders: ['Content-Disposition', 'Content-Length']
 }));
-app.use(compression());
+// Backup downloads are excluded -- gzip-compressing the response strips the
+// Content-Length header (final size isn't known until the stream ends), and
+// the client needs that header up front to compute a download percentage.
+app.use(compression({
+  filter: (req, res) => (req.path.startsWith('/api/admin/backup') ? false : compression.filter(req, res))
+}));
 app.use(express.json());
 // Filenames under /uploads are random UUIDs assigned once at upload time and
 // never reused for different content, so caching them for a year is safe --

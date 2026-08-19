@@ -54,31 +54,31 @@ function RestorePanel({ title, description, confirmWord, accept, onRestore }) {
 }
 
 export default function AdminBackup() {
-  const [dbDownloading, setDbDownloading] = useState(false);
-  const [filesDownloading, setFilesDownloading] = useState(false);
+  const [dbProgress, setDbProgress] = useState(null);
+  const [filesProgress, setFilesProgress] = useState(null);
   const [downloadError, setDownloadError] = useState(null);
 
   async function downloadDatabase() {
-    setDbDownloading(true);
+    setDbProgress(0);
     setDownloadError(null);
     try {
-      await api.download('/admin/backup/database', 'denco-database-backup.json');
+      await api.download('/admin/backup/database', 'denco-database-backup.json', setDbProgress);
     } catch (err) {
       setDownloadError(err.message);
     } finally {
-      setDbDownloading(false);
+      setDbProgress(null);
     }
   }
 
   async function downloadFiles() {
-    setFilesDownloading(true);
+    setFilesProgress(0);
     setDownloadError(null);
     try {
-      await api.download('/admin/backup/files', 'denco-files-backup.zip');
+      await api.download('/admin/backup/files', 'denco-files-backup.zip', setFilesProgress);
     } catch (err) {
       setDownloadError(err.message);
     } finally {
-      setFilesDownloading(false);
+      setFilesProgress(null);
     }
   }
 
@@ -97,16 +97,26 @@ export default function AdminBackup() {
         <div className="contact-form-card" style={{ maxWidth: 320 }}>
           <h3 style={{ color: 'var(--navy)', fontSize: '1.05rem', margin: 0 }}>Download Database Backup</h3>
           <p style={{ fontSize: '.85rem', color: 'var(--mute)', margin: 0 }}>Saves a .json file with all content.</p>
-          <button type="button" className="btn btn-accent btn-sm" onClick={downloadDatabase} disabled={dbDownloading}>
-            {dbDownloading ? 'Preparing…' : 'Download'}
+          <button type="button" className="btn btn-accent btn-sm" onClick={downloadDatabase} disabled={dbProgress !== null}>
+            {dbProgress === null ? 'Download' : dbProgress > 0 ? `Downloading… ${dbProgress}%` : 'Preparing…'}
           </button>
+          {dbProgress !== null && (
+            <div style={{ height: 5, borderRadius: 3, background: 'var(--mist)', overflow: 'hidden' }}>
+              <div style={{ height: '100%', width: `${dbProgress}%`, background: 'var(--accent)', transition: 'width .2s ease' }} />
+            </div>
+          )}
         </div>
         <div className="contact-form-card" style={{ maxWidth: 320 }}>
           <h3 style={{ color: 'var(--navy)', fontSize: '1.05rem', margin: 0 }}>Download Files Backup</h3>
           <p style={{ fontSize: '.85rem', color: 'var(--mute)', margin: 0 }}>Saves a .zip of every uploaded image/video.</p>
-          <button type="button" className="btn btn-accent btn-sm" onClick={downloadFiles} disabled={filesDownloading}>
-            {filesDownloading ? 'Preparing…' : 'Download'}
+          <button type="button" className="btn btn-accent btn-sm" onClick={downloadFiles} disabled={filesProgress !== null}>
+            {filesProgress === null ? 'Download' : filesProgress > 0 ? `Downloading… ${filesProgress}%` : 'Preparing…'}
           </button>
+          {filesProgress !== null && (
+            <div style={{ height: 5, borderRadius: 3, background: 'var(--mist)', overflow: 'hidden' }}>
+              <div style={{ height: '100%', width: `${filesProgress}%`, background: 'var(--accent)', transition: 'width .2s ease' }} />
+            </div>
+          )}
         </div>
       </div>
 
