@@ -100,7 +100,7 @@ export default function AdminSettings() {
         </div>
         <div className="form-group">
           <label>WhatsApp Number (digits only, with country code)</label>
-          <input type="text" placeholder="917010767919" value={form.whatsappNumber || ''} onChange={(e) => update('whatsappNumber', e.target.value)} />
+          <input type="text" placeholder="919876543210" value={form.whatsappNumber || ''} onChange={(e) => update('whatsappNumber', e.target.value)} />
         </div>
 
         <h3 style={{ color: 'var(--navy)', fontSize: '1.05rem', margin: '.5rem 0 0' }}>Social Media Links</h3>
