@@ -24,7 +24,14 @@ export default function AdminFormModal({ open, onClose, children }) {
       document.body.style.overflow = '';
       document.removeEventListener('keydown', onKey);
     };
-  }, [open, onClose]);
+    // Deliberately NOT depending on `onClose` -- none of the admin pages
+    // memoize their cancelEdit handler, so it's a new function reference on
+    // every render. Typing in any field re-renders the parent (setForm),
+    // and with onClose in the deps that reran this effect on every single
+    // keystroke -- re-focusing the first field and yanking focus away from
+    // whatever field was actually being typed into.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open]);
 
   return (
     <div
