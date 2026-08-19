@@ -792,6 +792,26 @@ section{ position:relative; padding:clamp(3.6rem,7vw,6rem) 0; }
 .job-apply-modal-inner .contact-form-card .btn{ margin-top:0; }
 .job-apply-modal-inner .cert-lightbox-close{ top:-.9rem; right:-.9rem; width:30px; height:30px; }
 .job-apply-modal-inner .cert-lightbox-close svg{ width:13px; height:13px; }
+
+/* ---------- Admin add/edit form popup (AdminFormModal) ---------- */
+.admin-modal{
+  position:fixed; inset:0; z-index:1000;
+  background:rgba(6,35,26,.6);
+  display:flex; align-items:flex-start; justify-content:center;
+  padding:clamp(1.2rem,4vw,3rem);
+  overflow-y:auto;
+  opacity:0; visibility:hidden;
+  transition:opacity .25s var(--ease), visibility 0s linear .25s;
+}
+.admin-modal.open{ opacity:1; visibility:visible; transition:opacity .25s var(--ease); }
+.admin-modal-inner{
+  position:relative; max-width:640px; width:100%; margin:auto 0;
+  transform:translateY(14px) scale(.98); transition:transform .25s var(--ease);
+}
+.admin-modal.open .admin-modal-inner{ transform:translateY(0) scale(1); }
+.admin-modal-inner .contact-form-card{ box-shadow:var(--shadow-lift); margin-bottom:0; max-width:none; }
+.admin-modal-inner .cert-lightbox-close{ top:-.9rem; right:-.9rem; width:30px; height:30px; }
+.admin-modal-inner .cert-lightbox-close svg{ width:13px; height:13px; }
 .job-apply-success{
   background:#fff; border-radius:var(--r-lg); box-shadow:var(--shadow-lift);
   padding:1.8rem 1.5rem; text-align:center; max-width:300px; margin:0 auto;

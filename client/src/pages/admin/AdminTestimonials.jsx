@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { api } from '../../api/client';
 import MediaUploadField from '../../components/admin/MediaUploadField';
+import AdminFormModal from '../../components/admin/AdminFormModal';
 import { resolveImageUrl } from '../../utils/resolveImageUrl';
 import { useSiteSettings } from '../../context/SiteSettingsContext';
 
@@ -118,8 +119,8 @@ export default function AdminTestimonials() {
 
       {error && <p className="form-note" style={{ color: '#D9611E' }}>{error}</p>}
 
-      {editingId !== null && (
-        <form onSubmit={handleSubmit} className="contact-form-card" style={{ marginBottom: '1.5rem', maxWidth: 560 }}>
+      <AdminFormModal open={editingId !== null} onClose={cancelEdit}>
+        <form onSubmit={handleSubmit} className="contact-form-card">
           <h3 style={{ color: 'var(--navy)', fontSize: '1.05rem', margin: 0 }}>{editingId === 'new' ? 'Add New' : 'Edit'}</h3>
           <div className="form-row">
             <div className="form-group">
@@ -150,7 +151,7 @@ export default function AdminTestimonials() {
             <button type="button" className="btn btn-ghost btn-sm" onClick={cancelEdit}>Cancel</button>
           </div>
         </form>
-      )}
+      </AdminFormModal>
 
       <div style={{ overflowX: 'auto', background: '#fff', borderRadius: 'var(--r-lg)', border: '1px solid var(--line)' }}>
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '.88rem' }}>
