@@ -4,7 +4,8 @@
    Type: Manrope (display) + Inter (body)
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
+/* Manrope/Inter are loaded from index.html via <link>, not @import here --
+   see the comment there for why. */
 
 :root{
   --navy:        #0B3327;

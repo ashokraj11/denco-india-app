@@ -14,7 +14,7 @@ export default function About() {
             <a href="#certs" className="btn btn-accent" style={{ marginTop: '1.6rem' }}>Our Certifications</a>
           </Reveal>
           <Reveal as="div" className="about-media" delay={1}>
-            <img src="https://images.unsplash.com/photo-1468493858157-0da44aaf1d13?q=80&w=1200&auto=format&fit=crop" alt="Hand holding a precision dental restoration for close inspection" />
+            <img src="https://images.unsplash.com/photo-1468493858157-0da44aaf1d13?q=80&w=1200&auto=format&fit=crop" alt="Hand holding a precision dental restoration for close inspection" loading="lazy" decoding="async" />
           </Reveal>
         </div>
       </div>

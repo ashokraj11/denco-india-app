@@ -9,6 +9,14 @@
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://dencoindia.com/">
 
+<!-- Font loading moved here (instead of a CSS @import) so the browser
+     discovers and fetches these in parallel with the main bundle -- an
+     @import inside a stylesheet is a serial fetch that blocks first paint
+     until the imported CSS itself is done downloading and parsed. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap">
+
 <!-- Open Graph / Facebook, WhatsApp, LinkedIn link previews -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="DENCO INDIA">

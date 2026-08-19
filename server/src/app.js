@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const compression = require('compression');
 const path = require('path');
 require('./config/loadEnv');
 
@@ -59,8 +60,12 @@ app.use(cors({
     callback(new Error(`Origin ${origin} not allowed by CORS`));
   }
 }));
+app.use(compression());
 app.use(express.json());
-app.use('/uploads', express.static(uploadDir));
+// Filenames under /uploads are random UUIDs assigned once at upload time and
+// never reused for different content, so caching them for a year is safe --
+// an edited/replaced image gets a brand new filename, not the old one.
+app.use('/uploads', express.static(uploadDir, { maxAge: '365d', immutable: true }));
 
 // API responses are dynamic and must never be served stale by a CDN, proxy,
 // or the browser's own cache -- e.g. site settings edited in the admin panel

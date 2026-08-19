@@ -17,4 +17,18 @@
   ExpiresByType text/css "access plus 1 year"
   ExpiresByType image/jpeg "access plus 1 year"
   ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
+  ExpiresByType image/x-icon "access plus 1 year"
+  ExpiresByType font/woff2 "access plus 1 year"
+</IfModule>
+
+# Compress text-based responses so the browser downloads far fewer bytes
+# for the JS/CSS bundle, HTML, and SVGs (images like JPEG/PNG/WebP are
+# already compressed formats and gain nothing from this, so they're left
+# out on purpose).
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml
+  AddOutputFilterByType DEFLATE application/javascript application/json
+  AddOutputFilterByType DEFLATE image/svg+xml application/xml+rss
 </IfModule>
