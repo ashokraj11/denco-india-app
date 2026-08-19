@@ -28,17 +28,14 @@ export default function Career() {
           <Reveal as="div" className="sec-head" style={{ marginTop: 'calc(var(--nav-h, 5.5rem) + 2.5rem)' }}>
             <span className="eyebrow">Careers</span>
             <h2>Join the DENCO INDIA Team</h2>
-            <p>We're always looking for skilled, motivated people to help us deliver precision dental prosthetics and digital dentistry solutions. Explore our current openings below, or send us a general application.</p>
-            <button type="button" className="btn btn-accent" style={{ marginTop: '1.4rem' }} onClick={() => openApply(null)}>
-              Send a General Application <ArrowRightIcon />
-            </button>
+            <p>We're always looking for skilled, motivated people to help us deliver precision dental prosthetics and digital dentistry solutions. Explore our current openings below and apply directly.</p>
           </Reveal>
 
           <Reveal as="div" className="career-jobs">
             {jobsLoading && <p style={{ textAlign: 'center', color: 'var(--mute)' }}>Loading openings…</p>}
             {!jobsLoading && jobs?.length === 0 && (
               <p style={{ textAlign: 'center', color: 'var(--mute)' }}>
-                There are no open positions right now — feel free to send a general application above.
+                There are no open positions right now — please check back soon.
               </p>
             )}
             {jobs?.map((job) => (
