@@ -6,11 +6,18 @@ import { CloseIcon } from '../icons/UiIcons';
 // transition can play, same pattern as JobApplicationModal/Lightbox.
 export default function AdminFormModal({ open, onClose, children }) {
   const closeRef = useRef(null);
+  const innerRef = useRef(null);
 
   useEffect(() => {
     if (!open) return undefined;
     document.body.style.overflow = 'hidden';
-    closeRef.current?.focus();
+    // Focus the form's first field, not the close button -- landing focus on
+    // a <button> means every following keystroke goes nowhere (buttons
+    // ignore character input, and Enter/Space on it closes the popup) until
+    // the admin clicks into a field themselves, which reads as "the
+    // keyboard doesn't work" in here.
+    const firstField = innerRef.current?.querySelector('input, select, textarea');
+    (firstField || closeRef.current)?.focus();
     const onKey = (e) => { if (e.key === 'Escape') onClose(); };
     document.addEventListener('keydown', onKey);
     return () => {
@@ -27,7 +34,7 @@ export default function AdminFormModal({ open, onClose, children }) {
       aria-hidden={!open}
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
-      <div className="admin-modal-inner">
+      <div className="admin-modal-inner" ref={innerRef}>
         <button className="cert-lightbox-close" aria-label="Close" onClick={onClose} ref={closeRef}>
           <CloseIcon />
         </button>
