@@ -15,11 +15,19 @@ export default function BrandLockup() {
   useEffect(() => { setLogoLoaded(false); }, [logoSrc]);
 
   const showText = !loading && (!logoSrc || logoLoaded);
+  // Splits "DENCO INDIA" into its two words so each can carry its own
+  // brand color -- falls back gracefully if the admin-set name is ever
+  // just one word or something else entirely.
+  const [nameFirst, ...nameRest] = (showText ? settings.siteName : '').split(' ');
+  const nameLast = nameRest.join(' ');
 
   return (
     <a href="#home" className="brand-block">
       <span className="brand-name-row">
-        <span className="brand-name">{showText ? settings.siteName : ''}</span>
+        <span className="brand-name">
+          <span className="brand-name-primary">{nameFirst}</span>
+          {nameLast && <> <span className="brand-name-secondary">{nameLast}</span></>}
+        </span>
         <small>{showText ? settings.tagline : ''}</small>
       </span>
       <span className="brand-logo-row">
