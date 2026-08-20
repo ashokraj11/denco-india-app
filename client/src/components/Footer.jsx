@@ -67,7 +67,7 @@ export default function Footer() {
           </div>
         </div>
       </div>
-      <DecorativeLayer hostIndex={10} dark />
+      <DecorativeLayer hostIndex={10} />
     </footer>
   );
 }
