@@ -68,10 +68,11 @@ export default function AdminSettings() {
             <input type="text" value={form.tagline || ''} onChange={(e) => update('tagline', e.target.value)} />
           </div>
         </div>
+        <p className="form-note" style={{ margin: '-.6rem 0 0' }}>
+          Not shown in the menu bar/footer (that's just the logo image below) -- used for the browser tab title, SEO, and the footer copyright line.
+        </p>
 
-        <ImageUploadField label="Logo" value={form.logoUrl} onChange={(url) => update('logoUrl', url)} />
-
-        <ImageUploadField label="Secondary Logo (rectangular, shown under the site name in the menu bar and footer)" value={form.secondaryLogoUrl} onChange={(url) => update('secondaryLogoUrl', url)} />
+        <ImageUploadField label="Logo (single image, shown in the menu bar and footer)" value={form.logoUrl} onChange={(url) => update('logoUrl', url)} />
 
         <DocumentUploadField label="Brochure (PDF, linked from the homepage's Download Brochure button)" value={form.brochureUrl} onChange={(url) => update('brochureUrl', url)} />
 
