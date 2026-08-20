@@ -33,6 +33,9 @@ export default function ImageUploadField({ label = 'Image', value, onChange, end
         )}
         <input type="file" accept="image/*" onChange={handleFile} disabled={uploading} />
         {uploading && <span style={{ fontSize: '.8rem', color: 'var(--mute)' }}>Uploading…</span>}
+        {preview && !uploading && (
+          <button type="button" className="btn btn-ghost btn-sm" onClick={() => onChange('')}>Remove</button>
+        )}
       </div>
       <input
         type="text"

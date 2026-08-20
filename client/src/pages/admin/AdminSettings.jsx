@@ -29,6 +29,7 @@ export default function AdminSettings() {
         site_name: form.siteName,
         tagline: form.tagline,
         logo_url: form.logoUrl,
+        logo_height: form.logoHeight || null,
         secondary_logo_url: form.secondaryLogoUrl,
         brochure_url: form.brochureUrl,
         meta_title: form.metaTitle,
@@ -73,6 +74,19 @@ export default function AdminSettings() {
         </p>
 
         <ImageUploadField label="Logo (single image, shown in the menu bar and footer)" value={form.logoUrl} onChange={(url) => update('logoUrl', url)} />
+
+        <div className="form-group">
+          <label>Logo Height (px)</label>
+          <input
+            type="number"
+            min="24"
+            max="200"
+            placeholder="Default (auto-sized)"
+            value={form.logoHeight ?? ''}
+            onChange={(e) => update('logoHeight', e.target.value ? Number(e.target.value) : null)}
+          />
+          <span style={{ fontSize: '.78rem', color: 'var(--mute)' }}>Leave blank to use the default responsive size. Applies in both the menu bar and the footer.</span>
+        </div>
 
         <DocumentUploadField label="Brochure (PDF, linked from the homepage's Download Brochure button)" value={form.brochureUrl} onChange={(url) => update('brochureUrl', url)} />
 
