@@ -172,11 +172,11 @@ section{ position:relative; padding:clamp(3.6rem,7vw,6rem) 0; }
 }
 .brand-logo-row{ display:flex; align-items:center; gap:1rem; }
 .brand-secondary-logo{
-  display:block; height:clamp(42px, 8vw, 52px); width:auto; max-width:110px;
+  display:block; height:clamp(54px, 10vw, 66px); width:auto; max-width:140px;
 }
 .brand-mark{
-  width:clamp(42px, 8vw, 52px); height:clamp(42px, 8vw, 52px);
-  border-radius:clamp(12px, 3vw, 16px);
+  width:clamp(54px, 10vw, 66px); height:clamp(54px, 10vw, 66px);
+  border-radius:clamp(15px, 4vw, 20px);
   background:var(--grad-green);
   display:flex; align-items:center; justify-content:center;
   box-shadow:0 8px 16px -6px rgba(30,145,66,.5);
@@ -187,7 +187,7 @@ section{ position:relative; padding:clamp(3.6rem,7vw,6rem) 0; }
   height:55%;
 }
 .brand-mark-img{
-  display:block; height:clamp(42px, 8vw, 52px); width:auto; max-width:80px;
+  display:block; height:clamp(54px, 10vw, 66px); width:auto; max-width:100px;
   flex-shrink: 0;
 }
 
