@@ -217,6 +217,22 @@ section{ position:relative; padding:clamp(3.6rem,7vw,6rem) 0; }
 @media(max-width:960px){
   body.nav-open{ overflow:hidden; }
 
+  /* The desktop lockup (name+tagline stacked above two full-size logos) is
+     too tall on a narrow screen -- align-items:center on .nav-inner ends up
+     centering the hamburger against that whole tall block, leaving it
+     floating in the gap between the text and the logos rather than lined
+     up with either. Collapse back to a single compact row: logo first,
+     name/tagline beside it, secondary/cert badge dropped (illegible at
+     mobile size anyway) -- so the row is short enough to align cleanly. */
+  .brand-block{ flex-direction:row; align-items:center; gap:.55rem; margin-left:0; }
+  .brand-logo-row{ order:-1; }
+  .brand-secondary-logo{ display:none; }
+  .brand-name-row{ align-items:flex-start; }
+  .brand-mark, .brand-mark-img{ width:clamp(38px,11vw,50px); height:clamp(38px,11vw,50px); }
+  .brand-mark-img{ max-width:80px; }
+  .brand-name{ font-size:.92rem; }
+  .brand-name-row small{ font-size:.56rem; }
+
   .nav-links{
     position:fixed; top:4.2rem; left:.75rem; right:.75rem;
     z-index:101;
