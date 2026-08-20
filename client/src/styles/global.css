@@ -221,17 +221,20 @@ section{ position:relative; padding:clamp(3.6rem,7vw,6rem) 0; }
      too tall on a narrow screen -- align-items:center on .nav-inner ends up
      centering the hamburger against that whole tall block, leaving it
      floating in the gap between the text and the logos rather than lined
-     up with either. Collapse back to a single compact row: logo first,
-     name/tagline beside it, secondary/cert badge dropped (illegible at
-     mobile size anyway) -- so the row is short enough to align cleanly. */
-  .brand-block{ flex-direction:row; align-items:center; gap:.55rem; margin-left:0; }
-  .brand-logo-row{ order:-1; }
-  .brand-secondary-logo{ display:none; }
+     up with either. Collapse back to a single compact row instead: both
+     logos then name/tagline, all left-aligned as one group, so the row is
+     short enough to align cleanly against the hamburger -- which gets an
+     explicit margin-left:auto here since .nav-links (which normally carries
+     that) becomes position:fixed at this width and drops out of the flow. */
+  .brand-block{ flex-direction:row; align-items:center; gap:.4rem; margin-left:0; }
+  .brand-logo-row{ order:-1; gap:.3rem; }
+  .brand-secondary-logo{ height:clamp(30px,9vw,40px); max-width:70px; }
   .brand-name-row{ align-items:flex-start; }
-  .brand-mark, .brand-mark-img{ width:clamp(38px,11vw,50px); height:clamp(38px,11vw,50px); }
-  .brand-mark-img{ max-width:80px; }
-  .brand-name{ font-size:.92rem; }
-  .brand-name-row small{ font-size:.56rem; }
+  .brand-mark, .brand-mark-img{ width:clamp(34px,10vw,44px); height:clamp(34px,10vw,44px); }
+  .brand-mark-img{ max-width:60px; }
+  .brand-name{ font-size:.85rem; }
+  .brand-name-row small{ font-size:.5rem; }
+  .nav-toggle{ margin-left:auto; }
 
   .nav-links{
     position:fixed; top:4.2rem; left:.75rem; right:.75rem;
