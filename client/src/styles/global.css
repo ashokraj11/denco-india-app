@@ -153,26 +153,12 @@ section{ position:relative; padding:clamp(3.6rem,7vw,6rem) 0; }
 }
 
 .brand-block{
-  display:flex; flex-direction:column; align-items:center; gap:.5rem;
-  font-family:var(--f-display); font-weight:800; color:var(--navy);
-  text-align:center;
+  display:flex; align-items:center;
   flex-shrink: 0;
   margin-left:-30px;
 }
-.brand-name-row{ display:flex; flex-direction:column; align-items:center; }
-.brand-name{ font-size:clamp(1.1rem, 2.6vw, 1.5rem); line-height:1.15; }
-.brand-name-primary{ color:#ED7527; }
-.brand-name-secondary{ color:#41A13F; }
-.brand-name-row small{
-  display:block; font-family:var(--f-body);
-  font-size:clamp(.62rem, 1.6vw, .78rem);
-  letter-spacing:.16em; color:#000; font-weight:700;
-  margin-top:.2rem;
-  white-space:nowrap;
-}
-.brand-logo-row{ display:flex; align-items:center; gap:1rem; }
-.brand-secondary-logo{
-  display:block; height:clamp(54px, 10vw, 66px); width:auto; max-width:140px;
+.brand-logo-img{
+  display:block; height:clamp(54px, 10vw, 66px); width:auto; max-width:220px;
 }
 .brand-mark{
   width:clamp(54px, 10vw, 66px); height:clamp(54px, 10vw, 66px);
@@ -185,10 +171,6 @@ section{ position:relative; padding:clamp(3.6rem,7vw,6rem) 0; }
 .brand-mark svg{
   width:55%;
   height:55%;
-}
-.brand-mark-img{
-  display:block; height:clamp(54px, 10vw, 66px); width:auto; max-width:100px;
-  flex-shrink: 0;
 }
 
 .nav-links{ display:flex; align-items:center; gap:clamp(.9rem, 1.8vw, 2.1rem); flex-wrap:nowrap; margin-left:auto; }
@@ -217,23 +199,13 @@ section{ position:relative; padding:clamp(3.6rem,7vw,6rem) 0; }
 @media(max-width:960px){
   body.nav-open{ overflow:hidden; }
 
-  /* The desktop lockup (name+tagline stacked above two full-size logos) is
-     too tall on a narrow screen -- align-items:center on .nav-inner ends up
-     centering the hamburger against that whole tall block, leaving it
-     floating in the gap between the text and the logos rather than lined
-     up with either. Collapse back to a single compact row instead: both
-     logos then name/tagline, all left-aligned as one group, so the row is
-     short enough to align cleanly against the hamburger -- which gets an
-     explicit margin-left:auto here since .nav-links (which normally carries
-     that) becomes position:fixed at this width and drops out of the flow. */
-  .brand-block{ flex-direction:row; align-items:center; gap:.4rem; margin-left:0; }
-  .brand-logo-row{ order:-1; gap:.3rem; }
-  .brand-secondary-logo{ height:clamp(30px,9vw,40px); max-width:70px; }
-  .brand-name-row{ align-items:flex-start; }
-  .brand-mark, .brand-mark-img{ width:clamp(34px,10vw,44px); height:clamp(34px,10vw,44px); }
-  .brand-mark-img{ max-width:60px; }
-  .brand-name{ font-size:.85rem; }
-  .brand-name-row small{ font-size:.5rem; }
+  .brand-block{ margin-left:0; }
+  .brand-logo-img{ height:clamp(38px,11vw,48px); max-width:150px; }
+  .brand-mark{ width:clamp(38px,11vw,48px); height:clamp(38px,11vw,48px); }
+  /* .nav-links (which normally carries the push-right via its own
+     margin-left:auto) becomes position:fixed at this width and drops out
+     of the flow, so nothing was reliably pinning the hamburger to the
+     right edge without this. */
   .nav-toggle{ margin-left:auto; }
 
   .nav-links{
@@ -880,9 +852,7 @@ section{ position:relative; padding:clamp(3.6rem,7vw,6rem) 0; }
    ========================================================================== */
 footer{ background:#071A13; color:rgba(255,255,255,.65); padding-top:4rem; }
 .footer-grid{ display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr 1.2fr; gap:2rem; padding-bottom:2.6rem; border-bottom:1px solid rgba(255,255,255,.08); }
-.footer-brand .brand-block{ color:#fff; align-items:flex-start; text-align:left; margin-left:0; }
-.footer-brand .brand-name-row{ align-items:flex-start; }
-.footer-brand .brand-name-row small{ color:rgba(255,255,255,.75); }
+.footer-brand .brand-block{ margin-left:0; }
 .footer-brand p{ margin-top:1rem; font-size:.85rem; line-height:1.7; max-width:22rem; color:rgba(255,255,255,.5); }
 .footer-social{ display:flex; gap:.7rem; margin-top:1.3rem; }
 .footer-social a{ width:34px; height:34px; border-radius:8px; border:1px solid rgba(255,255,255,.15); display:flex; align-items:center; justify-content:center; transition:all .3s var(--ease); }
