@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AdminAuthProvider } from './context/AdminAuthContext';
 import { SiteSettingsProvider } from './context/SiteSettingsContext';
+import WhatsAppFloat from './components/WhatsAppFloat';
 import Home from './pages/Home';
 import Career from './pages/Career';
 import LegalPage from './pages/LegalPage';
@@ -39,11 +40,18 @@ function ScrollToTop() {
   return null;
 }
 
+function PublicWhatsAppFloat() {
+  const { pathname } = useLocation();
+  if (pathname.startsWith('/admin')) return null;
+  return <WhatsAppFloat />;
+}
+
 export default function App() {
   return (
     <SiteSettingsProvider>
       <AdminAuthProvider>
         <ScrollToTop />
+        <PublicWhatsAppFloat />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/careers" element={<Career />} />
