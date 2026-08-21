@@ -13,6 +13,13 @@ export default function RichTextEditor({ value, onChange, uploadEndpoint = '/blo
   const [linkPromptOpen, setLinkPromptOpen] = useState(false);
   const [linkUrl, setLinkUrl] = useState('');
   const [uploading, setUploading] = useState(false);
+  // 'visual' uses the TipTap toolbar; 'html' is a raw <textarea> for pasting
+  // or writing arbitrary markup (tables, embeds, custom attributes) the
+  // toolbar can't produce. Switching back to Visual re-parses that HTML
+  // through TipTap's schema, so anything outside what the toolbar supports
+  // gets normalized/dropped at that point -- same tradeoff as WordPress's
+  // classic Visual/Text editor tabs.
+  const [mode, setMode] = useState('visual');
 
   const editor = useEditor({
     extensions: [
@@ -91,6 +98,8 @@ export default function RichTextEditor({ value, onChange, uploadEndpoint = '/blo
           {btn(editor.isActive('link'), openLinkPrompt, '🔗', 'Link')}
           {btn(false, () => fileInputRef.current?.click(), '🖼', uploading ? 'Uploading…' : 'Insert Image')}
           <input ref={fileInputRef} type="file" accept="image/*" onChange={handleImageSelect} disabled={uploading} style={{ display: 'none' }} />
+          <span style={{ flex: 1 }} />
+          {btn(mode === 'html', () => setMode((m) => (m === 'html' ? 'visual' : 'html')), '</>', mode === 'html' ? 'Back to Visual editor' : 'Edit raw HTML')}
         </div>
 
         {linkPromptOpen && (
@@ -107,7 +116,17 @@ export default function RichTextEditor({ value, onChange, uploadEndpoint = '/blo
           </div>
         )}
 
-        <EditorContent editor={editor} className="rte-content" />
+        {mode === 'html' ? (
+          <textarea
+            className="rte-html-source"
+            value={value || ''}
+            onChange={(e) => onChange(e.target.value)}
+            spellCheck={false}
+            placeholder="<p>Write or paste raw HTML here…</p>"
+          />
+        ) : (
+          <EditorContent editor={editor} className="rte-content" />
+        )}
       </div>
     </div>
   );

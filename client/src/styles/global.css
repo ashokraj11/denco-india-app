@@ -817,6 +817,12 @@ section{ position:relative; padding:clamp(3.6rem,7vw,6rem) 0; }
 .rte-content .ProseMirror{ outline:none; min-height:200px; }
 .rte-content p{ margin:.4rem 0; }
 .rte-content img{ max-width:100%; border-radius:8px; }
+.rte-html-source{
+  display:block; width:100%; min-height:220px; padding:.8rem 1rem; border:none; resize:vertical;
+  font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size:.82rem; line-height:1.6; color:var(--ink); background:#fff;
+}
+.rte-html-source:focus{ outline:none; }
 
 /* ---------- Job Application Modal ---------- */
 .job-apply-modal{
