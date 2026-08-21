@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { api } from '../../api/client';
+import { api as defaultApi } from '../../api/client';
 import ImageUploadField from './ImageUploadField';
 import AdminFormModal from './AdminFormModal';
 import { slugify } from '../../utils/slugify';
@@ -13,7 +13,7 @@ import { slugify } from '../../utils/slugify';
 // fields: [{ name, label, type: 'text'|'textarea'|'select'|'number'|'image', required, options,
 //            deriveFrom: '<other field name>' — auto-fills this field with a slugified version
 //            of that field's value, until the admin edits this field directly. }]
-export default function AdminCrudTable({ title, listPath, adminBasePath, columns, fields, emptyItem }) {
+export default function AdminCrudTable({ title, listPath, adminBasePath, columns, fields, emptyItem, api = defaultApi }) {
   const [rows, setRows] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -118,6 +118,7 @@ export default function AdminCrudTable({ title, listPath, adminBasePath, columns
                   label={f.label}
                   value={form[f.name]}
                   onChange={(url) => setForm((s) => ({ ...s, [f.name]: url }))}
+                  api={api}
                 />
               ) : f.type === 'textarea' ? (
                 <>

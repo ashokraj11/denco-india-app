@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { api } from '../../api/client';
+import { api as defaultApi } from '../../api/client';
 import { resolveImageUrl } from '../../utils/resolveImageUrl';
 
-export default function ImageUploadField({ label = 'Image', value, onChange, endpoint = '/admin/uploads' }) {
+export default function ImageUploadField({ label = 'Image', value, onChange, endpoint = '/admin/uploads', api = defaultApi }) {
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState(null);
 

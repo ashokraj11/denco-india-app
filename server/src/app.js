@@ -43,6 +43,12 @@ const adminHeroSlidesRoutes = require('./routes/adminHeroSlides');
 const adminTestimonialsRoutes = require('./routes/adminTestimonials');
 const adminTrustBadgesRoutes = require('./routes/adminTrustBadges');
 const adminBackupRoutes = require('./routes/adminBackup');
+const blogPostsRoutes = require('./routes/blogPosts');
+const blogCategoriesRoutes = require('./routes/blogCategories');
+const blogAuthRoutes = require('./routes/blogAuth');
+const blogAdminPostsRoutes = require('./routes/blogAdminPosts');
+const blogAdminCategoriesRoutes = require('./routes/blogAdminCategories');
+const blogAdminUploadsRoutes = require('./routes/blogAdminUploads');
 
 const app = express();
 
@@ -104,6 +110,8 @@ app.use('/api/trust-badges', trustBadgesRoutes);
 app.use('/api/enquiries', enquiriesRoutes);
 app.use('/api/jobs', jobsRoutes);
 app.use('/api/job-applications', jobApplicationsRoutes);
+app.use('/api/blog-posts', blogPostsRoutes);
+app.use('/api/blog-categories', blogCategoriesRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/admin/jobs', adminJobsRoutes);
 app.use('/api/admin/job-applications', adminJobApplicationsRoutes);
@@ -124,6 +132,14 @@ app.use('/api/admin/hero-slides', adminHeroSlidesRoutes);
 app.use('/api/admin/testimonials', adminTestimonialsRoutes);
 app.use('/api/admin/trust-badges', adminTrustBadgesRoutes);
 app.use('/api/admin/backup', adminBackupRoutes);
+
+// A fully separate namespace from /api/admin/* -- guarded by
+// requireBlogAdmin (scope: 'blog'), not requireAdmin -- for the standalone
+// blog portal. See middleware/blogAuth.js.
+app.use('/api/blog-admin', blogAuthRoutes);
+app.use('/api/blog-admin/posts', blogAdminPostsRoutes);
+app.use('/api/blog-admin/categories', blogAdminCategoriesRoutes);
+app.use('/api/blog-admin/uploads', blogAdminUploadsRoutes);
 
 app.use(notFound);
 app.use(errorHandler);

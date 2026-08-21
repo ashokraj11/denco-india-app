@@ -103,6 +103,9 @@ export default function Navbar() {
               </li>
             ))}
             <li>
+              <Link to="/blog" onClick={() => setMobileOpen(false)}>Blog</Link>
+            </li>
+            <li>
               <Link to="/careers" onClick={() => setMobileOpen(false)}>Careers</Link>
             </li>
             <li>

@@ -161,3 +161,21 @@ export function YoutubeIcon(props) {
     </svg>
   );
 }
+
+export function CalendarIcon(props) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" {...props}>
+      <rect x="3.5" y="5" width="17" height="16" rx="2.5" stroke="currentColor" strokeWidth="1.6" />
+      <path d="M3.5 9.5h17M8 3v3.6M16 3v3.6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+export function TagIcon(props) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" {...props}>
+      <path d="M11.4 3.5H6a2.5 2.5 0 0 0-2.5 2.5v5.4c0 .66.26 1.3.73 1.77l8.15 8.15a2.5 2.5 0 0 0 3.54 0l5.4-5.4a2.5 2.5 0 0 0 0-3.54L13.17 4.23a2.5 2.5 0 0 0-1.77-.73Z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
+      <circle cx="8.2" cy="8.2" r="1.4" fill="currentColor" />
+    </svg>
+  );
+}

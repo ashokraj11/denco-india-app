@@ -227,3 +227,43 @@ CREATE TABLE IF NOT EXISTS job_applications (
   CONSTRAINT fk_job_applications_job FOREIGN KEY (job_id)
     REFERENCES job_openings(id) ON DELETE SET NULL
 );
+
+-- Blog: a separate blog_users login (own portal at /blog-admin, independent
+-- of admin_users/the main /admin panel) manages blog_categories/blog_posts.
+CREATE TABLE IF NOT EXISTS blog_users (
+  id            INT AUTO_INCREMENT PRIMARY KEY,
+  username      VARCHAR(64) NOT NULL UNIQUE,
+  password_hash VARCHAR(255) NOT NULL,
+  created_at    TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS blog_categories (
+  id             INT AUTO_INCREMENT PRIMARY KEY,
+  slug           VARCHAR(60) NOT NULL UNIQUE,
+  name           VARCHAR(120) NOT NULL,
+  display_order  INT NOT NULL DEFAULT 0
+);
+
+-- category_id is ON DELETE RESTRICT (not CASCADE like products.category_id)
+-- -- deleting a category must never silently delete published, indexed
+-- articles; the admin controller checks for posts in a category first and
+-- returns 409 if any exist. published_at is separate from created_at so the
+-- public listing can ORDER BY published_at DESC without draft rows
+-- (published_at IS NULL) affecting the sort.
+CREATE TABLE IF NOT EXISTS blog_posts (
+  id                INT AUTO_INCREMENT PRIMARY KEY,
+  category_id       INT NOT NULL,
+  slug              VARCHAR(160) NOT NULL UNIQUE,
+  title             VARCHAR(200) NOT NULL,
+  excerpt           VARCHAR(300) NULL,
+  cover_image_url   VARCHAR(500) NULL,
+  content           LONGTEXT NOT NULL,
+  status            ENUM('draft','published') NOT NULL DEFAULT 'draft',
+  meta_title        VARCHAR(160) NULL,
+  meta_description  VARCHAR(300) NULL,
+  published_at      TIMESTAMP NULL,
+  created_at        TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at        TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  CONSTRAINT fk_blog_posts_category FOREIGN KEY (category_id)
+    REFERENCES blog_categories(id) ON DELETE RESTRICT
+);

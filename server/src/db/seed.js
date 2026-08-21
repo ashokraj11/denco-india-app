@@ -515,6 +515,17 @@ async function seedAdmin(conn) {
   console.log(`Seeded admin user "${username}"`);
 }
 
+async function seedBlogAdmin(conn) {
+  const username = process.env.BLOG_ADMIN_USERNAME || 'blog-admin';
+  const password = process.env.BLOG_ADMIN_PASSWORD || 'change-this-password';
+  const passwordHash = await bcrypt.hash(password, 10);
+  await conn.query(
+    'INSERT INTO blog_users (username, password_hash) VALUES (?, ?) ON DUPLICATE KEY UPDATE password_hash = VALUES(password_hash)',
+    [username, passwordHash]
+  );
+  console.log(`Seeded blog admin user "${username}"`);
+}
+
 async function main() {
   const conn = await pool.getConnection();
   try {
@@ -528,6 +539,7 @@ async function main() {
     await seedGallery(conn);
     await seedSettings(conn);
     await seedAdmin(conn);
+    await seedBlogAdmin(conn);
     console.log('Database seeded successfully.');
   } finally {
     conn.release();

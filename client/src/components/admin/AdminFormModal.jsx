@@ -4,7 +4,7 @@ import { CloseIcon } from '../icons/UiIcons';
 // Shared popup wrapper for every admin list page's add/edit form -- kept
 // mounted (not unmounted) whenever `open` is false so the closing
 // transition can play, same pattern as JobApplicationModal/Lightbox.
-export default function AdminFormModal({ open, onClose, children }) {
+export default function AdminFormModal({ open, onClose, children, wide = false }) {
   const closeRef = useRef(null);
   const innerRef = useRef(null);
 
@@ -41,7 +41,7 @@ export default function AdminFormModal({ open, onClose, children }) {
       aria-hidden={!open}
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
-      <div className="admin-modal-inner" ref={innerRef}>
+      <div className={`admin-modal-inner${wide ? ' wide' : ''}`} ref={innerRef}>
         <button className="cert-lightbox-close" aria-label="Close" onClick={onClose} ref={closeRef}>
           <CloseIcon />
         </button>
