@@ -3,6 +3,7 @@ import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Link from '@tiptap/extension-link';
 import Image from '@tiptap/extension-image';
+import { resolveImageUrl } from '../../utils/resolveImageUrl';
 
 // Controlled (value/onChange HTML string) rich text editor for blog post
 // content. TipTap is headless -- it renders no UI of its own -- so the
@@ -64,7 +65,12 @@ export default function RichTextEditor({ value, onChange, uploadEndpoint = '/blo
     setUploading(true);
     try {
       const result = await api.upload(uploadEndpoint, file);
-      editor.chain().focus().setImage({ src: result.url }).run();
+      // The API returns a path relative to ITS OWN origin (/uploads/xyz.jpg)
+      // -- the client and API are on separate domains in production, so that
+      // relative path must be resolved to an absolute URL before it's baked
+      // into the stored content HTML, or it resolves against the client's
+      // own origin instead and 404s as a broken image.
+      editor.chain().focus().setImage({ src: resolveImageUrl(result.url) }).run();
     } catch (err) {
       window.alert(err.message);
     } finally {
