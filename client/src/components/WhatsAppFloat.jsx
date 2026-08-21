@@ -1,10 +1,10 @@
 import { useSiteSettings } from '../context/SiteSettingsContext';
 
-const FALLBACK_WHATSAPP_NUMBER = import.meta.env.VITE_WHATSAPP_NUMBER || '917010767919';
-
 export default function WhatsAppFloat() {
   const { settings } = useSiteSettings();
-  const whatsappNumber = settings.whatsappNumber || FALLBACK_WHATSAPP_NUMBER;
+  const whatsappNumber = settings.whatsappNumber;
+  if (!whatsappNumber) return null;
+
   const waUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent('Hi DENCO INDIA, I have an enquiry.')}`;
 
   return (

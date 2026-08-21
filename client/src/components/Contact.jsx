@@ -6,13 +6,11 @@ import Reveal from './Reveal';
 import DecorativeLayer from './DecorativeLayer';
 import { useSiteSettings } from '../context/SiteSettingsContext';
 
-const FALLBACK_WHATSAPP_NUMBER = import.meta.env.VITE_WHATSAPP_NUMBER || '917010767919';
-
 const EMPTY_FORM = { name: '', clinic: '', email: '', phone: '', message: '', consent: false };
 
 export default function Contact() {
   const { settings } = useSiteSettings();
-  const whatsappNumber = settings.whatsappNumber || FALLBACK_WHATSAPP_NUMBER;
+  const whatsappNumber = settings.whatsappNumber;
   const [form, setForm] = useState(EMPTY_FORM);
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -52,8 +50,10 @@ export default function Contact() {
         '*Message:*',
         form.message.trim()
       ].filter(Boolean);
-      const waUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(lines.join('\n'))}`;
-      window.open(waUrl, '_blank', 'noopener');
+      if (whatsappNumber) {
+        const waUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(lines.join('\n'))}`;
+        window.open(waUrl, '_blank', 'noopener');
+      }
 
       setSubmitted(true);
       setForm(EMPTY_FORM);

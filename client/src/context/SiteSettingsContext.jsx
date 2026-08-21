@@ -14,7 +14,7 @@ const DEFAULTS = {
   contactPhone: '+91 97917 11182',
   contactEmail: 'info@dencoindia.com',
   contactAddress: 'Serving dental professionals across Tamil Nadu & Puducherry, India',
-  whatsappNumber: '917010767919',
+  whatsappNumber: '',
   facebookUrl: null,
   instagramUrl: null,
   linkedinUrl: null,
