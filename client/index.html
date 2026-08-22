@@ -18,6 +18,13 @@
 <meta name="description" content="DENCO INDIA is a scientific dental laboratory delivering precision CAD/CAM prosthetics, zirconia restorations and digital dentistry solutions to dental professionals across Tamil Nadu &amp; Puducherry, India.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://dencoindia.com/">
+<!-- Static favicon fallback -- SiteSettingsContext.jsx sets this dynamically
+     via JS for real browsers once Settings load, but link-preview crawlers
+     (WhatsApp, Slack, iMessage, etc.) never run that JS, so without a static
+     tag here they show no site icon at all. Same class of issue as og:image
+     below. Update this URL manually if the Favicon is changed in Settings. -->
+<link rel="icon" type="image/jpeg" href="https://api.dencoindia.com/uploads/68fa8bfc-eea4-425e-b438-f746c35d7c98.jpg">
+<link rel="apple-touch-icon" href="https://api.dencoindia.com/uploads/68fa8bfc-eea4-425e-b438-f746c35d7c98.jpg">
 
 <!-- Font loading moved here (instead of a CSS @import) so the browser
      discovers and fetches these in parallel with the main bundle -- an
