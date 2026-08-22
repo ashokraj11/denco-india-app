@@ -59,13 +59,16 @@
 <meta name="twitter:image" content="https://api.dencoindia.com/uploads/68fa8bfc-eea4-425e-b438-f746c35d7c98.jpg">
 
 <!-- Structured data: filled in with live values (logo, contact info, service
-     area, social links) once site settings load -- see SeoMeta.jsx. A basic
-     Organization record is included here as a static fallback for crawlers
-     that don't execute JavaScript. -->
+     area, social links, certifications, services offered, opening hours)
+     once site settings load -- see SeoMeta.jsx, which sets matching @id
+     values so a JS-enabled crawler resolves this into the same graph. A
+     basic Organization + WebSite record is included here as a static
+     fallback for crawlers that don't execute JavaScript. -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
+  "@id": "https://dencoindia.com/#organization",
   "name": "DENCO INDIA",
   "description": "Scientific dental laboratory delivering precision CAD/CAM prosthetics, zirconia restorations and digital dentistry solutions to dental professionals across Tamil Nadu & Puducherry, India.",
   "url": "https://dencoindia.com/",
@@ -73,6 +76,16 @@
     { "@type": "State", "name": "Tamil Nadu" },
     { "@type": "AdministrativeArea", "name": "Puducherry" }
   ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": "https://dencoindia.com/#website",
+  "name": "DENCO INDIA",
+  "url": "https://dencoindia.com/",
+  "publisher": { "@id": "https://dencoindia.com/#organization" }
 }
 </script>
 </head>

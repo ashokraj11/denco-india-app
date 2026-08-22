@@ -3,7 +3,8 @@ const pool = require('../config/db');
 async function listJobs(req, res, next) {
   try {
     const [rows] = await pool.query(
-      `SELECT id, title, location, employment_type AS employmentType, description, display_order
+      `SELECT id, title, location, employment_type AS employmentType, description, display_order,
+              created_at AS datePosted
        FROM job_openings WHERE is_active = 1 ORDER BY display_order ASC, id DESC`
     );
     res.json(rows);

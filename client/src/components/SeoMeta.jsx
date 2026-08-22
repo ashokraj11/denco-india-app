@@ -4,6 +4,8 @@ import { useFetch } from '../hooks/useFetch';
 import { resolveImageUrl } from '../utils/resolveImageUrl';
 
 const SITE_URL = 'https://dencoindia.com/';
+const ORG_ID = `${SITE_URL}#organization`;
+const WEBSITE_ID = `${SITE_URL}#website`;
 
 function upsertMeta(attr, key, content) {
   if (!content) return;
@@ -41,6 +43,8 @@ export default function SeoMeta() {
   const { settings } = useSiteSettings();
   const { data: districts } = useFetch('/districts');
   const { data: faqs } = useFetch('/faqs');
+  const { data: services } = useFetch('/services');
+  const { data: certifications } = useFetch('/certifications');
 
   useEffect(() => {
     if (settings.metaTitle) document.title = settings.metaTitle;
@@ -61,12 +65,55 @@ export default function SeoMeta() {
   }, [settings.metaTitle, settings.metaDescription, settings.faviconUrl, settings.logoUrl]);
 
   useEffect(() => {
+    upsertJsonLd('seo-website-jsonld', {
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      '@id': WEBSITE_ID,
+      name: settings.siteName || 'DENCO INDIA',
+      url: SITE_URL,
+      publisher: { '@id': ORG_ID }
+    });
+  }, [settings.siteName]);
+
+  useEffect(() => {
     const sameAs = [settings.facebookUrl, settings.instagramUrl, settings.linkedinUrl, settings.youtubeUrl].filter(Boolean);
     const logoSrc = resolveImageUrl(settings.logoUrl) || undefined;
+
+    // Real, currently-displayed hours (see Contact.jsx's "Working Hours" row)
+    // -- not fabricated, so it's safe to structure. Google's
+    // OpeningHoursSpecification uses two-letter day codes.
+    const openingHoursSpecification = {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+      opens: '09:00',
+      closes: '19:00'
+    };
+
+    // Real certifications/services already published on the site -- not
+    // invented for SEO. Ratings/reviews are deliberately NOT added anywhere
+    // in this file since the site has no real review data; fabricating
+    // AggregateRating/Review markup would violate Google's structured data
+    // guidelines and risks a manual action.
+    const hasCredential = certifications?.length
+      ? certifications.map((c) => ({
+          '@type': 'EducationalOccupationalCredential',
+          name: c.title,
+          description: c.description || undefined,
+          image: resolveImageUrl(c.image_url) || undefined
+        }))
+      : undefined;
+
+    const makesOffer = services?.length
+      ? services.map((s) => ({
+          '@type': 'Offer',
+          itemOffered: { '@type': 'Service', name: s.title, provider: { '@id': ORG_ID } }
+        }))
+      : undefined;
 
     upsertJsonLd('seo-org-jsonld', {
       '@context': 'https://schema.org',
       '@type': 'ProfessionalService',
+      '@id': ORG_ID,
       name: settings.siteName || 'DENCO INDIA',
       description: settings.metaDescription || undefined,
       url: SITE_URL,
@@ -83,9 +130,12 @@ export default function SeoMeta() {
       areaServed: districts?.length
         ? districts.map((d) => ({ '@type': 'AdministrativeArea', name: d.name }))
         : [{ '@type': 'State', name: 'Tamil Nadu' }, { '@type': 'AdministrativeArea', name: 'Puducherry' }],
+      openingHoursSpecification,
+      hasCredential,
+      makesOffer,
       sameAs: sameAs.length ? sameAs : undefined
     });
-  }, [settings, districts]);
+  }, [settings, districts, certifications, services]);
 
   useEffect(() => {
     if (!faqs?.length) return;

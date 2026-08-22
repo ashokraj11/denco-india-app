@@ -10,7 +10,7 @@ const PUBLIC_LIST_FIELDS = `
 `;
 
 const PUBLIC_DETAIL_FIELDS = `
-  ${PUBLIC_LIST_FIELDS}, bp.content,
+  ${PUBLIC_LIST_FIELDS}, bp.content, bp.updated_at AS updatedAt,
   bp.meta_title AS metaTitle, bp.meta_description AS metaDescription
 `;
 
