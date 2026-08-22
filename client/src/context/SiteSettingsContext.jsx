@@ -6,6 +6,7 @@ const DEFAULTS = {
   siteName: 'DENCO',
   tagline: 'INDIA',
   logoUrl: null,
+  faviconUrl: null,
   secondaryLogoUrl: null,
   brochureUrl: null,
   testimonialsVisible: true,
@@ -67,16 +68,18 @@ export function SiteSettingsProvider({ children }) {
   useEffect(() => { load(); }, []);
 
   useEffect(() => {
-    const logoSrc = resolveImageUrl(settings.logoUrl);
-    if (!logoSrc) return;
+    // Favicon falls back to the logo when no dedicated favicon has been
+    // uploaded, since a browser tab icon showing SOMETHING beats a blank one.
+    const iconSrc = resolveImageUrl(settings.faviconUrl) || resolveImageUrl(settings.logoUrl);
+    if (!iconSrc) return;
     let link = document.querySelector('link[rel="icon"]');
     if (!link) {
       link = document.createElement('link');
       link.rel = 'icon';
       document.head.appendChild(link);
     }
-    link.href = logoSrc;
-  }, [settings.logoUrl]);
+    link.href = iconSrc;
+  }, [settings.faviconUrl, settings.logoUrl]);
 
   return (
     <SiteSettingsContext.Provider value={{ settings, loading, reload: load }}>

@@ -1,7 +1,7 @@
 const pool = require('../config/db');
 
 const COLUMNS = [
-  'site_name', 'tagline', 'logo_url', 'logo_height', 'secondary_logo_url', 'brochure_url', 'testimonials_visible',
+  'site_name', 'tagline', 'logo_url', 'logo_height', 'favicon_url', 'secondary_logo_url', 'brochure_url', 'testimonials_visible',
   'meta_title', 'meta_description', 'contact_phone', 'contact_email', 'contact_address', 'whatsapp_number',
   'facebook_url', 'instagram_url', 'linkedin_url', 'youtube_url'
 ];
@@ -9,7 +9,7 @@ const COLUMNS = [
 async function getSettings(req, res, next) {
   try {
     const [rows] = await pool.query(
-      `SELECT site_name AS siteName, tagline, logo_url AS logoUrl, logo_height AS logoHeight, secondary_logo_url AS secondaryLogoUrl,
+      `SELECT site_name AS siteName, tagline, logo_url AS logoUrl, logo_height AS logoHeight, favicon_url AS faviconUrl, secondary_logo_url AS secondaryLogoUrl,
               brochure_url AS brochureUrl, testimonials_visible AS testimonialsVisible,
               meta_title AS metaTitle, meta_description AS metaDescription,
               contact_phone AS contactPhone, contact_email AS contactEmail, contact_address AS contactAddress,

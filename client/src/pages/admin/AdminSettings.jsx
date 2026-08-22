@@ -30,6 +30,7 @@ export default function AdminSettings() {
         tagline: form.tagline,
         logo_url: form.logoUrl,
         logo_height: form.logoHeight || null,
+        favicon_url: form.faviconUrl,
         secondary_logo_url: form.secondaryLogoUrl,
         brochure_url: form.brochureUrl,
         meta_title: form.metaTitle,
@@ -87,6 +88,8 @@ export default function AdminSettings() {
           />
           <span style={{ fontSize: '.78rem', color: 'var(--mute)' }}>Leave blank to use the default responsive size. Applies in both the menu bar and the footer.</span>
         </div>
+
+        <ImageUploadField label="Favicon (browser tab icon -- square image works best, falls back to the Logo above if left blank)" value={form.faviconUrl} onChange={(url) => update('faviconUrl', url)} />
 
         <DocumentUploadField label="Brochure (PDF, linked from the homepage's Download Brochure button)" value={form.brochureUrl} onChange={(url) => update('brochureUrl', url)} />
 

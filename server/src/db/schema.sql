@@ -143,6 +143,7 @@ CREATE TABLE IF NOT EXISTS site_settings (
   tagline            VARCHAR(80) NOT NULL DEFAULT 'INDIA',
   logo_url           VARCHAR(500) NULL,
   logo_height        SMALLINT NULL,
+  favicon_url        VARCHAR(500) NULL,
   secondary_logo_url VARCHAR(500) NULL,
   brochure_url       VARCHAR(500) NULL,
   testimonials_visible TINYINT(1) NOT NULL DEFAULT 1,
@@ -163,7 +164,8 @@ CREATE TABLE IF NOT EXISTS site_settings (
 -- they existed (CREATE TABLE IF NOT EXISTS above is a no-op on an existing
 -- table, so each new column needs its own idempotent add).
 ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS logo_height SMALLINT NULL AFTER logo_url;
-ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS secondary_logo_url VARCHAR(500) NULL AFTER logo_height;
+ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS favicon_url VARCHAR(500) NULL AFTER logo_height;
+ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS secondary_logo_url VARCHAR(500) NULL AFTER favicon_url;
 ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS brochure_url VARCHAR(500) NULL AFTER secondary_logo_url;
 ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS testimonials_visible TINYINT(1) NOT NULL DEFAULT 1 AFTER brochure_url;
 ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS facebook_url VARCHAR(500) NULL AFTER whatsapp_number;
