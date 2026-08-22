@@ -50,12 +50,15 @@ export default function SeoMeta() {
     upsertMeta('name', 'twitter:title', settings.metaTitle);
     upsertMeta('name', 'twitter:description', settings.metaDescription);
 
-    const logoSrc = resolveImageUrl(settings.logoUrl);
-    if (logoSrc) {
-      upsertMeta('property', 'og:image', logoSrc);
-      upsertMeta('name', 'twitter:image', logoSrc);
+    // Favicon preferred over the Logo for share-preview thumbnails -- the
+    // logo is often a wide horizontal lockup that crops awkwardly in a
+    // preview card, whereas the favicon is usually closer to square/mark-only.
+    const shareImageSrc = resolveImageUrl(settings.faviconUrl) || resolveImageUrl(settings.logoUrl);
+    if (shareImageSrc) {
+      upsertMeta('property', 'og:image', shareImageSrc);
+      upsertMeta('name', 'twitter:image', shareImageSrc);
     }
-  }, [settings.metaTitle, settings.metaDescription, settings.logoUrl]);
+  }, [settings.metaTitle, settings.metaDescription, settings.faviconUrl, settings.logoUrl]);
 
   useEffect(() => {
     const sameAs = [settings.facebookUrl, settings.instagramUrl, settings.linkedinUrl, settings.youtubeUrl].filter(Boolean);
