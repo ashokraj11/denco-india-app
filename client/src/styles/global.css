@@ -432,7 +432,17 @@ section{ position:relative; padding:clamp(3.6rem,7vw,6rem) 0; }
 .product-card p{ margin:0; padding-top:.55rem; font-size:.83rem; color:var(--mute); line-height:1.55; }
 
 @media(max-width:980px){ .product-grid{ grid-template-columns:1fr; } }
-@media(max-width:560px){ .product-card{ flex-direction:column; } .product-thumb{ width:100%; aspect-ratio:16/9; } .cat-section-head{ align-items:flex-start; } }
+@media(max-width:560px){
+  .product-card{ flex-direction:column; }
+  /* Product photos vary in aspect ratio (some near-square, some portrait) --
+     a fixed 16:9 box with object-fit:cover was cropping the top/bottom off
+     anything that wasn't already wide. Switching to contain guarantees the
+     full photo is always visible, letterboxed on the --mist background
+     .product-thumb already has, instead of gambling on one crop ratio. */
+  .product-thumb{ width:100%; aspect-ratio:1/1; }
+  .product-thumb img{ object-fit:contain; }
+  .cat-section-head{ align-items:flex-start; }
+}
 
 /* ==========================================================================
    STATS BAND
