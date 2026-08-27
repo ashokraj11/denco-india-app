@@ -82,7 +82,7 @@ export default function Contact() {
                 <span className="ci-ico"><LocationPinIcon /></span>
                 <div>
                   <span className="ci-label">Head Office</span>
-                  <span className="ci-value">{settings.siteName} {settings.tagline}, {settings.contactAddress}</span>
+                  <span className="ci-value">{settings.contactAddress}</span>
                 </div>
               </li>
               <li>
