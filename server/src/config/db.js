@@ -10,7 +10,18 @@ const pool = mysql.createPool({
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,
-  dateStrings: true
+  dateStrings: true,
+  // Shared MySQL hosting typically force-closes a connection after a short
+  // server-side wait_timeout. Without this, a pooled connection can go
+  // stale during a quiet period and the pool doesn't notice until it hands
+  // that dead socket to the NEXT query, which then fails outright -- often
+  // every endpoint at once, since several pooled connections go stale
+  // together. idleTimeout/maxIdle make the pool close and replace idle
+  // connections itself before MySQL does it out from under us.
+  enableKeepAlive: true,
+  keepAliveInitialDelay: 10000,
+  idleTimeout: 60000,
+  maxIdle: 10
 });
 
 module.exports = pool;
