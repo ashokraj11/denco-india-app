@@ -33,6 +33,8 @@ export default function AdminSettings() {
         favicon_url: form.faviconUrl,
         secondary_logo_url: form.secondaryLogoUrl,
         brochure_url: form.brochureUrl,
+        hero_eyebrow: form.heroEyebrow,
+        hero_lead: form.heroLead,
         meta_title: form.metaTitle,
         meta_description: form.metaDescription,
         contact_phone: form.contactPhone,
@@ -92,6 +94,19 @@ export default function AdminSettings() {
         <ImageUploadField label="Favicon (browser tab icon -- square image works best, falls back to the Logo above if left blank)" value={form.faviconUrl} onChange={(url) => update('faviconUrl', url)} />
 
         <DocumentUploadField label="Brochure (PDF, linked from the homepage's Download Brochure button)" value={form.brochureUrl} onChange={(url) => update('brochureUrl', url)} />
+
+        <h3 style={{ color: 'var(--navy)', fontSize: '1.05rem', margin: '.5rem 0 0' }}>Hero Section</h3>
+        <p className="form-note" style={{ margin: 0 }}>
+          The small label and intro paragraph on the homepage's hero banner. The rotating headline itself is managed separately under Content -&gt; Hero Headlines.
+        </p>
+        <div className="form-group">
+          <label>Hero Eyebrow</label>
+          <input type="text" value={form.heroEyebrow || ''} onChange={(e) => update('heroEyebrow', e.target.value)} />
+        </div>
+        <div className="form-group">
+          <label>Hero Paragraph</label>
+          <textarea rows={3} value={form.heroLead || ''} onChange={(e) => update('heroLead', e.target.value)} />
+        </div>
 
         <div className="form-group">
           <label>Browser Tab Title</label>

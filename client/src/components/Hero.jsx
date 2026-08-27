@@ -8,12 +8,10 @@ import DecorativeLayer from './DecorativeLayer';
 
 const SLIDE_INTERVAL = 6000;
 
-const HEADLINES = [
-  { line1: 'Precision Dental Restorations,', line2: 'Engineered for', accent: 'Perfect Fit.' },
-  { line1: 'Trusted Dental Lab Partner,', line2: 'Delivering', accent: 'On Time, Every Time.' },
-  { line1: 'Advanced CAD/CAM Craftsmanship,', line2: 'Built for', accent: 'Lasting Precision.' },
-  { line1: 'From Case Pickup to Delivery,', line2: 'We Make It', accent: 'Effortless.' },
-  { line1: 'Skilled Technicians, Modern Tech,', line2: 'Committed to', accent: 'Your Success.' }
+// Falls back to a single static headline only if the admin has somehow
+// deleted every hero_headlines row -- the hero should never render blank.
+const FALLBACK_HEADLINES = [
+  { id: 'fallback', line1: 'Precision Dental Restorations,', line2: 'Engineered for', accent: 'Perfect Fit.' }
 ];
 
 export default function Hero() {
@@ -21,9 +19,14 @@ export default function Hero() {
   const brochureUrl = resolveImageUrl(settings.brochureUrl);
   const [slides, setSlides] = useState([]);
   const [slideIndex, setSlideIndex] = useState(0);
+  const [headlines, setHeadlines] = useState(FALLBACK_HEADLINES);
 
   useEffect(() => {
     api.get('/hero-slides').then(setSlides).catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    api.get('/hero-headlines').then((rows) => { if (rows?.length) setHeadlines(rows); }).catch(() => {});
   }, []);
 
   useEffect(() => {
@@ -40,17 +43,18 @@ export default function Hero() {
   const [swapping, setSwapping] = useState(false);
 
   useEffect(() => {
+    if (headlines.length < 2) return undefined;
     const id = setInterval(() => {
       setSwapping(true);
       setTimeout(() => {
-        setIndex((i) => (i + 1) % HEADLINES.length);
+        setIndex((i) => (i + 1) % headlines.length);
         setSwapping(false);
       }, 800);
     }, 3600);
     return () => clearInterval(id);
-  }, []);
+  }, [headlines.length]);
 
-  const headline = HEADLINES[index];
+  const headline = headlines[index % headlines.length];
 
   return (
     <header className="hero" id="home">
@@ -66,11 +70,11 @@ export default function Hero() {
       <div className="container">
         <div className="hero-grid">
           <Reveal as="div" className="hero-copy">
-            <span className="eyebrow">Scientific Dental Laboratory. Digital Precision.</span>
+            <span className="eyebrow">{settings.heroEyebrow}</span>
             <h1 id="heroHeadline" className={`hero-headline-rotator${swapping ? ' is-swapping' : ''}`}>
               {headline.line1}<br />{headline.line2} <span className="accent">{headline.accent}</span>
             </h1>
-            <p className="lead">DENCO INDIA is one of India's leading scientific dental laboratories, combining experienced technicians, certified materials and advanced CAD/CAM technology to deliver clinically accurate, aesthetically superior restorations to dentists and clinics across Tamil Nadu.</p>
+            <p className="lead">{settings.heroLead}</p>
             <div className="hero-cta">
               <a href="#products" className="btn btn-primary">Explore Our Services
                 <ArrowRightIcon />

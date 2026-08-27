@@ -10,6 +10,8 @@ const DEFAULTS = {
   secondaryLogoUrl: null,
   brochureUrl: null,
   testimonialsVisible: true,
+  heroEyebrow: 'Scientific Dental Laboratory. Digital Precision.',
+  heroLead: 'DENCO INDIA is one of India\'s leading scientific dental laboratories, combining experienced technicians, certified materials and advanced CAD/CAM technology to deliver clinically accurate, aesthetically superior restorations to dentists and clinics across Tamil Nadu.',
   metaTitle: 'DENCO INDIA | Scientific Dental Laboratory & Digital Dentistry',
   metaDescription: '',
   contactPhone: '+91 97917 11182',

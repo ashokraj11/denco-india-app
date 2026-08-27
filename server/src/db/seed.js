@@ -299,6 +299,14 @@ const districts = [
   { name: 'Karaikal', slug: 'karaikal', left: 84.4, top: 49.1 }
 ];
 
+const heroHeadlines = [
+  { line1: 'Precision Dental Restorations,', line2: 'Engineered for', accent: 'Perfect Fit.' },
+  { line1: 'Trusted Dental Lab Partner,', line2: 'Delivering', accent: 'On Time, Every Time.' },
+  { line1: 'Advanced CAD/CAM Craftsmanship,', line2: 'Built for', accent: 'Lasting Precision.' },
+  { line1: 'From Case Pickup to Delivery,', line2: 'We Make It', accent: 'Effortless.' },
+  { line1: 'Skilled Technicians, Modern Tech,', line2: 'Committed to', accent: 'Your Success.' }
+];
+
 const defaultSettings = {
   site_name: 'DENCO',
   tagline: 'INDIA',
@@ -306,6 +314,8 @@ const defaultSettings = {
   secondary_logo_url: null,
   brochure_url: null,
   testimonials_visible: 1,
+  hero_eyebrow: 'Scientific Dental Laboratory. Digital Precision.',
+  hero_lead: 'DENCO INDIA is one of India\'s leading scientific dental laboratories, combining experienced technicians, certified materials and advanced CAD/CAM technology to deliver clinically accurate, aesthetically superior restorations to dentists and clinics across Tamil Nadu.',
   meta_title: 'DENCO INDIA | Scientific Dental Laboratory & Digital Dentistry',
   meta_description: 'DENCO INDIA is a scientific dental laboratory delivering precision CAD/CAM prosthetics, zirconia restorations and digital dentistry solutions to dental professionals across Tamil Nadu.',
   contact_phone: '+91 97917 11182',
@@ -492,16 +502,32 @@ async function seedSettings(conn) {
   }
   await conn.query(
     `INSERT INTO site_settings
-      (id, site_name, tagline, logo_url, secondary_logo_url, brochure_url, testimonials_visible, meta_title, meta_description, contact_phone, contact_email, contact_address, whatsapp_number, facebook_url, instagram_url, linkedin_url, youtube_url)
-     VALUES (1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      (id, site_name, tagline, logo_url, secondary_logo_url, brochure_url, testimonials_visible, hero_eyebrow, hero_lead, meta_title, meta_description, contact_phone, contact_email, contact_address, whatsapp_number, facebook_url, instagram_url, linkedin_url, youtube_url)
+     VALUES (1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     [
       defaultSettings.site_name, defaultSettings.tagline, defaultSettings.logo_url, defaultSettings.secondary_logo_url, defaultSettings.brochure_url,
-      defaultSettings.testimonials_visible, defaultSettings.meta_title, defaultSettings.meta_description, defaultSettings.contact_phone,
+      defaultSettings.testimonials_visible, defaultSettings.hero_eyebrow, defaultSettings.hero_lead, defaultSettings.meta_title, defaultSettings.meta_description, defaultSettings.contact_phone,
       defaultSettings.contact_email, defaultSettings.contact_address, defaultSettings.whatsapp_number,
       defaultSettings.facebook_url, defaultSettings.instagram_url, defaultSettings.linkedin_url, defaultSettings.youtube_url
     ]
   );
   console.log('Seeded default site settings');
+}
+
+async function seedHeroHeadlines(conn) {
+  const [[{ count }]] = await conn.query('SELECT COUNT(*) AS count FROM hero_headlines');
+  if (count > 0) {
+    console.log('Hero headlines already seeded, skipping (admin edits are preserved)');
+    return;
+  }
+  for (let i = 0; i < heroHeadlines.length; i++) {
+    const h = heroHeadlines[i];
+    await conn.query(
+      'INSERT INTO hero_headlines (line1, line2, accent, display_order) VALUES (?, ?, ?, ?)',
+      [h.line1, h.line2, h.accent, i]
+    );
+  }
+  console.log(`Seeded ${heroHeadlines.length} hero headlines`);
 }
 
 async function seedAdmin(conn) {
@@ -537,6 +563,7 @@ async function main() {
     await seedFaqs(conn);
     await seedStats(conn);
     await seedGallery(conn);
+    await seedHeroHeadlines(conn);
     await seedSettings(conn);
     await seedAdmin(conn);
     await seedBlogAdmin(conn);

@@ -79,6 +79,17 @@ CREATE TABLE IF NOT EXISTS hero_slides (
   display_order  INT NOT NULL DEFAULT 0
 );
 
+-- The rotating hero headline (line1/line2 + accent phrase) shown on the
+-- homepage -- previously a hardcoded array in Hero.jsx, now admin-managed.
+-- Seeded with the original hardcoded headlines by seed.js (seedHeroHeadlines).
+CREATE TABLE IF NOT EXISTS hero_headlines (
+  id             INT AUTO_INCREMENT PRIMARY KEY,
+  line1          VARCHAR(160) NOT NULL,
+  line2          VARCHAR(80) NOT NULL,
+  accent         VARCHAR(120) NOT NULL,
+  display_order  INT NOT NULL DEFAULT 0
+);
+
 CREATE TABLE IF NOT EXISTS offices (
   id             INT AUTO_INCREMENT PRIMARY KEY,
   name           VARCHAR(120) NOT NULL,
@@ -146,6 +157,8 @@ CREATE TABLE IF NOT EXISTS site_settings (
   favicon_url        VARCHAR(500) NULL,
   secondary_logo_url VARCHAR(500) NULL,
   brochure_url       VARCHAR(500) NULL,
+  hero_eyebrow       VARCHAR(255) NULL,
+  hero_lead          TEXT NULL,
   testimonials_visible TINYINT(1) NOT NULL DEFAULT 1,
   meta_title         VARCHAR(160) NOT NULL DEFAULT 'DENCO INDIA | Scientific Dental Laboratory & Digital Dentistry',
   meta_description   VARCHAR(300) NULL,
@@ -172,6 +185,15 @@ ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS facebook_url VARCHAR(500) NUL
 ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS instagram_url VARCHAR(500) NULL AFTER facebook_url;
 ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS linkedin_url VARCHAR(500) NULL AFTER instagram_url;
 ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS youtube_url VARCHAR(500) NULL AFTER linkedin_url;
+ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS hero_eyebrow VARCHAR(255) NULL AFTER brochure_url;
+ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS hero_lead TEXT NULL AFTER hero_eyebrow;
+
+-- Backfills the two hero text fields with the copy that was previously
+-- hardcoded in Hero.jsx, on an existing row created before these columns
+-- existed. WHERE ... IS NULL keeps this idempotent and never overwrites a
+-- value an admin has since edited.
+UPDATE site_settings SET hero_eyebrow = 'Scientific Dental Laboratory. Digital Precision.' WHERE hero_eyebrow IS NULL;
+UPDATE site_settings SET hero_lead = 'DENCO INDIA is one of India''s leading scientific dental laboratories, combining experienced technicians, certified materials and advanced CAD/CAM technology to deliver clinically accurate, aesthetically superior restorations to dentists and clinics across Tamil Nadu.' WHERE hero_lead IS NULL;
 
 CREATE TABLE IF NOT EXISTS enquiries (
   id          INT AUTO_INCREMENT PRIMARY KEY,

@@ -13,7 +13,7 @@ import { slugify } from '../../utils/slugify';
 // fields: [{ name, label, type: 'text'|'textarea'|'select'|'number'|'image', required, options,
 //            deriveFrom: '<other field name>' — auto-fills this field with a slugified version
 //            of that field's value, until the admin edits this field directly. }]
-export default function AdminCrudTable({ title, listPath, adminBasePath, columns, fields, emptyItem, api = defaultApi }) {
+export default function AdminCrudTable({ title, description, listPath, adminBasePath, columns, fields, emptyItem, api = defaultApi }) {
   const [rows, setRows] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -103,6 +103,7 @@ export default function AdminCrudTable({ title, listPath, adminBasePath, columns
           <button className="btn btn-accent btn-sm" onClick={startCreate}>+ Add New</button>
         )}
       </div>
+      {description && <p className="form-note" style={{ marginTop: 0, marginBottom: '1.2rem' }}>{description}</p>}
 
       {error && <p className="form-note" style={{ color: '#D9611E' }}>{error}</p>}
 

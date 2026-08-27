@@ -10,6 +10,7 @@ const NAV_GROUPS = [
     { to: 'job-applications', label: 'Job Applications' }
   ] },
   { label: 'Content', items: [
+    { to: 'hero-headlines', label: 'Hero Headlines' },
     { to: 'hero-slides', label: 'Hero Slider' },
     { to: 'trust-badges', label: 'Trust Badges' },
     { to: 'gallery', label: 'Gallery' },

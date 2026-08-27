@@ -22,6 +22,7 @@ import AdminCategories from './pages/admin/AdminCategories';
 import AdminCertifications from './pages/admin/AdminCertifications';
 import AdminServices from './pages/admin/AdminServices';
 import AdminGallery from './pages/admin/AdminGallery';
+import AdminHeroHeadlines from './pages/admin/AdminHeroHeadlines';
 import AdminHeroSlides from './pages/admin/AdminHeroSlides';
 import AdminTestimonials from './pages/admin/AdminTestimonials';
 import AdminTrustBadges from './pages/admin/AdminTrustBadges';
@@ -83,6 +84,7 @@ export default function App() {
               <Route path="certifications" element={<AdminCertifications />} />
               <Route path="services" element={<AdminServices />} />
               <Route path="gallery" element={<AdminGallery />} />
+              <Route path="hero-headlines" element={<AdminHeroHeadlines />} />
               <Route path="hero-slides" element={<AdminHeroSlides />} />
               <Route path="testimonials" element={<AdminTestimonials />} />
               <Route path="trust-badges" element={<AdminTrustBadges />} />
